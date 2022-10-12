@@ -1,14 +1,12 @@
-import { createDiteApp } from '@dite/nest';
 import { NestFactory } from '@nestjs/core';
+import { IConfig } from 'dite';
 import { AppModule } from './app.module';
 
-async function main() {
+async function createServer(opts: { config: IConfig }) {
+  const { config } = opts;
+  console.log('config.port', config.port);
   const app = await NestFactory.create(AppModule);
-  const server = createDiteApp(app);
-  await server.start();
+  await app.listen(config.port);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+export { createServer };

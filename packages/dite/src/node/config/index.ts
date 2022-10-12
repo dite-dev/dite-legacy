@@ -6,12 +6,15 @@ import { configFiles } from '../../shared/constants';
 
 export interface IConfig {
   port: number;
+  serverBuildPath: string;
+  buildPath: string;
+  root: string;
   // dir: string
   // version: string
 }
 
 export function defineConfig(options: Partial<IConfig>): Partial<IConfig> {
-  const config: IConfig = {
+  const config: Partial<IConfig> = {
     port: 3001,
     // dir: '.',
     // version: '',
@@ -62,8 +65,16 @@ export async function resolveConfig(opts: {
   command: 'serve' | 'build';
   mode: 'development' | 'production';
 }) {
-  const config = await resolveUserConfig(opts);
-  return config;
+  const userConfig = await resolveUserConfig(opts);
+  if (!userConfig) return null;
+  const { config } = userConfig;
+  config.buildPath = '.dite';
+  config.serverBuildPath = resolve(
+    opts.root,
+    config.serverBuildPath ?? resolve(config.buildPath, 'server'),
+  );
+  config.root = opts.root;
+  return config as unknown as IConfig;
 }
 
 async function loadConfigFromFile<T = Partial<IConfig>>(

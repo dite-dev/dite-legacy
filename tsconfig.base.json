@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "strict": true,
     "target": "es2015",
     "jsx": "react"
