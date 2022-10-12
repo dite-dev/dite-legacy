@@ -6,7 +6,7 @@
     "module": "commonjs",
     "skipLibCheck": true,
     "moduleResolution": "node",
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": false,
     "strict": true,
     "target": "es2015",

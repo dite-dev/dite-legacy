@@ -1,6 +1,6 @@
 import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'fs';
-import { resolve } from 'path';
+import { join } from 'path';
 
 import { configFiles } from '../../shared/constants';
 
@@ -69,9 +69,9 @@ export async function resolveConfig(opts: {
   if (!userConfig) return null;
   const { config } = userConfig;
   config.buildPath = '.dite';
-  config.serverBuildPath = resolve(
+  config.serverBuildPath = join(
     opts.root,
-    config.serverBuildPath ?? resolve(config.buildPath, 'server'),
+    config.serverBuildPath ?? join(config.buildPath, 'server/index.js'),
   );
   config.root = opts.root;
   return config as IConfig;
@@ -85,7 +85,7 @@ async function loadConfigFromFile<T = Partial<IConfig>>(
   dependencies: string[];
 } | null> {
   const filepath = configFiles
-    .map((configFile) => resolve(cwd, configFile))
+    .map((configFile) => join(cwd, configFile))
     .find((p) => existsSync(p));
   if (filepath) {
     const config = await bundleRequire({ filepath });

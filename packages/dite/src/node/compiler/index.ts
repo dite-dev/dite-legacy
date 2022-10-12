@@ -11,7 +11,8 @@ export async function build(
     .build({
       absWorkingDir: config.root,
       entryPoints: { index: 'server/main.ts' },
-      outdir: config.serverBuildPath,
+      outfile: config.serverBuildPath,
+      minifySyntax: true,
       jsx: 'automatic',
       write: false,
       format: 'cjs',
@@ -31,13 +32,6 @@ export async function build(
         '@nestjs/core',
         '@nestjs/common',
       ],
-      // stdin: {
-      //   contents: `export * from ${JSON.stringify(
-      //     '@dite/node'
-      //   )};\``,
-      //   resolveDir: root,
-      //   loader: 'ts'
-      // }
     })
     .then(async (build) => {
       await writeServerBuildResult(
@@ -52,8 +46,10 @@ export async function writeServerBuildResult(
   config: { serverBuildPath: string },
   outputFiles: esbuild.OutputFile[],
 ) {
-  fs.ensureDir(dirname(config.serverBuildPath));
+  // console.log(dirname(config.serverBuildPath))
+  // await fs.ensureDir(dirname(config.serverBuildPath));
   for (const file of outputFiles) {
+    await fs.ensureDir(dirname(file.path));
     if (file.path.endsWith('.js')) {
       // fix sourceMappingURL to be relative to current path instead of /build
       const filename = file.path.substring(file.path.lastIndexOf(sep) + 1);
