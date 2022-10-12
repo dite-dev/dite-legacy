@@ -1,7 +1,32 @@
+import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
-import { dirname, sep } from 'path';
+import { dirname, join, sep } from 'path';
 import { IConfig } from '../config';
+
+async function buildEverything(config: IConfig) {}
+
+export async function watch(
+  config: IConfig,
+  options: { mode: 'development' | 'production' },
+) {
+  const { mode } = options;
+  const { root, serverBuildPath } = config;
+  const toWatch = [join(config.root, 'server')];
+
+  const watcher = chokidar
+    .watch(toWatch, {
+      persistent: true,
+      ignoreInitial: true,
+      awaitWriteFinish: {
+        stabilityThreshold: 100,
+        pollInterval: 100,
+      },
+    })
+    .on('change', async (file) => {
+      console.log('change', file);
+    });
+}
 
 export async function build(
   config: IConfig,

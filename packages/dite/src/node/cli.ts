@@ -7,7 +7,7 @@ import { resolveConfig } from './config';
 
 const { readJSONSync } = fs;
 
-export function run(argv: string[] = process.argv) {
+export async function run(argv: string[] = process.argv) {
   const pkg = readJSONSync('./../../package.json');
   const cli = cac('dite').version(pkg.version).help();
   const spinner = ora('dite');

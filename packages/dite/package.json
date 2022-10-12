@@ -44,6 +44,7 @@
     "bundle-require": "^3.1.0",
     "cac": "^6.7.14",
     "chalk": "^4.1.2",
+    "chokidar": "^3.5.1",
     "consola": "^2.15.3",
     "debug": "^4.3.4",
     "fs-extra": "^10.1.0",
