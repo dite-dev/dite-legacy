@@ -1,0 +1,48 @@
+{
+  "name": "@dite/codemod",
+  "version": "0.1.6-alpha.0",
+  "description": "@dite/codemod",
+  "keywords": [
+    "dite"
+  ],
+  "homepage": "https://dite.dev",
+  "bugs": {
+    "url": "https://github.com/ditejs/dite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ditejs/dite",
+    "directory": "codemod"
+  },
+  "license": "MIT",
+  "bin": {
+    "dite-codemod": "bin/dite-codemod.js"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build --watch"
+  },
+  "dependencies": {
+    "consola": "^2.15.3",
+    "esbuild": "^0.15.10",
+    "fast-glob": "^3.2.12",
+    "fs-extra": "^10.1.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "Zack <lorenx@163.com> (https://github.com/loyep)"
+  ]
+}

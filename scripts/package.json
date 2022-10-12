@@ -1,0 +1,26 @@
+{
+  "name": "dite-scripts",
+  "version": "0.0.0",
+  "private": true,
+  "bin": {
+    "dite-scripts": "bin/dite-scripts.js"
+  },
+  "dependencies": {
+    "@types/cross-spawn": "^6.0.2",
+    "@types/rimraf": "^3.0.2",
+    "@types/yargs-parser": "^21.0.0",
+    "chalk": "^4.1.2",
+    "cpy": "^9.0.1",
+    "cross-spawn": "^7.0.3",
+    "esbuild": "^0.15.10",
+    "fast-glob": "^3.2.12",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^9.1.3",
+    "rimraf": "^3.0.2",
+    "semver": "^7.3.8",
+    "yargs-parser": "^21.1.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13"
+  }
+}

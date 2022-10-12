@@ -1,0 +1,16 @@
+node_modules
+dist
+*.d.ts
+compiled
+*.js
+fixtures
+*.md
+*.yaml
+*.less
+.turbo
+.dite
+lerna.json
+**/__temp__/**
+tests/**/out/**
+pnpm-lock.yaml
+*.test.ts

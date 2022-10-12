@@ -1,0 +1,76 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.3
+
+executors:
+  lts:
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/repo
+    resource_class: large
+  latest:
+    docker:
+      - image: cimg/node:current
+    working_directory: ~/repo
+    resource_class: large
+
+jobs:
+  build:
+    executor: lts
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-deps-v1-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
+      - run:
+          name: install pnpm
+          command: |
+            sudo corepack enable
+            sudo corepack prepare pnpm@7.3.0 --activate
+            pnpm config set store-dir ~/.pnpm-store
+      - run:
+          name: install packages
+          command: pnpm install --frozen-lockfile
+      - save_cache:
+          key: node-deps-v1-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
+          paths:
+            - node_modules
+      - run:
+          name: Run build
+          command: pnpm build
+
+  test:
+    executor: lts
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-deps-v1-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
+      - run:
+          name: install pnpm
+          command: |
+            sudo corepack enable
+            sudo corepack prepare pnpm@7.3.0 --activate
+            pnpm config set store-dir ~/.pnpm-store
+      - run:
+          name: install packages
+          command: pnpm install --frozen-lockfile
+      - save_cache:
+          key: node-deps-v1-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
+          paths:
+            - node_modules
+      - run:
+          name: Run build
+          command: pnpm build
+      - run:
+          name: Run tests
+          command: pnpm test
+
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

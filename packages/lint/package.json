@@ -1,0 +1,39 @@
+{
+  "name": "@dite/lint",
+  "version": "0.1.6",
+  "description": "lint",
+  "keywords": [
+    "dite"
+  ],
+  "homepage": "https://dite.dev",
+  "bugs": {
+    "url": "https://github.com/ditejs/dite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ditejs/dite",
+    "directory": "packages/lint"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "create-dite": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build --watch"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "Zack <lorenx@163.com> (https://github.com/loyep)"
+  ]
+}

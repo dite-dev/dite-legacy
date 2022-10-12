@@ -1,0 +1,97 @@
+{
+  "private": true,
+  "homepage": "https://dite.dev",
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "dite-scripts bootstrap",
+    "build": "dite-scripts turbo build",
+    "build:client": "dite-scripts turbo build:client",
+    "build:force": "dite-scripts turbo build --no-cache",
+    "clean": "dite-scripts clean",
+    "cov": "jest --coverage",
+    "dep:update": "pnpm up --interactive --latest --recursive",
+    "format": "prettier --cache --write .",
+    "preinstall": "npx only-allow pnpm",
+    "jest": "jest",
+    "lint": "dite-scripts lint",
+    "prepare": "husky install",
+    "release": "dite-scripts release",
+    "test": "jest",
+    "tsc:check": "tsc --noEmit",
+    "version": "pnpm install && git add pnpm-lock.yaml"
+  },
+  "lint-staged": {
+    "*.{jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@dite/codemod": "workspace:*",
+    "@dite/core": "workspace:*",
+    "@dite/lint": "workspace:*",
+    "@dite/nest": "workspace:*",
+    "@dite/node": "workspace:*",
+    "@dite/react": "workspace:*",
+    "@dite/vue": "workspace:*",
+    "@jest/types": "^29.1.2",
+    "@pnpm/lockfile-file": "^5.3.8",
+    "@pnpm/logger": "^4.0.0",
+    "@types/jest": "^29.1.2",
+    "@types/node": "^17.0.45",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@types/resolve": "^1.20.2",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "chalk": "^4.1.2",
+    "create-dite": "workspace:*",
+    "dite": "workspace:*",
+    "dite-scripts": "workspace:*",
+    "esbuild": "^0.15.10",
+    "esbuild-jest": "^0.5.0",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "git-repo-info": "^2.1.1",
+    "husky": "^8.0.1",
+    "jest": "^29.1.2",
+    "lerna": "^5.6.2",
+    "lint-staged": "^13.0.3",
+    "only-allow": "^1.1.1",
+    "prettier": "^2.7.1",
+    "prettier-plugin-organize-imports": "^3.1.1",
+    "prettier-plugin-packagejson": "^2.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "regenerate-unicode-properties": "^10.1.0",
+    "resolve": "^1.22.1",
+    "standard-version": "^9.5.0",
+    "ts-node": "^10.9.1",
+    "tsup": "^6.2.3",
+    "tsx": "^3.10.1",
+    "turbo": "^1.5.6",
+    "typescript": "^4.8.4",
+    "uglify-js": "^3.17.3",
+    "zx": "4.3.0"
+  },
+  "packageManager": "pnpm@7.3.0",
+  "engines": {
+    "node": ">=14",
+    "pnpm": ">=7"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "react",
+        "react-dom",
+        "postcss",
+        "eslint",
+        "stylelint"
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "dite",
+  "version": "0.1.6",
+  "description": "dite",
+  "keywords": [
+    "dite"
+  ],
+  "homepage": "https://dite.dev",
+  "bugs": {
+    "url": "https://github.com/ditejs/dite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ditejs/dite",
+    "directory": "packages/dite"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js",
+      "require": "./dist/node/index.cjs"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "main": "dist/node/index.cjs",
+  "module": "dist/node/index.js",
+  "types": "dist/node/index.d.ts",
+  "bin": {
+    "dite": "bin/dite.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build --watch"
+  },
+  "dependencies": {
+    "@dite/core": "0.1.6",
+    "arg": "^5.0.2",
+    "bundle-require": "^3.1.0",
+    "cac": "^6.7.14",
+    "chalk": "^4.1.2",
+    "consola": "^2.15.3",
+    "debug": "^4.3.4",
+    "fs-extra": "^10.1.0",
+    "lodash": "^4.17.21",
+    "ora": "^6.1.2",
+    "picocolors": "^1.0.0",
+    "semver": "^7.3.8",
+    "vite": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash": "^4.14.186",
+    "@types/semver": "^7.3.12",
+    "es-module-lexer": "^1.0.3"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "Zack <lorenx@163.com> (https://github.com/loyep)"
+  ]
+}
