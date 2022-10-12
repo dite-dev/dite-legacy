@@ -18,6 +18,7 @@ export async function build(
       minify: options.mode === 'production',
       platform: 'node',
       bundle: true,
+      mainFields: ['browser', 'module', 'main'],
       // splitting: true,
       keepNames: true,
       treeShaking: true,

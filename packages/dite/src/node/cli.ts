@@ -28,8 +28,8 @@ export async function run(argv: string[] = process.argv) {
       const { createServer: createNodeApp } = await import(
         `${serverBuilder.outputFiles[0].path}?t=${Date.now()}`
       );
+      spinner.stop();
       const server = await createNodeApp({ config: config });
-      console.log('server', server);
       // const createServer = async () => {
       //   const { createDevServer } = await import(`./dev.js?t=${Date.now()}`);
       //   // const server = await createDevServer(root, async () => {
@@ -56,6 +56,7 @@ export async function run(argv: string[] = process.argv) {
       });
       if (!config) return;
       await build(config, { mode: 'production' });
+      spinner.stop();
       // const { createServer: createNodeApp } = await import(`${serverBuilder.outputFiles[0].path}?t=${Date.now()}`);
       // const server = await createNodeApp({ config: config.config })
       // console.log('server', server)
@@ -77,11 +78,11 @@ export async function run(argv: string[] = process.argv) {
         join(root, 'dist/server/index.js')
       );
       if (port) config.port = port;
+      spinner.stop();
       const server = await createNodeApp({ config: config });
       console.log('server', server);
     });
 
-  cli.parse(argv, { run: false });
+  cli.parse(argv);
   await cli.runMatchedCommand();
-  spinner.stop();
 }

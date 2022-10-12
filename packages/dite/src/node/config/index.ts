@@ -74,7 +74,7 @@ export async function resolveConfig(opts: {
     config.serverBuildPath ?? resolve(config.buildPath, 'server'),
   );
   config.root = opts.root;
-  return config as unknown as IConfig;
+  return config as IConfig;
 }
 
 async function loadConfigFromFile<T = Partial<IConfig>>(
