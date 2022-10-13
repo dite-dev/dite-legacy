@@ -63,7 +63,6 @@ export async function watch(
   }: WatchOptions = {},
 ) {
   const toWatch = [join(config.root, 'server')];
-  console.log('mode', mode);
   const options = {
     mode,
     onWarning,
@@ -201,36 +200,12 @@ export async function build(
     onBuildFailure = defaultBuildFailureHandler,
   }: BuildOptions = {},
 ) {
-  return esbuild
-    .build({
-      absWorkingDir: config.root,
-      entryPoints: { index: 'server/main.ts' },
-      outfile: config.serverBuildPath,
-      minifySyntax: true,
-      jsx: 'automatic',
-      write: false,
-      format: 'cjs',
-      minify: mode === 'production',
-      platform: 'node',
-      bundle: true,
-      mainFields: ['browser', 'module', 'main'],
-      // splitting: true,
-      keepNames: true,
-      treeShaking: true,
-      external: [
-        '@nestjs/microservices',
-        'class-transformer',
-        'cache-manager',
-        'class-validator',
-        '@nestjs/websockets',
-        '@nestjs/core',
-        '@nestjs/common',
-      ],
-    })
-    .then(async (build) => {
-      await writeServerBuildResult(config, build.outputFiles);
-      return build;
-    });
+  const options = {
+    mode,
+    onWarning,
+    onBuildFailure,
+  };
+  return buildEverything(config, options);
 }
 
 export async function writeServerBuildResult(

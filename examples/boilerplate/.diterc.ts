@@ -1,4 +1,4 @@
-import node from '@dite/node';
+import { createIntegration as node } from '@dite/node';
 import { defineConfig } from 'dite';
 
 export default defineConfig({

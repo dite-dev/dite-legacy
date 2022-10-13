@@ -15,7 +15,6 @@
     "directory": "packages/node"
   },
   "license": "MIT",
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/node/index.d.ts",

@@ -13,7 +13,7 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   outDir: 'dist/node',
   clean: true,
-  format: 'cjs',
+  format: ['cjs', 'esm'],
   platform: 'node',
   shims: true,
 });

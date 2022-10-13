@@ -8,7 +8,7 @@ export function getAdapter(): DiteAdapter {
   };
 }
 
-export default function createAdapter(): DiteIntegration {
+export function createIntegration(): DiteIntegration {
   return {
     name: 'dite:adapter:node',
     hooks: {
@@ -18,3 +18,5 @@ export default function createAdapter(): DiteIntegration {
     },
   };
 }
+
+export default createIntegration;
