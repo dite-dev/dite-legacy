@@ -4,15 +4,101 @@ import fs from 'fs-extra';
 import { dirname, join, sep } from 'path';
 import { IConfig } from '../config';
 
-async function buildEverything(config: IConfig) {}
+function defaultWarningHandler(message: string, key: string) {
+  console.log(message, key);
+}
+
+export type BuildError = Error | esbuild.BuildFailure;
+
+function defaultBuildFailureHandler(failure: BuildError) {
+  console.log(failure);
+}
+
+async function buildEverything(
+  config: IConfig,
+  options: Required<BuildOptions> & { incremental?: boolean },
+): Promise<(esbuild.BuildResult | undefined)[]> {
+  console.log('config', config);
+  try {
+    const serverBuildPromise = createServerBuild(config, options);
+    const browserBuildPromise = createBrowserBuild(config, options);
+
+    return await Promise.all([serverBuildPromise, browserBuildPromise]);
+  } catch (e) {
+    console.log('e', e);
+    return [undefined, undefined];
+  }
+}
+
+interface BuildConfig {
+  mode: 'development' | 'production';
+}
+
+interface BuildOptions extends Partial<BuildConfig> {
+  onWarning?(message: string, key: string): void;
+  onBuildFailure?(failure: Error | esbuild.BuildFailure): void;
+}
+
+interface WatchOptions extends BuildOptions {
+  onRebuildStart?(): void;
+  onRebuildFinish?(): void;
+  onFileCreated?(file: string): void;
+  onFileChanged?(file: string): void;
+  onFileDeleted?(file: string): void;
+  onInitialBuild?(): void;
+}
 
 export async function watch(
   config: IConfig,
-  options: { mode: 'development' | 'production' },
+  {
+    mode = 'development',
+    onFileChanged,
+    onFileCreated,
+    onFileDeleted,
+    onInitialBuild,
+    onRebuildFinish,
+    onRebuildStart,
+    onWarning = defaultWarningHandler,
+    onBuildFailure = defaultBuildFailureHandler,
+  }: WatchOptions = {},
 ) {
-  const { mode } = options;
-  const { root, serverBuildPath } = config;
   const toWatch = [join(config.root, 'server')];
+  console.log('mode', mode);
+  const options = {
+    mode,
+    onWarning,
+    onBuildFailure,
+    incremental: true,
+  };
+  let [serverBuild, browserBuild] = await buildEverything(config, options);
+
+  const initialBuildComplete = !!browserBuild && !!serverBuild;
+  if (initialBuildComplete && onInitialBuild) {
+    onInitialBuild();
+  }
+
+  function disposeBuilders() {
+    browserBuild?.rebuild?.dispose();
+    serverBuild?.rebuild?.dispose();
+    browserBuild = undefined;
+    serverBuild = undefined;
+  }
+
+  const rebuildEverything = async () => {
+    if (onRebuildStart) onRebuildStart();
+    console.log('rebuild all', serverBuild?.rebuild);
+    if (!serverBuild?.rebuild) {
+      return;
+    }
+    console.log('all1');
+    await Promise.all([
+      serverBuild
+        .rebuild()
+        .then((build) => writeServerBuildResult(config, build.outputFiles!)),
+    ]);
+    console.log('all');
+    if (onRebuildFinish) onRebuildFinish();
+  };
 
   const watcher = chokidar
     .watch(toWatch, {
@@ -23,14 +109,29 @@ export async function watch(
         pollInterval: 100,
       },
     })
+    .on('error', (error) => console.error(error))
     .on('change', async (file) => {
       console.log('change', file);
+      if (onFileChanged) onFileChanged(file);
+      await rebuildEverything();
+    })
+    .on('add', async (file) => {
+      if (onFileCreated) onFileCreated(file);
+      await rebuildEverything();
+    })
+    .on('unlink', async (file) => {
+      if (onFileDeleted) onFileDeleted(file);
+      await rebuildEverything();
     });
+  return async () => {
+    await watcher.close().catch(() => {});
+    disposeBuilders();
+  };
 }
 
-export async function build(
+export function createServerBuild(
   config: IConfig,
-  options: { mode: 'development' | 'production' },
+  options: Required<BuildOptions> & { incremental?: boolean },
 ) {
   return esbuild
     .build({
@@ -42,6 +143,74 @@ export async function build(
       write: false,
       format: 'cjs',
       minify: options.mode === 'production',
+      platform: 'node',
+      bundle: true,
+      mainFields: ['browser', 'module', 'main'],
+      // splitting: true,
+      keepNames: true,
+      incremental: options.incremental,
+      treeShaking: true,
+      external: [
+        '@nestjs/microservices',
+        'class-transformer',
+        'cache-manager',
+        'class-validator',
+        '@nestjs/websockets',
+        '@nestjs/core',
+        '@nestjs/common',
+      ],
+    })
+    .then(async (build) => {
+      await writeServerBuildResult(config, build.outputFiles);
+      return build;
+    });
+}
+
+export function createBrowserBuild(
+  config: IConfig,
+  options: Required<BuildOptions> & { incremental?: boolean },
+) {
+  return esbuild.build({
+    absWorkingDir: config.root,
+    entryPoints: { index: 'app/root.tsx' },
+    outdir: join(config.root, '.dite', 'browser'),
+    minifySyntax: true,
+    jsx: 'automatic',
+    format: 'esm',
+    minify: options.mode === 'production',
+    platform: 'browser',
+    bundle: true,
+    metafile: true,
+    incremental: options.incremental,
+    entryNames: '[dir]/[name]-[hash]',
+    chunkNames: '_shared/[name]-[hash]',
+    assetNames: '_assets/[name]-[hash]',
+    mainFields: ['browser', 'module', 'main'],
+    splitting: true,
+    jsxDev: options.mode !== 'production',
+    keepNames: true,
+    treeShaking: true,
+  });
+}
+
+export async function build(
+  config: IConfig,
+  {
+    mode = 'production',
+    onWarning = defaultWarningHandler,
+    onBuildFailure = defaultBuildFailureHandler,
+  }: BuildOptions = {},
+) {
+  return esbuild
+    .build({
+      absWorkingDir: config.root,
+      entryPoints: { index: 'server/main.ts' },
+      outfile: config.serverBuildPath,
+      minifySyntax: true,
+      jsx: 'automatic',
+      write: false,
+      format: 'cjs',
+      minify: mode === 'production',
       platform: 'node',
       bundle: true,
       mainFields: ['browser', 'module', 'main'],
@@ -59,20 +228,17 @@ export async function build(
       ],
     })
     .then(async (build) => {
-      await writeServerBuildResult(
-        { serverBuildPath: config.serverBuildPath },
-        build.outputFiles,
-      );
+      await writeServerBuildResult(config, build.outputFiles);
       return build;
     });
 }
 
 export async function writeServerBuildResult(
-  config: { serverBuildPath: string },
+  config: IConfig,
   outputFiles: esbuild.OutputFile[],
 ) {
-  // console.log(dirname(config.serverBuildPath))
-  // await fs.ensureDir(dirname(config.serverBuildPath));
+  if (!outputFiles) return;
+  await fs.ensureDir(dirname(config.serverBuildPath));
   for (const file of outputFiles) {
     await fs.ensureDir(dirname(file.path));
     if (file.path.endsWith('.js')) {

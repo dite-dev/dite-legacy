@@ -1,8 +1,10 @@
 import { cac } from 'cac';
+import exitHook from 'exit-hook';
 import fs from 'fs-extra';
+import type { Server } from 'http';
 import ora from 'ora';
 import { join } from 'path';
-import { build } from './compiler';
+import * as compiler from './compiler';
 import { resolveConfig } from './config';
 
 const { readJSONSync } = fs;
@@ -24,13 +26,40 @@ export async function run(argv: string[] = process.argv) {
         mode: 'development',
       });
       if (!config) return;
-      const serverBuilder = await build(config, { mode: 'development' });
-      const { createServer: createNodeApp } = await import(
-        `${config.serverBuildPath}?t=${Date.now()}`
-      );
-      spinner.stop();
-      const server = await createNodeApp({ config: config });
-      console.log('server', server);
+
+      let server: Server | null = null;
+
+      const createServer = async () => {
+        const { createServer: createNodeApp } = await import(
+          `${config.serverBuildPath}?t=${Date.now()}`
+        );
+        const app = await createNodeApp({ config });
+        return app;
+      };
+      const closeWatcher = await compiler.watch(config, {
+        mode: 'development',
+        async onInitialBuild() {
+          spinner.stop();
+          server = await createServer();
+        },
+        onRebuildStart() {
+          spinner.start();
+        },
+        async onRebuildFinish() {
+          spinner.stop();
+          server?.close();
+          server = await createServer();
+        },
+      });
+      let resolve: () => void;
+      exitHook(() => {
+        resolve();
+      });
+      return new Promise<void>((r) => {
+        resolve = r;
+      }).then(async () => {
+        await closeWatcher();
+      });
     });
 
   cli
@@ -43,9 +72,8 @@ export async function run(argv: string[] = process.argv) {
         mode: 'production',
       });
       if (!config) return;
-      const server = await build(config, { mode: 'production' });
+      const server = await compiler.build(config, { mode: 'production' });
       spinner.stop();
-      console.log('server', server);
     });
 
   cli
