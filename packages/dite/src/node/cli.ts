@@ -72,7 +72,7 @@ export async function run(argv: string[] = process.argv) {
         mode: 'production',
       });
       if (!config) return;
-      const server = await compiler.build(config, { mode: 'production' });
+      await compiler.build(config, { mode: 'production' });
       spinner.stop();
     });
 

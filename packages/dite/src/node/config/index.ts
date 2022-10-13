@@ -4,23 +4,41 @@ import { join } from 'path';
 
 import { configFiles } from '../../shared/constants';
 
-export interface IConfig {
+export interface DiteAdapter {
+  name: string;
+  serverEntrypoint?: string;
+  exports?: string[];
+  args?: any;
+}
+
+export interface DiteIntegration {
+  name: string;
+  hooks?: {
+    onConfigDone?: (options: {
+      config: DiteConfig;
+      setAdapter: (adapter: DiteAdapter) => void;
+    }) => void | Promise<void>;
+  };
+}
+
+export interface DiteConfig {
   port: number;
   serverBuildPath: string;
   buildPath: string;
   root: string;
-  // dir: string
-  // version: string
+  adapter?: DiteIntegration[];
 }
 
-export function defineConfig(options: Partial<IConfig>): Partial<IConfig> {
-  const config: Partial<IConfig> = {
+export function defineConfig(
+  options: Partial<DiteConfig>,
+): Partial<DiteConfig> {
+  const config: Partial<DiteConfig> = {
     port: 3001,
     // dir: '.',
     // version: '',
     ...options,
   };
-  return config as IConfig;
+  return config as DiteConfig;
 }
 
 // function getUserConfig(configFiles: string[]) {
@@ -45,12 +63,12 @@ export function defineConfig(options: Partial<IConfig>): Partial<IConfig> {
 //     }
 //   }
 //   return {
-//     config: config as IConfig,
+//     config: config as DiteConfig,
 //     files,
 //   };
 // }
 //
-// export function loadConfig(): Promise<IConfig> {
+// export function loadConfig(): Promise<DiteConfig> {
 //   const { config } = getUserConfig(
 //     getAbsFiles({
 //       files: configFiles,
@@ -74,10 +92,10 @@ export async function resolveConfig(opts: {
     config.serverBuildPath ?? join(config.buildPath, 'server/index.js'),
   );
   config.root = opts.root;
-  return config as IConfig;
+  return config as DiteConfig;
 }
 
-async function loadConfigFromFile<T = Partial<IConfig>>(
+async function loadConfigFromFile<T = Partial<DiteConfig>>(
   cwd: string,
 ): Promise<{
   path: string;

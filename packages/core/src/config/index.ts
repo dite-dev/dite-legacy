@@ -5,20 +5,22 @@
 // import { configFiles } from '../../shared/constants';
 // import { getAbsFiles } from './utils';
 
-export interface IConfig {
+export interface DiteConfig {
   port: number;
   // dir: string
   // version: string
 }
 
-export function defineConfig(options: Partial<IConfig>): Partial<IConfig> {
-  const config: IConfig = {
+export function defineConfig(
+  options: Partial<DiteConfig>,
+): Partial<DiteConfig> {
+  const config: DiteConfig = {
     port: 3001,
     // dir: '.',
     // version: '',
     ...options,
   };
-  return config as IConfig;
+  return config as DiteConfig;
 }
 
 // function getUserConfig(configFiles: string[]) {
@@ -43,12 +45,12 @@ export function defineConfig(options: Partial<IConfig>): Partial<IConfig> {
 //     }
 //   }
 //   return {
-//     config: config as IConfig,
+//     config: config as DiteConfig,
 //     files,
 //   };
 // }
 //
-// export function loadConfig(): Promise<IConfig> {
+// export function loadConfig(): Promise<DiteConfig> {
 //   const { config } = getUserConfig(
 //     getAbsFiles({
 //       files: configFiles,

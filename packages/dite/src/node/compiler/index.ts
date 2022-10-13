@@ -2,7 +2,7 @@ import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
 import { dirname, join, sep } from 'path';
-import { IConfig } from '../config';
+import { DiteConfig } from '../config';
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -15,7 +15,7 @@ function defaultBuildFailureHandler(failure: BuildError) {
 }
 
 async function buildEverything(
-  config: IConfig,
+  config: DiteConfig,
   options: Required<BuildOptions> & { incremental?: boolean },
 ): Promise<(esbuild.BuildResult | undefined)[]> {
   console.log('config', config);
@@ -49,7 +49,7 @@ interface WatchOptions extends BuildOptions {
 }
 
 export async function watch(
-  config: IConfig,
+  config: DiteConfig,
   {
     mode = 'development',
     onFileChanged,
@@ -130,7 +130,7 @@ export async function watch(
 }
 
 export function createServerBuild(
-  config: IConfig,
+  config: DiteConfig,
   options: Required<BuildOptions> & { incremental?: boolean },
 ) {
   return esbuild
@@ -167,13 +167,13 @@ export function createServerBuild(
 }
 
 export function createBrowserBuild(
-  config: IConfig,
+  config: DiteConfig,
   options: Required<BuildOptions> & { incremental?: boolean },
 ) {
   return esbuild.build({
     absWorkingDir: config.root,
     entryPoints: { index: 'app/root.tsx' },
-    outdir: join(config.root, '.dite', 'browser'),
+    outdir: join(config.root, config.buildPath, 'browser'),
     minifySyntax: true,
     jsx: 'automatic',
     format: 'esm',
@@ -194,7 +194,7 @@ export function createBrowserBuild(
 }
 
 export async function build(
-  config: IConfig,
+  config: DiteConfig,
   {
     mode = 'production',
     onWarning = defaultWarningHandler,
@@ -234,7 +234,7 @@ export async function build(
 }
 
 export async function writeServerBuildResult(
-  config: IConfig,
+  config: DiteConfig,
   outputFiles: esbuild.OutputFile[],
 ) {
   if (!outputFiles) return;

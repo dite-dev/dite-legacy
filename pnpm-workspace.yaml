@@ -1,7 +1,7 @@
 packages:
   - 'docs'
-  - 'packages/*'
-  - 'examples/*'
+  - 'packages/**/*'
+  - 'examples/**/*'
   - 'playground'
   - 'codemod'
   - 'scripts'
