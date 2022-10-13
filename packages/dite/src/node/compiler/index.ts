@@ -1,6 +1,7 @@
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
+import debounce from 'lodash.debounce';
 import { dirname, join, sep } from 'path';
 import { DiteConfig } from '../config';
 
@@ -83,21 +84,19 @@ export async function watch(
     serverBuild = undefined;
   }
 
-  const rebuildEverything = async () => {
+  const rebuildEverything = debounce(async () => {
     if (onRebuildStart) onRebuildStart();
-    console.log('rebuild all', serverBuild?.rebuild);
     if (!serverBuild?.rebuild) {
+      disposeBuilders();
       return;
     }
-    console.log('all1');
     await Promise.all([
       serverBuild
         .rebuild()
         .then((build) => writeServerBuildResult(config, build.outputFiles!)),
     ]);
-    console.log('all');
     if (onRebuildFinish) onRebuildFinish();
-  };
+  }, 500);
 
   const watcher = chokidar
     .watch(toWatch, {
@@ -110,7 +109,6 @@ export async function watch(
     })
     .on('error', (error) => console.error(error))
     .on('change', async (file) => {
-      console.log('change', file);
       if (onFileChanged) onFileChanged(file);
       await rebuildEverything();
     })
@@ -122,6 +120,7 @@ export async function watch(
       if (onFileDeleted) onFileDeleted(file);
       await rebuildEverything();
     });
+
   return async () => {
     await watcher.close().catch(() => {});
     disposeBuilders();

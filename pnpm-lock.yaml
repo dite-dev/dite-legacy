@@ -232,6 +232,7 @@ importers:
       '@types/debug': ^4.1.7
       '@types/fs-extra': ^9.0.13
       '@types/lodash': ^4.14.186
+      '@types/lodash.debounce': ^4.0.6
       '@types/semver': ^7.3.12
       arg: ^5.0.2
       bundle-require: ^3.1.0
@@ -244,6 +245,7 @@ importers:
       exit-hook: ^3.1.0
       fs-extra: ^10.1.0
       lodash: ^4.17.21
+      lodash.debounce: ^4.0.8
       ora: ^6.1.2
       picocolors: ^1.0.0
       semver: ^7.3.8
@@ -260,6 +262,7 @@ importers:
       exit-hook: 3.1.0
       fs-extra: 10.1.0
       lodash: 4.17.21
+      lodash.debounce: 4.0.8
       ora: 6.1.2
       picocolors: 1.0.0
       semver: 7.3.8
@@ -268,6 +271,7 @@ importers:
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.13
       '@types/lodash': 4.14.186
+      '@types/lodash.debounce': 4.0.7
       '@types/semver': 7.3.12
       es-module-lexer: 1.0.3
 
@@ -2597,6 +2601,12 @@ packages:
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
+
+  /@types/lodash.debounce/4.0.7:
+    resolution: {integrity: sha512-X1T4wMZ+gT000M2/91SYj0d/7JfeNZ9PeeOldSNoE/lunLeQXKvkmIumI29IaKMotU/ln/McOIvgzZcQ/3TrSA==}
+    dependencies:
+      '@types/lodash': 4.14.186
+    dev: true
 
   /@types/lodash/4.14.186:
     resolution: {integrity: sha512-eHcVlLXP0c2FlMPm56ITode2AgLMSa6aJ05JTTbYbI+7EMkCEE5qk2E41d5g2lCVTqRe0GnnRFurmlCsDODrPw==}
@@ -7325,6 +7335,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
+
+  /lodash.debounce/4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+    dev: false
 
   /lodash.ismatch/4.4.0:
     resolution: {integrity: sha512-fPMfXjGQEV9Xsq/8MTSgUf255gawYRbjwMyDbcvDhXgV7enSZA0hynz6vMPnpAb5iONEzBHBPsT+0zes5Z301g==}

@@ -19,6 +19,14 @@ export default defineConfig([
     shims: true,
     // noExternal: ['bundle-require'],
     format: ['cjs', 'esm'],
+    banner: ({ format }) => {
+      return {
+        js:
+          format === 'esm'
+            ? `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+            : '',
+      };
+    },
   },
   {
     entry: {

@@ -30,11 +30,11 @@ export async function run(argv: string[] = process.argv) {
       let server: Server | null = null;
 
       const createServer = async () => {
+        delete require.cache[config.serverBuildPath];
         const { createServer: createNodeApp } = await import(
           `${config.serverBuildPath}?t=${Date.now()}`
         );
-        const app = await createNodeApp({ config });
-        return app;
+        return await createNodeApp({ config });
       };
       const closeWatcher = await compiler.watch(config, {
         mode: 'development',
@@ -42,7 +42,7 @@ export async function run(argv: string[] = process.argv) {
           spinner.stop();
           server = await createServer();
         },
-        onRebuildStart() {
+        onRebuildStart: () => {
           spinner.start();
         },
         async onRebuildFinish() {
