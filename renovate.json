@@ -5,12 +5,27 @@
   "commitMessageExtra": "to {{newValue}}",
   "commitMessageTopic": "{{depName}}",
   "extends": ["config:base", ":preserveSemverRanges"],
-  "ignoreDeps": ["zx", "chalk", "pnpm", "node", "dite", "@dite/*"],
+  "ignoreDeps": [
+    "zx",
+    "chalk",
+    "pnpm",
+    "node",
+    "dite",
+    "@dite/core",
+    "@dite/nest",
+    "@dite/node",
+    "@dite/react",
+    "@dite/vue"
+  ],
   "ignorePaths": ["fixtures", "test/"],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "packageRules": [
     {
       "updateTypes": ["major"],
+      "labels": ["UPDATE-MAJOR"]
+    },
+    {
+      "updateTypes": ["rollback"],
       "labels": ["UPDATE-MAJOR"]
     },
     {
