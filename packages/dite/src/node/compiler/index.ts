@@ -157,6 +157,8 @@ export function createServerBuild(
       incremental,
       treeShaking: true,
       external: [
+        'vite',
+        'esbuild',
         '@nestjs/microservices',
         'class-transformer',
         'cache-manager',
