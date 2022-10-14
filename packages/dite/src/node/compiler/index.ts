@@ -37,15 +37,21 @@ interface BuildConfig {
 
 interface BuildOptions extends Partial<BuildConfig> {
   onWarning?(message: string, key: string): void;
+
   onBuildFailure?(failure: Error | esbuild.BuildFailure): void;
 }
 
 interface WatchOptions extends BuildOptions {
   onRebuildStart?(): void;
+
   onRebuildFinish?(): void;
+
   onFileCreated?(file: string): void;
+
   onFileChanged?(file: string): void;
+
   onFileDeleted?(file: string): void;
+
   onInitialBuild?(): void;
 }
 
@@ -93,7 +99,9 @@ export async function watch(
     await Promise.all([
       serverBuild
         .rebuild()
-        .then((build) => writeServerBuildResult(config, build.outputFiles!)),
+        .then((build) =>
+          writeServerBuildResult(config, { mode }, build.outputFiles!),
+        ),
     ]);
     if (onRebuildFinish) onRebuildFinish();
   }, 500);
@@ -129,7 +137,7 @@ export async function watch(
 
 export function createServerBuild(
   config: DiteConfig,
-  options: Required<BuildOptions> & { incremental?: boolean },
+  { mode, incremental }: Required<BuildOptions> & { incremental?: boolean },
 ) {
   return esbuild
     .build({
@@ -140,13 +148,13 @@ export function createServerBuild(
       jsx: 'automatic',
       write: false,
       format: 'cjs',
-      minify: options.mode === 'production',
+      minify: mode === 'production',
       platform: 'node',
       bundle: true,
       mainFields: ['browser', 'module', 'main'],
       // splitting: true,
       keepNames: true,
-      incremental: options.incremental,
+      incremental,
       treeShaking: true,
       external: [
         '@nestjs/microservices',
@@ -159,14 +167,14 @@ export function createServerBuild(
       ],
     })
     .then(async (build) => {
-      await writeServerBuildResult(config, build.outputFiles);
+      await writeServerBuildResult(config, { mode }, build.outputFiles);
       return build;
     });
 }
 
 export function createBrowserBuild(
   config: DiteConfig,
-  options: Required<BuildOptions> & { incremental?: boolean },
+  { mode, incremental }: Required<BuildOptions> & { incremental?: boolean },
 ) {
   return esbuild.build({
     absWorkingDir: config.root,
@@ -175,17 +183,17 @@ export function createBrowserBuild(
     minifySyntax: true,
     jsx: 'automatic',
     format: 'esm',
-    minify: options.mode === 'production',
+    minify: mode === 'production',
     platform: 'browser',
     bundle: true,
     metafile: true,
-    incremental: options.incremental,
+    incremental,
     entryNames: '[dir]/[name]-[hash]',
     chunkNames: '_shared/[name]-[hash]',
     assetNames: '_assets/[name]-[hash]',
     mainFields: ['browser', 'module', 'main'],
     splitting: true,
-    jsxDev: options.mode !== 'production',
+    jsxDev: mode !== 'production',
     keepNames: true,
     treeShaking: true,
   });
@@ -209,13 +217,18 @@ export async function build(
 
 export async function writeServerBuildResult(
   config: DiteConfig,
-  outputFiles: esbuild.OutputFile[],
+  { mode }: BuildConfig,
+  outputFiles: esbuild.OutputFile[] = [],
 ) {
   if (!outputFiles) return;
+
   await fs.ensureDir(dirname(config.serverBuildPath));
   for (const file of outputFiles) {
     await fs.ensureDir(dirname(file.path));
     if (file.path.endsWith('.js')) {
+      if (mode === 'development') {
+        delete require.cache[file.path];
+      }
       // fix sourceMappingURL to be relative to current path instead of /build
       const filename = file.path.substring(file.path.lastIndexOf(sep) + 1);
       const escapedFilename = filename.replace(/\./g, '\\.');

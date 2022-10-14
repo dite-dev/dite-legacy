@@ -49,7 +49,7 @@ See [Contributing Guide](./CONTRIBUTING.md).
 
 ## 🪴 Project Activity
 
-![Alt](https://repobeats.axiom.co/api/embed/e5e45ef7fab2aac36a5e8ae537c6e61831577c46.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/ae0072d06cf7a5ad7c73a1af62e468defde2ce11.svg "Repobeats analytics image")
 
 ## 📄 License
 

@@ -3,6 +3,7 @@ import exitHook from 'exit-hook';
 import type { Server } from 'http';
 import ora from 'ora';
 import { join } from 'path';
+import { printMemoryUsage } from '../shared/lib/printMemoryUsage';
 import * as compiler from './compiler';
 import { resolveConfig } from './config';
 
@@ -27,11 +28,12 @@ export async function run(argv: string[] = process.argv) {
       let server: Server | null = null;
 
       const createServer = async () => {
-        delete require.cache[config.serverBuildPath];
         const { createServer: createNodeApp } = await import(
           `${config.serverBuildPath}?t=${Date.now()}`
         );
-        return await createNodeApp({ config });
+        const app = await createNodeApp({ config });
+        printMemoryUsage();
+        return app;
       };
       const closeWatcher = await compiler.watch(config, {
         mode: 'development',
