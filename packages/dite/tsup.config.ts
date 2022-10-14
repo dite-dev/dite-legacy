@@ -1,4 +1,13 @@
+import type { Format } from 'tsup';
 import { defineConfig } from 'tsup';
+
+const banner = ({ format }: { format: Format }) => ({
+  js:
+    format === 'esm'
+      ? `import {createRequire as __createRequire} from 'module';var require = __createRequire(import` +
+        `.meta.url);`
+      : '',
+});
 
 export default defineConfig([
   {
@@ -17,16 +26,8 @@ export default defineConfig([
     outDir: 'dist/node',
     clean: true,
     shims: true,
-    // noExternal: ['bundle-require'],
     format: ['cjs', 'esm'],
-    banner: ({ format }) => {
-      return {
-        js:
-          format === 'esm'
-            ? `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
-            : '',
-      };
-    },
+    banner,
   },
   {
     entry: {
@@ -40,8 +41,9 @@ export default defineConfig([
     minify: process.env.NODE_ENV === 'production',
     skipNodeModulesBundle: true,
     outDir: 'dist/client',
+    format: ['cjs', 'esm'],
     clean: true,
     shims: true,
-    format: ['cjs', 'esm'],
+    banner,
   },
 ]);

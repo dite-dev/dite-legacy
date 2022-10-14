@@ -1,13 +1,10 @@
 import { cac } from 'cac';
 import exitHook from 'exit-hook';
-import fs from 'fs-extra';
 import type { Server } from 'http';
 import ora from 'ora';
 import { join } from 'path';
 import * as compiler from './compiler';
 import { resolveConfig } from './config';
-
-const { readJSONSync } = fs;
 
 export async function run(argv: string[] = process.argv) {
   const pkg = require('./../../package.json');
@@ -94,6 +91,9 @@ export async function run(argv: string[] = process.argv) {
       spinner.stop();
       const server = await createNodeApp({ config: config });
       console.log('server', server);
+      exitHook(() => {
+        server?.close();
+      });
     });
 
   cli.parse(argv);

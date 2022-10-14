@@ -32,7 +32,8 @@
     "dite": "bin/dite.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
   "scripts": {
     "build": "tsup",
