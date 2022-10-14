@@ -42,6 +42,7 @@ English | [简体中文](./README_zh-CN.md) | [Gitter](https://gitter.im/ditejs/
 Open this example on [CodeSandbox](https://codesandbox.com):
 
 [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/ditejs/dite/tree/master/examples/boilerplate)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github.com/ditejs/dite/tree/master/examples/boilerplate?title=DiteStater)
 
 ## 🧱 Contribute
 
