@@ -4,6 +4,7 @@ import fs from 'fs-extra';
 import debounce from 'lodash.debounce';
 import { dirname, join, sep } from 'path';
 import { DiteConfig } from '../config';
+import { swcPlugin } from './swc';
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -153,6 +154,7 @@ export function createServerBuild(
       bundle: true,
       mainFields: ['browser', 'module', 'main'],
       // splitting: true,
+      plugins: [swcPlugin()],
       keepNames: true,
       incremental,
       treeShaking: true,

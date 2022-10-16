@@ -1,3 +1,0 @@
-[submodule "examples/starter"]
-	path = examples/starter
-	url = git@github.com:ditejs/dite-starter.git
