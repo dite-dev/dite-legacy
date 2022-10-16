@@ -15,6 +15,7 @@
     "jest": "jest",
     "lint": "dite-scripts lint",
     "prepare": "husky install",
+    "publish:pkg": "dite-scripts publish",
     "release": "dite-scripts release",
     "test": "jest",
     "tsc:check": "tsc --noEmit",
