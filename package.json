@@ -38,7 +38,7 @@
     "@dite/react": "workspace:*",
     "@dite/vue": "workspace:*",
     "@jest/types": "^29.1.2",
-    "@pnpm/lockfile-file": "^5.3.8",
+    "@pnpm/lockfile-file": "^6.0.0",
     "@pnpm/logger": "^4.0.0",
     "@types/jest": "^29.1.2",
     "@types/node": "^17.0.45",
