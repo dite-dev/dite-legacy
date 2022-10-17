@@ -1,33 +1,11 @@
 import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'fs';
 import { join } from 'path';
+import type { DiteConfig } from '../../shared/types';
 
 import { configFiles } from '../../shared/constants';
 
-export interface DiteAdapter {
-  name: string;
-  serverEntrypoint?: string;
-  exports?: string[];
-  args?: any;
-}
-
-export interface DiteIntegration {
-  name: string;
-  hooks?: {
-    onConfigDone?: (options: {
-      config: DiteConfig;
-      setAdapter: (adapter: DiteAdapter) => void;
-    }) => void | Promise<void>;
-  };
-}
-
-export interface DiteConfig {
-  port: number;
-  serverBuildPath: string;
-  buildPath: string;
-  root: string;
-  adapter?: DiteIntegration[];
-}
+export { DiteAdapter, DiteConfig, DiteIntegration } from '../../shared/types';
 
 export function defineConfig(
   options: Partial<DiteConfig>,

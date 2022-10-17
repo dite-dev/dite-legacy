@@ -5,11 +5,11 @@
   "scripts": {
     "bootstrap": "dite-scripts bootstrap",
     "build": "dite-scripts turbo build",
-    "build:client": "dite-scripts turbo build:client",
     "build:force": "dite-scripts turbo build --no-cache",
     "clean": "dite-scripts clean",
     "cov": "jest --coverage",
     "dep:update": "pnpm up --interactive --latest --recursive",
+    "dev": "dite-scripts turbo dev",
     "format": "prettier --cache --write .",
     "preinstall": "npx only-allow pnpm",
     "jest": "jest",

@@ -44,15 +44,10 @@ interface BuildOptions extends Partial<BuildConfig> {
 
 interface WatchOptions extends BuildOptions {
   onRebuildStart?(): void;
-
   onRebuildFinish?(): void;
-
   onFileCreated?(file: string): void;
-
   onFileChanged?(file: string): void;
-
   onFileDeleted?(file: string): void;
-
   onInitialBuild?(): void;
 }
 

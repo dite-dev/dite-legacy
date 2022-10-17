@@ -4,7 +4,7 @@ import type { Server } from 'http';
 import debounce from 'lodash.debounce';
 import ora from 'ora';
 import { join } from 'path';
-import { printMemoryUsage } from '../shared/lib/printMemoryUsage';
+import { printMemoryUsage } from '../shared/lib/print-memory-usage';
 import * as compiler from './compiler';
 import { DiteConfig, resolveConfig } from './config';
 
