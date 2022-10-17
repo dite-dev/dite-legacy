@@ -1,11 +1,12 @@
 import { cac } from 'cac';
 import exitHook from 'exit-hook';
 import type { Server } from 'http';
+import debounce from 'lodash.debounce';
 import ora from 'ora';
 import { join } from 'path';
 import { printMemoryUsage } from '../shared/lib/printMemoryUsage';
 import * as compiler from './compiler';
-import { resolveConfig } from './config';
+import { DiteConfig, resolveConfig } from './config';
 
 export async function run(argv: string[] = process.argv) {
   const pkg = require('./../../package.json');
@@ -27,14 +28,16 @@ export async function run(argv: string[] = process.argv) {
 
       let server: Server | null = null;
 
-      const createServer = async () => {
+      const createServer = debounce(async () => {
         const { createServer: createNodeApp } = await import(
           `${config.serverBuildPath}?t=${Date.now()}`
         );
-        const app = await createNodeApp({ config });
+        const app = await (
+          createNodeApp as (options: { config: DiteConfig }) => Promise<any>
+        )({ config }).catch((e) => console.error(e));
         printMemoryUsage();
         return app;
-      };
+      }, 500);
       const closeWatcher = await compiler.watch(config, {
         mode: 'development',
         async onInitialBuild() {

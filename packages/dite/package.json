@@ -50,6 +50,7 @@
     "consola": "^2.15.3",
     "debug": "^4.3.4",
     "exit-hook": "^3.1.0",
+    "fast-glob": "^3.2.12",
     "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",

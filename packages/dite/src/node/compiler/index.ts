@@ -140,34 +140,32 @@ export function createServerBuild(
   config: DiteConfig,
   { mode, incremental }: Required<BuildOptions> & { incremental?: boolean },
 ) {
+  // auto externalize node_modules
+  const pkg = fs.readJSONSync(join(config.root, 'package.json'));
+
   return esbuild
     .build({
-      absWorkingDir: config.root,
-      entryPoints: { index: 'server/main.ts' },
+      absWorkingDir: join(config.root, 'server'),
+      entryPoints: ['index.ts'],
       outfile: config.serverBuildPath,
       minifySyntax: true,
       jsx: 'automatic',
+      sourceRoot: config.root,
       write: false,
       format: 'cjs',
       minify: mode === 'production',
       platform: 'node',
       bundle: true,
       mainFields: ['browser', 'module', 'main'],
-      // splitting: true,
+      splitting: false,
       plugins: [swcPlugin()],
       keepNames: true,
+      sourcemap: true,
       incremental,
       treeShaking: true,
       external: [
-        'vite',
-        'esbuild',
-        '@nestjs/microservices',
-        'class-transformer',
-        'cache-manager',
-        'class-validator',
-        '@nestjs/websockets',
-        '@nestjs/core',
-        '@nestjs/common',
+        ...Object.keys(pkg.dependencies || {}),
+        ...Object.keys(pkg.devDependencies || {}),
       ],
     })
     .then(async (build) => {
