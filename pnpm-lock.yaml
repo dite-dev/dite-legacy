@@ -236,6 +236,7 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@types/lodash': ^4.14.186
       '@types/lodash.debounce': ^4.0.6
+      '@types/mustache': ^4.2.1
       bundle-require: ^3.1.0
       cac: ^6.7.14
       chalk: ^4.1.2
@@ -248,6 +249,7 @@ importers:
       fs-extra: ^10.1.0
       lodash: ^4.17.21
       lodash.debounce: ^4.0.8
+      mustache: ^4.2.0
       ora: ^6.1.2
       picocolors: ^1.0.0
       resolve-from: ^5.0.0
@@ -267,6 +269,7 @@ importers:
       fs-extra: 10.1.0
       lodash: 4.17.21
       lodash.debounce: 4.0.8
+      mustache: 4.2.0
       ora: 6.1.2
       picocolors: 1.0.0
       resolve-from: 5.0.0
@@ -277,6 +280,7 @@ importers:
       '@types/fs-extra': 9.0.13
       '@types/lodash': 4.14.186
       '@types/lodash.debounce': 4.0.7
+      '@types/mustache': 4.2.1
       vite: 3.1.8
 
   packages/lint:
@@ -2799,6 +2803,10 @@ packages:
 
   /@types/ms/0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
+    dev: true
+
+  /@types/mustache/4.2.1:
+    resolution: {integrity: sha512-gFAlWL9Ik21nJioqjlGCnNYbf9zHi0sVbaZ/1hQEBcCEuxfLJDvz4bVJSV6v6CUaoLOz0XEIoP7mSrhJ6o237w==}
     dev: true
 
   /@types/node-fetch/2.6.2:
@@ -7893,6 +7901,11 @@ packages:
       array-union: 2.1.0
       arrify: 2.0.1
       minimatch: 3.1.2
+    dev: false
+
+  /mustache/4.2.0:
+    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
+    hasBin: true
     dev: false
 
   /mute-stream/0.0.8:
