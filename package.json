@@ -18,6 +18,7 @@
     "publish:pkg": "dite-scripts publish",
     "release": "dite-scripts release",
     "test": "jest",
+    "test:check-examples": "dite-scripts check-examples",
     "tsc:check": "tsc --noEmit",
     "version": "pnpm install && git add pnpm-lock.yaml"
   },

@@ -31,9 +31,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        OS: [ ubuntu-latest, windows-latest ]
+        OS: [ubuntu-latest, windows-latest]
         # TODO: Enable node@18!
-        NODE_VERSION: [ 14, 16 ]
+        NODE_VERSION: [14, 16]
         include:
           - OS: macos-latest
             NODE_VERSION: 14
