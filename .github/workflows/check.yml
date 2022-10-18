@@ -16,7 +16,7 @@ env:
 
 jobs:
   check:
-    name: astro check
+    name: dite check
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -30,6 +30,7 @@ jobs:
         with:
           node-version: 16
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org/'
 
       - name: Install dependencies
         run: pnpm install

@@ -5,7 +5,6 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
   FORCE_COLOR: true
-  ASTRO_TELEMETRY_DISABLED: true
 
 on:
   push:
@@ -27,16 +26,16 @@ concurrency:
 
 jobs:
   build:
-    name: 'Build: ${{ matrix.os }} (node@${{ matrix.NODE_VERSION }})'
+    name: 'Build: ${{ matrix.os }} (node@${{ matrix.node-version }})'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        OS: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
         # TODO: Enable node@18!
-        NODE_VERSION: [14, 16]
+        node-version: [14, 16]
         include:
-          - OS: macos-latest
-            NODE_VERSION: 14
+          - os: macos-latest
+            node-version: 14
       fail-fast: false
 
     steps:
@@ -48,10 +47,10 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/action-setup@v2.2.1
 
-      - name: Setup node@${{ matrix.NODE_VERSION }}
+      - name: Setup node@${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.NODE_VERSION }}
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org/'
 
