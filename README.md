@@ -12,6 +12,9 @@ English | [简体中文](./README_zh-CN.md) | [Gitter](https://gitter.im/ditejs/
   <a href="https://github.com/ditejs/dite/pulls">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
   </a>
+  <a href="https://packagephobia.com/result?p=dite">
+    <img src="https://packagephobia.com/badge?p=dite" alt="install size" />
+  </a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
   <a href="https://gitter.im/ditejs/dite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
     <img src="https://badges.gitter.im/ditejs/dite.svg" alt="gitter">
