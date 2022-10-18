@@ -1,14 +1,16 @@
 import { cac } from 'cac';
+import spawn from 'cross-spawn';
+import dotenv from 'dotenv';
 import exitHook from 'exit-hook';
-import type { Server } from 'http';
 import ora from 'ora';
 import { join } from 'path';
-import { printMemoryUsage } from '../shared/lib/print-memory-usage';
+import { treeKillSync as killProcessSync } from '../shared/lib/tree-kill';
 import * as compiler from './compiler';
-import type { DiteConfig } from './config';
 import { resolveConfig } from './config';
 
 export async function run(argv: string[] = process.argv) {
+  dotenv.config();
+
   const pkg = require('./../../package.json');
   const cli = cac('dite').version(pkg.version).help();
   const spinner = ora('dite');
@@ -26,31 +28,38 @@ export async function run(argv: string[] = process.argv) {
       });
       if (!config) return;
 
-      let server: Server | null = null;
+      let childProcessRef: any;
+      process.on(
+        'exit',
+        () => childProcessRef?.pid && killProcessSync(childProcessRef.pid),
+      );
 
-      const createServer = async () => {
-        const { createServer: createNodeApp } = await import(
-          `${config.serverBuildPath}?t=${Date.now()}`
-        );
-        const app = await (
-          createNodeApp as (options: { config: DiteConfig }) => Promise<any>
-        )({ config }).catch((e) => console.error(e));
-        printMemoryUsage();
+      const createServer = () => {
+        const app = spawn.spawn('node', [config.serverBuildPath], {
+          env: process.env,
+          stdio: 'inherit',
+          shell: true,
+        });
         return app;
       };
       const closeWatcher = await compiler.watch(config, {
         mode: 'development',
         async onInitialBuild() {
           spinner.stop();
-          server = await createServer();
+          childProcessRef = createServer();
         },
         onRebuildStart: () => {
           spinner.start();
         },
         async onRebuildFinish() {
           spinner.stop();
-          server?.close();
-          server = await createServer();
+          childProcessRef.removeAllListeners('exit');
+          childProcessRef.on('exit', () => {
+            childProcessRef = createServer();
+            childProcessRef.on('exit', () => (childProcessRef = undefined));
+          });
+          childProcessRef.stdin && childProcessRef.stdin.pause();
+          killProcessSync(childProcessRef.pid);
         },
       });
       let resolve: () => void;
