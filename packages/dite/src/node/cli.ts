@@ -1,4 +1,4 @@
-import { logger, resolveConfig } from '@dite/core';
+import { resolveConfig } from '@dite/core';
 import { cac } from 'cac';
 import spawn from 'cross-spawn';
 import dotenv from 'dotenv';
@@ -29,10 +29,6 @@ export async function run(argv: string[] = process.argv) {
       if (!config) return;
 
       let childProcessRef: any;
-      process.on(
-        'exit',
-        () => childProcessRef?.pid && killProcessSync(childProcessRef.pid),
-      );
 
       const createServer = () => {
         const app = spawn.spawn('node', [config.serverBuildPath], {
@@ -64,6 +60,7 @@ export async function run(argv: string[] = process.argv) {
       });
       let resolve: () => void;
       exitHook(() => {
+        childProcessRef?.pid && killProcessSync(childProcessRef.pid);
         resolve();
       });
       return new Promise<void>((r) => {
@@ -98,15 +95,17 @@ export async function run(argv: string[] = process.argv) {
         mode: 'production',
       });
       if (!config) return;
-      if (port) config.port = port;
-      const { createServer: createNodeApp } = await import(
-        `${config.serverBuildPath}?t=${Date.now()}`
-      );
       spinner.stop();
-      const server = await createNodeApp({ config: config });
-      logger.info('server', server);
+      const childProcessRef = spawn.spawn('node', [config.serverBuildPath], {
+        env: {
+          ...process.env,
+          PORT: String(config.port),
+        },
+        stdio: 'inherit',
+        shell: true,
+      });
       exitHook(() => {
-        server?.close();
+        childProcessRef?.pid && killProcessSync(childProcessRef.pid);
       });
     });
 
