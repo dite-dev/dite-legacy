@@ -1,5 +1,5 @@
 ---
-"@fake-scope/fake-pkg": patch
+"dite": patch
 ---
 
-feat: island
+Ensure CLI flags override function-style server config
