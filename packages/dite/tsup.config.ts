@@ -27,7 +27,6 @@ export default defineConfig([
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
-    noExternal: ['exit-hook'],
     banner,
   },
   {

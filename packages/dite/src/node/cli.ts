@@ -6,7 +6,8 @@ import ora from 'ora';
 import { join } from 'path';
 import { printMemoryUsage } from '../shared/lib/print-memory-usage';
 import * as compiler from './compiler';
-import { DiteConfig, resolveConfig } from './config';
+import type { DiteConfig } from './config';
+import { resolveConfig } from './config';
 
 export async function run(argv: string[] = process.argv) {
   const pkg = require('./../../package.json');

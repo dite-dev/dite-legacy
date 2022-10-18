@@ -7,7 +7,6 @@ export async function clean() {
   eachPkg(pkgs, ({ dir }) => {
     rimraf.sync(join(dir, 'dist'));
     rimraf.sync(join(dir, '.turbo'));
-    rimraf.sync(join(dir, 'node_modules/.cache/fastsc'));
   });
   rimraf.sync(join(process.cwd(), '.turbo'));
 }
