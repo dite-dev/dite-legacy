@@ -1,11 +1,11 @@
 import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import type { DiteConfig } from '../../shared/types';
+import type { DiteConfig } from './types';
 
-import { configFiles } from '../../shared/constants';
+import { configFiles } from './shared/constants';
 
-export { DiteAdapter, DiteConfig, DiteIntegration } from '../../shared/types';
+export { DiteAdapter, DiteConfig, DiteIntegration } from './types';
 
 export function defineConfig(
   options: Partial<DiteConfig>,

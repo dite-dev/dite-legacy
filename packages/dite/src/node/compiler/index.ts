@@ -1,10 +1,11 @@
+import type { DiteConfig } from '@dite/core';
+import { logger } from '@dite/core';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
 import debounce from 'lodash.debounce';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'path';
-import { DiteConfig } from '../config';
 import { templateDir } from '../constants/constants';
 import { swcPlugin } from './swc';
 
@@ -22,7 +23,7 @@ async function buildEverything(
   config: DiteConfig,
   options: Required<BuildOptions> & { incremental?: boolean },
 ): Promise<(esbuild.BuildResult | undefined)[]> {
-  console.log('config', config);
+  logger.wait('config', config);
   try {
     const serverBuildPromise = createServerBuild(config, options);
     const browserBuildPromise = createBrowserBuild(config, options);

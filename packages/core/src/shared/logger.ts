@@ -1,6 +1,6 @@
+import colors from 'chalk';
 import consola from 'consola';
 import makeDebug from 'debug';
-import colors from 'picocolors';
 
 export const prefixes = {
   wait: colors.cyan('wait') + '  -',

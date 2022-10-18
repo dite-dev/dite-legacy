@@ -37,23 +37,19 @@
     "test": "pnpm test"
   },
   "dependencies": {
-    "arg": "^5.0.2",
+    "bundle-require": "^3.1.0",
     "cac": "^6.7.14",
     "chalk": "^4.1.2",
     "consola": "^2.15.3",
     "debug": "^4.3.4",
     "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",
-    "ora": "^6.1.2",
-    "picocolors": "^1.0.0",
-    "semver": "^7.3.8"
+    "ora": "^6.1.2"
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^9.0.13",
-    "@types/lodash": "^4.14.186",
-    "@types/semver": "^7.3.12",
-    "es-module-lexer": "^1.0.3"
+    "@types/lodash": "^4.14.186"
   },
   "engines": {
     "node": ">=14"
