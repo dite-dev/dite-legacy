@@ -1,3 +1,4 @@
+import { logger, resolveConfig } from '@dite/core';
 import { cac } from 'cac';
 import spawn from 'cross-spawn';
 import dotenv from 'dotenv';
@@ -6,7 +7,6 @@ import ora from 'ora';
 import { join } from 'path';
 import { treeKillSync as killProcessSync } from '../shared/lib/tree-kill';
 import * as compiler from './compiler';
-import { resolveConfig } from './config';
 
 export async function run(argv: string[] = process.argv) {
   dotenv.config();
@@ -104,7 +104,7 @@ export async function run(argv: string[] = process.argv) {
       );
       spinner.stop();
       const server = await createNodeApp({ config: config });
-      console.log('server', server);
+      logger.info('server', server);
       exitHook(() => {
         server?.close();
       });

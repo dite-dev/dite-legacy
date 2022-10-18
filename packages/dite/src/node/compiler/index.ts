@@ -1,9 +1,12 @@
+import type { DiteConfig } from '@dite/core';
+import { logger } from '@dite/core';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
 import debounce from 'lodash.debounce';
+import Mustache from 'mustache';
 import { dirname, join, sep } from 'path';
-import { DiteConfig } from '../config';
+import { templateDir } from '../constants/constants';
 import { swcPlugin } from './swc';
 
 function defaultWarningHandler(message: string, key: string) {
@@ -20,7 +23,7 @@ async function buildEverything(
   config: DiteConfig,
   options: Required<BuildOptions> & { incremental?: boolean },
 ): Promise<(esbuild.BuildResult | undefined)[]> {
-  console.log('config', config);
+  logger.wait('config', config);
   try {
     const serverBuildPromise = createServerBuild(config, options);
     const browserBuildPromise = createBrowserBuild(config, options);
@@ -137,29 +140,17 @@ export function createServerBuild(
 ) {
   // auto externalize node_modules
   const pkg = fs.readJSONSync(join(config.root, 'package.json'));
-  const entryPath = join(config.root, config.buildPath, 'src/index.ts');
-  fs.ensureDirSync(dirname(entryPath));
-  fs.writeFileSync(
-    entryPath,
-    `
-import { createServer } from '${join(config.root, 'server/index.ts')}';\
-
-function getMemoryUsage() {
-  const size = 1 << 20;
-  const used = process.memoryUsage().heapUsed / size;
-  const rss = process.memoryUsage().rss / size;
-  return \`Memory Usage: \${Math.round(used * 100) / 100} MB (RSS: \${
-    Math.round(rss * 100) / 100
-  } MB)\`;
-}
-
-const config = ${JSON.stringify(config)};\
-(async () => { \
- await createServer({ config }); \
- console.info(getMemoryUsage()); \
-})(); \
-`,
+  const localeTpl = fs.readFileSync(
+    join(templateDir, 'server.mustache'),
+    'utf-8',
   );
+  const entryPath = join(config.root, config.buildPath, 'src/server.ts');
+  fs.ensureDirSync(dirname(entryPath));
+  const entryContent = Mustache.render(localeTpl, {
+    config: JSON.stringify(config),
+    serverPath: join(config.root, 'server/index.ts'),
+  });
+  fs.writeFileSync(entryPath, entryContent);
 
   return esbuild
     .build({
