@@ -1,1 +1,1 @@
-export { createServer } from './main';
+export { createServer } from './bootstrap';

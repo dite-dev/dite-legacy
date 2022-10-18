@@ -1,7 +1,6 @@
 import { cac } from 'cac';
 import exitHook from 'exit-hook';
 import type { Server } from 'http';
-import debounce from 'lodash.debounce';
 import ora from 'ora';
 import { join } from 'path';
 import { printMemoryUsage } from '../shared/lib/print-memory-usage';
@@ -29,7 +28,7 @@ export async function run(argv: string[] = process.argv) {
 
       let server: Server | null = null;
 
-      const createServer = debounce(async () => {
+      const createServer = async () => {
         const { createServer: createNodeApp } = await import(
           `${config.serverBuildPath}?t=${Date.now()}`
         );
@@ -38,7 +37,7 @@ export async function run(argv: string[] = process.argv) {
         )({ config }).catch((e) => console.error(e));
         printMemoryUsage();
         return app;
-      }, 500);
+      };
       const closeWatcher = await compiler.watch(config, {
         mode: 'development',
         async onInitialBuild() {
