@@ -45,7 +45,7 @@
     "@nestjs/core": "^9.1.4",
     "@types/compression": "^1.7.2",
     "@types/express": "^4.17.14",
-    "dite": "workspace:*",
+    "dite": "0.1.9-alpha.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.7"
   },
