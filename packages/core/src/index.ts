@@ -1,11 +1,10 @@
 import { logger } from './shared/logger';
 
-export {
-  defineConfig,
+export { defineConfig, resolveConfig, resolveUserConfig } from './config';
+export type {
   DiteAdapter,
   DiteConfig,
   DiteIntegration,
-  resolveConfig,
-  resolveUserConfig,
+  DiteUserConfig,
 } from './config';
 export { logger };
