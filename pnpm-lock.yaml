@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      '@changesets/changelog-github': 0.4.4
+      '@changesets/changelog-github': 0.4.7
       '@changesets/cli': 2.25.0
       '@dite/codemod': workspace:*
       '@dite/core': workspace:*
@@ -52,7 +52,7 @@ importers:
       vitest: ^0.24.1
       zx: 4.3.0
     dependencies:
-      '@changesets/changelog-github': 0.4.4
+      '@changesets/changelog-github': 0.4.7
       '@changesets/cli': 2.25.0
       '@dite/codemod': link:codemod
       '@dite/core': link:packages/core
@@ -483,8 +483,8 @@ packages:
       '@changesets/types': 5.2.0
     dev: false
 
-  /@changesets/changelog-github/0.4.4:
-    resolution: {integrity: sha512-htSILqCkyYtTB5/LoVKwx7GCJQGxAiBcYbfUKWiz/QoDARuM01owYtMXhV6/iytJZq/Dqqz3PjMZUNB4MphpbQ==}
+  /@changesets/changelog-github/0.4.7:
+    resolution: {integrity: sha512-UUG5sKwShs5ha1GFnayUpZNcDGWoY7F5XxhOEHS62sDPOtoHQZsG3j1nC5RxZ3M1URHA321cwVZHeXgu99Y3ew==}
     dependencies:
       '@changesets/get-github-info': 0.5.1
       '@changesets/types': 5.2.0
