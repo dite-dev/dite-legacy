@@ -12,6 +12,7 @@ function getMemoryUsage() {
 const config = {{{ config }}};
 
 (async () => {
+  config.port = process.env.PORT || config.port || 3001;
   await createServer({ config });
   console.info(getMemoryUsage());
 })();

@@ -1,60 +1,27 @@
 import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'fs';
-import { join } from 'path';
-import type { DiteConfig } from './types';
+import { isAbsolute, join } from 'path';
+import type { DiteConfig, DiteUserConfig } from './types';
 
 import { configFiles } from './shared/constants';
 
-export { DiteAdapter, DiteConfig, DiteIntegration } from './types';
+export type {
+  DiteAdapter,
+  DiteConfig,
+  DiteIntegration,
+  DiteUserConfig,
+} from './types';
 
-export function defineConfig(
-  options: Partial<DiteConfig>,
-): Partial<DiteConfig> {
-  const config: Partial<DiteConfig> = {
-    port: 3001,
-    // dir: '.',
-    // version: '',
-    ...options,
-  };
-  return config as DiteConfig;
+const defaultConfig: DiteConfig = {
+  root: process.cwd!(),
+  serverBuildPath: '',
+  port: 3001,
+  buildPath: '.dite',
+};
+
+export function defineConfig(config: DiteUserConfig): DiteUserConfig {
+  return config;
 }
-
-// function getUserConfig(configFiles: string[]) {
-//   let config = {};
-//   const files: string[] = [];
-//
-//   for (const configFile of configFiles) {
-//     if (fse.existsSync(configFile)) {
-//       register.register({
-//         implementor: esbuild,
-//       });
-//       register.clearFiles();
-//       config = lodash.merge(config, require(configFile).default);
-//       for (const file of register.getFiles()) {
-//         delete require.cache[file];
-//       }
-//       // includes the config File
-//       files.push(...register.getFiles());
-//       register.restore();
-//     } else {
-//       files.push(configFile);
-//     }
-//   }
-//   return {
-//     config: config as DiteConfig,
-//     files,
-//   };
-// }
-//
-// export function loadConfig(): Promise<DiteConfig> {
-//   const { config } = getUserConfig(
-//     getAbsFiles({
-//       files: configFiles,
-//       cwd: process.cwd(),
-//     }),
-//   );
-//   return Promise.resolve(config);
-// }
 
 export async function resolveConfig(opts: {
   root: string;
@@ -62,18 +29,22 @@ export async function resolveConfig(opts: {
   mode: 'development' | 'production';
 }) {
   const userConfig = await resolveUserConfig(opts);
-  if (!userConfig) return null;
-  const { config } = userConfig;
-  config.buildPath = '.dite';
-  config.serverBuildPath = join(
-    opts.root,
-    config.serverBuildPath ?? join(config.buildPath, 'server/index.js'),
+  const config: DiteConfig = Object.assign(
+    {},
+    defaultConfig,
+    userConfig?.config ?? {},
   );
+  config.serverBuildPath = isAbsolute(config.serverBuildPath)
+    ? config.serverBuildPath
+    : join(
+        opts.root,
+        config.serverBuildPath || join(config.buildPath, 'server/index.js'),
+      );
   config.root = opts.root;
   return config as DiteConfig;
 }
 
-async function loadConfigFromFile<T = Partial<DiteConfig>>(
+export async function loadConfigFromFile<T = Partial<DiteConfig>>(
   cwd: string,
 ): Promise<{
   path: string;
@@ -100,6 +71,5 @@ export async function resolveUserConfig(opts: {
   mode: 'development' | 'production';
 }) {
   const { root } = opts;
-  const result = await loadConfigFromFile(root);
-  return result;
+  return await loadConfigFromFile(root);
 }

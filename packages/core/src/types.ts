@@ -22,3 +22,5 @@ export interface DiteConfig {
   root: string;
   adapter?: DiteIntegration[];
 }
+
+export type DiteUserConfig = Partial<DiteConfig>;

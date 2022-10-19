@@ -11,5 +11,4 @@ export const PATHS = {
   PACKAGES: join(ROOT, './packages'),
   EXAMPLES: join(ROOT, './examples'),
   LERNA_CONFIG: join(ROOT, './lerna.json'),
-  JEST_CONFIG: join(ROOT, './jest.config.ts'),
 };
