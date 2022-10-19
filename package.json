@@ -7,7 +7,7 @@
     "build": "dite-scripts turbo build",
     "build:force": "dite-scripts turbo build --no-cache",
     "clean": "dite-scripts clean",
-    "coverage": "vitest run --coverage",
+    "cov": "vitest run --coverage",
     "dep:update": "pnpm up --interactive --latest --recursive",
     "dev": "dite-scripts turbo dev",
     "format": "prettier --cache --write .",
