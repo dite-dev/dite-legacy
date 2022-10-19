@@ -1,7 +1,6 @@
 node_modules
 dist
 *.d.ts
-compiled
 *.js
 fixtures
 *.md
@@ -13,5 +12,4 @@ lerna.json
 **/__temp__/**
 tests/**/out/**
 pnpm-lock.yaml
-*.test.ts
 coverage/**

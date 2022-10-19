@@ -1,6 +1,7 @@
 import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'fs';
 import { isAbsolute, join } from 'path';
+import { isValidServerMode, ServerMode } from './config/server-mode';
 import type { DiteConfig, DiteUserConfig } from './types';
 
 import { configFiles } from './shared/constants';
@@ -14,8 +15,7 @@ export type {
 
 interface ResolveConfigOptions {
   root: string;
-  command: 'serve' | 'build';
-  mode: 'development' | 'production';
+  mode: ServerMode;
 }
 
 const defaultConfig: DiteConfig = {
@@ -53,6 +53,21 @@ export async function loadConfigFromFile<T = Partial<DiteConfig>>(
 export async function resolveUserConfig(opts: ResolveConfigOptions) {
   const { root } = opts;
   return await loadConfigFromFile(root);
+}
+
+export async function readConfig(
+  diteRoot?: string,
+  serverMode = ServerMode.Production,
+) {
+  if (!diteRoot) {
+    diteRoot = process.env.DITE_ROOT || process.cwd!();
+  }
+
+  if (!isValidServerMode(serverMode)) {
+    throw new Error(`Invalid server mode "${serverMode}"`);
+  }
+
+  return resolveConfig({ root: diteRoot, mode: serverMode });
 }
 
 export function generateConfig(

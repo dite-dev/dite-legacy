@@ -6,7 +6,7 @@ import fs from 'fs-extra';
 import debounce from 'lodash.debounce';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'path';
-import { templateDir } from '../constants/constants';
+import { templateDir } from '../../shared/constants';
 import { swcPlugin } from './swc';
 
 function defaultWarningHandler(message: string, key: string) {
