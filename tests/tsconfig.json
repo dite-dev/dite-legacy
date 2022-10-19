@@ -9,7 +9,12 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "jsx": "react",
-    "types": ["@types/jest", "jest-playwright-preset", "expect-playwright"],
+    "types": [
+      "@types/jest",
+      "jest-playwright-preset",
+      "expect-playwright",
+      "vitest/globals"
+    ],
     "paths": {}
   }
 }
