@@ -14,3 +14,4 @@ lerna.json
 tests/**/out/**
 pnpm-lock.yaml
 *.test.ts
+coverage/**

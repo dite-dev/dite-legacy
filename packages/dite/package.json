@@ -56,8 +56,7 @@
     "lodash.debounce": "^4.0.8",
     "mustache": "^4.2.0",
     "ora": "^6.1.2",
-    "resolve-from": "^5.0.0",
-    "tiny-glob": "^0.2.9"
+    "resolve-from": "^5.0.0"
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.0",

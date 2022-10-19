@@ -48,8 +48,12 @@ async function main() {
     version.includes('-rc.')
   ) {
     tag = 'next';
+  } else if (version.includes('-canary.')) {
+    tag = 'canary';
+  } else if (!/^\d+\.\d+(?:\.\d+)?$/.test(version)) {
+    console.warn(`version ${version} is not valid`);
+    return;
   }
-  if (version.includes('-canary.')) tag = 'canary';
 
   const examples = fs.readdirSync(examplesDir).filter((dir) => {
     return (
