@@ -1,5 +1,12 @@
 import { describe, expect, test, it } from 'vitest'
-import { defineConfig, resolveUserConfig, resolveConfig, loadConfigFromFile, DiteConfig } from './config'
+import {
+  defineConfig,
+  resolveUserConfig,
+  resolveConfig,
+  loadConfigFromFile,
+  generateConfig,
+  DiteUserConfig
+} from '../src/config'
 import path from 'path'
 
 describe('config', () => {
@@ -7,7 +14,7 @@ describe('config', () => {
     port: 3001,
   }
 
-  const configPath = path.join(__dirname, '../test/fixtures/config')
+  const configPath = path.join(__dirname, './fixtures/config')
 
   test('defineConfig', () => {
     expect(defineConfig(config)).toEqual(config)
@@ -63,6 +70,17 @@ describe('config', () => {
       serverBuildPath: path.join(configPath, '.dite/server/index.js'),
       port: 3001,
       buildPath: '.dite'
+    })
+  })
+
+  test('generate config', async () => {
+    const userConfig: DiteUserConfig = {
+      serverBuildPath: path.join(process.cwd(), 'dist/server'),
+    }
+    const root = process.cwd()
+    expect(generateConfig({ config: userConfig, path: root, dependencies: []  }, { root, mode: 'development', command: 'build'}) ).toMatchObject({
+      port: 3001,
+      serverBuildPath: userConfig.serverBuildPath
     })
   })
 })

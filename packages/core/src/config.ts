@@ -12,6 +12,12 @@ export type {
   DiteUserConfig,
 } from './types';
 
+interface ResolveConfigOptions {
+  root: string;
+  command: 'serve' | 'build';
+  mode: 'development' | 'production';
+}
+
 const defaultConfig: DiteConfig = {
   root: process.cwd!(),
   serverBuildPath: '',
@@ -21,27 +27,6 @@ const defaultConfig: DiteConfig = {
 
 export function defineConfig(config: DiteUserConfig): DiteUserConfig {
   return config;
-}
-
-export async function resolveConfig(opts: {
-  root: string;
-  command: 'serve' | 'build';
-  mode: 'development' | 'production';
-}) {
-  const userConfig = await resolveUserConfig(opts);
-  const config: DiteConfig = Object.assign(
-    {},
-    defaultConfig,
-    userConfig?.config ?? {},
-  );
-  config.serverBuildPath = isAbsolute(config.serverBuildPath)
-    ? config.serverBuildPath
-    : join(
-        opts.root,
-        config.serverBuildPath || join(config.buildPath, 'server/index.js'),
-      );
-  config.root = opts.root;
-  return config as DiteConfig;
 }
 
 export async function loadConfigFromFile<T = Partial<DiteConfig>>(
@@ -65,11 +50,31 @@ export async function loadConfigFromFile<T = Partial<DiteConfig>>(
   return null;
 }
 
-export async function resolveUserConfig(opts: {
-  root: string;
-  command: 'serve' | 'build';
-  mode: 'development' | 'production';
-}) {
+export async function resolveUserConfig(opts: ResolveConfigOptions) {
   const { root } = opts;
   return await loadConfigFromFile(root);
+}
+
+export function generateConfig(
+  userConfig: Awaited<ReturnType<typeof resolveUserConfig>>,
+  opts: ResolveConfigOptions,
+) {
+  const config: DiteConfig = Object.assign(
+    {},
+    defaultConfig,
+    userConfig?.config ?? {},
+  );
+  config.serverBuildPath = isAbsolute(config.serverBuildPath)
+    ? config.serverBuildPath
+    : join(
+        opts.root,
+        config.serverBuildPath || join(config.buildPath, 'server/index.js'),
+      );
+  config.root = opts.root;
+  return config as DiteConfig;
+}
+
+export async function resolveConfig(opts: ResolveConfigOptions) {
+  const userConfig = await resolveUserConfig(opts);
+  return generateConfig(userConfig, opts);
 }
