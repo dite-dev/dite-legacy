@@ -5,7 +5,7 @@ importers:
   .:
     specifiers:
       '@changesets/changelog-github': 0.4.4
-      '@changesets/cli': 2.23.0
+      '@changesets/cli': 2.25.0
       '@dite/codemod': workspace:*
       '@dite/core': workspace:*
       '@dite/lint': workspace:*
@@ -53,7 +53,7 @@ importers:
       zx: 4.3.0
     dependencies:
       '@changesets/changelog-github': 0.4.4
-      '@changesets/cli': 2.23.0
+      '@changesets/cli': 2.25.0
       '@dite/codemod': link:codemod
       '@dite/core': link:packages/core
       '@dite/lint': link:packages/lint
@@ -493,8 +493,8 @@ packages:
       - encoding
     dev: false
 
-  /@changesets/cli/2.23.0:
-    resolution: {integrity: sha512-Gi3tMi0Vr6eNd8GX6q73tbOm9XOzGfuLEm4PYVeWG2neg5DlRGNOjYwrFULJ/An3N9MHtHn4r5h1Qvnju9Ijug==}
+  /@changesets/cli/2.25.0:
+    resolution: {integrity: sha512-Svu5KD2enurVHGEEzCRlaojrHjVYgF9srmMP9VQSy9c1TspX6C9lDPpulsSNIjYY9BuU/oiWpjBgR7RI9eQiAA==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.19.4
@@ -510,7 +510,7 @@ packages:
       '@changesets/pre': 1.0.13
       '@changesets/read': 0.5.8
       '@changesets/types': 5.2.0
-      '@changesets/write': 0.1.9
+      '@changesets/write': 0.2.1
       '@manypkg/get-packages': 1.1.3
       '@types/is-ci': 3.0.0
       '@types/semver': 6.2.3
@@ -640,14 +640,14 @@ packages:
     resolution: {integrity: sha512-km/66KOqJC+eicZXsm2oq8A8bVTSpkZJ60iPV/Nl5Z5c7p9kk8xxh6XGRTlnludHldxOOfudhnDN2qPxtHmXzA==}
     dev: false
 
-  /@changesets/write/0.1.9:
-    resolution: {integrity: sha512-E90ZrsrfJVOOQaP3Mm5Xd7uDwBAqq3z5paVEavTHKA8wxi7NAL8CmjgbGxSFuiP7ubnJA2BuHlrdE4z86voGOg==}
+  /@changesets/write/0.2.1:
+    resolution: {integrity: sha512-KUd49nt2fnYdGixIqTi1yVE1nAoZYUMdtB3jBfp77IMqjZ65hrmZE5HdccDlTeClZN0420ffpnfET3zzeY8pdw==}
     dependencies:
       '@babel/runtime': 7.19.4
       '@changesets/types': 5.2.0
       fs-extra: 7.0.1
       human-id: 1.0.2
-      prettier: 1.19.1
+      prettier: 2.7.1
     dev: false
 
   /@esbuild-kit/cjs-loader/2.4.0:
@@ -2270,7 +2270,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 17.0.45
+      '@types/node': 18.11.0
     dev: false
 
   /@types/glob/8.0.0:
@@ -7260,12 +7260,6 @@ packages:
     dependencies:
       prettier: 2.7.1
       sort-package-json: 1.57.0
-    dev: false
-
-  /prettier/1.19.1:
-    resolution: {integrity: sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==}
-    engines: {node: '>=4'}
-    hasBin: true
     dev: false
 
   /prettier/2.7.1:
