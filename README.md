@@ -15,6 +15,9 @@ English | [简体中文](./README_zh-CN.md) | [Gitter](https://gitter.im/ditejs/
   <a href="https://github.com/ditejs/dite">
     <img src="https://img.shields.io/badge/node-%3E=14-green.svg?color=4dc71f" alt="Node" />
   </a>
+  <a href="https://codecov.io/gh/ditejs/dite" > 
+    <img src="https://codecov.io/gh/ditejs/dite/branch/master/graph/badge.svg" alt="codecov"/> 
+  </a>
   <a href="https://packagephobia.com/result?p=dite">
     <img src="https://packagephobia.com/badge?p=dite" alt="install size" />
   </a>
