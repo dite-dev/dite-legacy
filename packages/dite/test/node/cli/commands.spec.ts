@@ -1,5 +1,5 @@
 import path from 'path';
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 import * as commands from '../../../src/node/cli/commands';
 
 describe('node/cli/commands.ts', () => {
@@ -8,6 +8,10 @@ describe('node/cli/commands.ts', () => {
     it('should be success', async () => {
       const closeWatcher = await commands.watch(rootPath);
       expect(closeWatcher).toBeDefined();
+
+      afterAll(() => {
+        closeWatcher();
+      });
     });
   });
 });
