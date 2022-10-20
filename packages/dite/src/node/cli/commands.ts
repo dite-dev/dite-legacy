@@ -1,7 +1,9 @@
 import { readConfig, ServerMode } from '@dite/core';
+import { fork } from 'child_process';
 import { spawn } from 'cross-spawn';
 import exitHook from 'exit-hook';
 import ora from 'ora';
+import { getMemoryUsage } from '../../shared/lib/print-memory-usage';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
 import * as compiler from '../compiler';
 
@@ -13,24 +15,37 @@ export async function watch(diteRoot: string) {
   const spinner = ora('dite');
 
   const createServer = () => {
-    return spawn('node', [config.serverBuildPath], {
+    const childRef = fork(config.serverBuildPath, {
       env: process.env,
       stdio: 'inherit',
-      shell: true,
     });
+
+    childRef.on('message', (msg) => {
+      if (msg === 'dite:ready') {
+        spinner.stop();
+        console.info(getMemoryUsage());
+        console.log('Server is ready.');
+      }
+    });
+
+    childRef.on('error', () => {
+      spinner.stop();
+    });
+
+    return childRef;
   };
 
   const closeWatcher = await compiler.watch(config, {
     mode: 'development',
     async onInitialBuild() {
-      spinner.stop();
+      // spinner.stop();
       childProcessRef = createServer();
     },
     onRebuildStart: () => {
       spinner.start();
     },
     async onRebuildFinish() {
-      spinner.stop();
+      // spinner.stop();
       childProcessRef.removeAllListeners('exit');
       childProcessRef.on('exit', () => {
         childProcessRef = createServer();

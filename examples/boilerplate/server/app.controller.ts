@@ -10,13 +10,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  // @Get('/api2')
-  // getHello2(): string {
-  //   return this.appService.getHello();
-  // }
-
   @Get('/')
   async home(): Promise<string> {
-    return Promise.resolve('hello ditejs');
+    return Promise.resolve('Hello DiteJs.');
   }
 }
