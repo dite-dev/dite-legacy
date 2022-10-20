@@ -88,16 +88,33 @@ describe('src/config', () => {
   });
 
   describe('readConfig', () => {
+    let config;
     it('should be success', async () => {
-      const config = await readConfig(configPath);
-      expect(config).toBeDefined();
-      expect(config.port).toEqual(3001);
+      config = await readConfig(configPath);
+
       expect(config).toMatchObject({
         root: configPath,
         serverBuildPath: path.join(configPath, '.dite/server/index.js'),
         port: 3001,
         buildPath: '.dite',
       });
+
+      process.env.DITE_ROOT = configPath;
+
+      config = await readConfig();
+
+      expect(config).toMatchObject({
+        root: configPath,
+        serverBuildPath: path.join(configPath, '.dite/server/index.js'),
+        port: 3001,
+        buildPath: '.dite',
+      });
+    });
+
+    it('should throw error if invalid server mode', async () => {
+      await expect(
+        readConfig(configPath, 'invalid' as any),
+      ).rejects.toThrowError();
     });
   });
 });
