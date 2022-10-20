@@ -15,4 +15,5 @@ const config = {{{ config }}};
   config.port = process.env.PORT || config.port || 3001;
   await createServer({ config });
   console.info(getMemoryUsage());
+  process.send('dite:ready');
 })();
