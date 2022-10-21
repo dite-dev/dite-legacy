@@ -1,6 +1,5 @@
 import type { Format } from 'tsup';
 import { defineConfig } from 'tsup';
-import pkg from './package.json';
 
 const banner = ({ format }: { format: Format }) => ({
   js:
@@ -9,6 +8,9 @@ const banner = ({ format }: { format: Format }) => ({
         `.meta.url);`
       : '',
 });
+
+const isDev = process.env.NODE_ENV !== 'production';
+const isProd = !isDev;
 
 export default defineConfig([
   {
@@ -22,13 +24,11 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     splitting: true,
-    minify: process.env.NODE_ENV === 'production',
-    skipNodeModulesBundle: true,
+    minify: isProd,
     outDir: 'dist/node',
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
-    external: [...Object.keys(pkg.dependencies)],
     banner,
   },
   {
@@ -40,7 +40,7 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     splitting: true,
-    minify: process.env.NODE_ENV === 'production',
+    minify: isProd,
     skipNodeModulesBundle: true,
     outDir: 'dist/client',
     format: ['cjs', 'esm'],
