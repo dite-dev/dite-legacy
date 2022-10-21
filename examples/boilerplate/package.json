@@ -8,11 +8,11 @@
     "start": "dite start"
   },
   "dependencies": {
-    "@dite/nest": "0.1.10-canary.0",
-    "@dite/node": "0.1.10-canary.0",
+    "@dite/nest": "0.1.10-canary.1",
+    "@dite/node": "0.1.10-canary.1",
     "@nestjs/common": "^9.1.4",
     "@nestjs/core": "^9.1.4",
-    "dite": "0.1.10-canary.0",
+    "dite": "0.1.10-canary.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reflect-metadata": "^0.1.13",
