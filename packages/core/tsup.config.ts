@@ -1,4 +1,9 @@
+import fs from 'fs-extra';
 import { defineConfig } from 'tsup';
+
+const pkg = fs.readJSONSync('package.json');
+const isDev = process.argv.slice(2).includes('--watch');
+const isProd = !isDev;
 
 export default defineConfig([
   {
@@ -11,7 +16,7 @@ export default defineConfig([
     sourcemap: true,
     splitting: true,
     minify: process.env.NODE_ENV === 'production',
-    skipNodeModulesBundle: true,
+    skipNodeModulesBundle: isDev,
     outDir: 'dist',
     clean: true,
     shims: true,
