@@ -138,8 +138,8 @@ importers:
 
   examples/boilerplate:
     specifiers:
-      '@dite/nest': 0.1.9
-      '@dite/node': 0.1.9
+      '@dite/nest': 0.1.10-canary.0
+      '@dite/node': 0.1.10-canary.0
       '@nestjs/common': ^9.1.4
       '@nestjs/core': ^9.1.4
       '@types/express': ^4.17.14
@@ -148,7 +148,7 @@ importers:
       '@types/react-dom': ^18.0.6
       '@typescript-eslint/eslint-plugin': ^5.40.0
       '@typescript-eslint/parser': ^5.40.0
-      dite: 0.1.9
+      dite: 0.1.10-canary.0
       eslint: ^8.25.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-prettier: ^4.2.1
@@ -217,13 +217,13 @@ importers:
 
   packages/create-dite:
     specifiers:
-      dite: 0.1.9
+      dite: 0.1.10-canary.0
     dependencies:
       dite: link:../dite
 
   packages/dite:
     specifiers:
-      '@dite/core': 0.1.9
+      '@dite/core': 0.1.10-canary.0
       '@swc/core': ^1.3.8
       '@types/cross-spawn': ^6.0.0
       '@types/debug': ^4.1.7
@@ -300,11 +300,11 @@ importers:
       typescript: ^4.8.4
       vite: ^3.0.0
     dependencies:
-      '@dite/nest': link:../../../../nest
-      '@dite/node': link:../../../../node
+      '@dite/nest': 0.1.9_x7tb6a6vwtc4vlxjw2lcry27p4
+      '@dite/node': 0.1.9_x7tb6a6vwtc4vlxjw2lcry27p4
       '@nestjs/common': 9.1.4_yzt46al3aifnexifjjdb4dxxja
       '@nestjs/core': 9.1.4_6fl4rox5ofo3yz2h7ukpny327a
-      dite: link:../../..
+      dite: 0.1.9_esbuild@0.15.11+vite@3.1.8
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       reflect-metadata: 0.1.13
@@ -329,7 +329,7 @@ importers:
 
   packages/nest:
     specifiers:
-      '@dite/node': 0.1.9
+      '@dite/node': 0.1.10-canary.0
       '@nestjs/common': ^9.1.4
       '@nestjs/core': ^9.1.4
       '@nestjs/platform-express': ^9.1.4
@@ -359,7 +359,7 @@ importers:
       '@types/compression': ^1.7.2
       '@types/express': ^4.17.14
       compression: ^1.7.4
-      dite: 0.1.9
+      dite: 0.1.10-canary.0
       reflect-metadata: ^0.1.13
       rxjs: ^7.5.7
     dependencies:
@@ -698,6 +698,65 @@ packages:
       fs-extra: 7.0.1
       human-id: 1.0.2
       prettier: 2.7.1
+    dev: false
+
+  /@dite/core/0.1.9_esbuild@0.15.11:
+    resolution: {integrity: sha512-PUtyMyyzHbsdkzB0GrxVKYTc21O+X6iOKGRwaCg/uYUcj2RgRvOXrEPW77/2nOH+T0TdatGUzQ9cJH22LSvL3w==}
+    engines: {node: '>=14'}
+    dependencies:
+      bundle-require: 3.1.0_esbuild@0.15.11
+      cac: 6.7.14
+      chalk: 4.1.2
+      consola: 2.15.3
+      debug: 4.3.4
+      fs-extra: 10.1.0
+      lodash: 4.17.21
+      ora: 6.1.2
+    transitivePeerDependencies:
+      - esbuild
+      - supports-color
+    dev: false
+
+  /@dite/nest/0.1.9_x7tb6a6vwtc4vlxjw2lcry27p4:
+    resolution: {integrity: sha512-eFMhRdgiwPPGJuhgekzP3r3pXbHFaQyfXCBO+mcDzkvsAadpxaLnS23GkHilXglGEopWf/S73rqU+r0BLiMTwQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@nestjs/common': ^8.4.7 || ^9.0.0
+      '@nestjs/core': ^8.4.7 || ^9.0.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.5.5
+    dependencies:
+      '@dite/node': 0.1.9_x7tb6a6vwtc4vlxjw2lcry27p4
+      '@nestjs/common': 9.1.4_yzt46al3aifnexifjjdb4dxxja
+      '@nestjs/core': 9.1.4_6fl4rox5ofo3yz2h7ukpny327a
+      compression: 1.7.4
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+    transitivePeerDependencies:
+      - dite
+      - supports-color
+    dev: false
+
+  /@dite/node/0.1.9_x7tb6a6vwtc4vlxjw2lcry27p4:
+    resolution: {integrity: sha512-k2x9lynVX1hY5nBxwV7BDfBQrNIJ7Gp0jXFgXBn4wjNIBMI8cHbP14h6Pjo8U2nYCWToWWLzXbuhScd8/MbOTQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@nestjs/common': ^8.4.7 || ^9.0.0
+      '@nestjs/core': ^8.4.7 || ^9.0.0
+      dite: '*'
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.5.5
+    dependencies:
+      '@nestjs/common': 9.1.4_yzt46al3aifnexifjjdb4dxxja
+      '@nestjs/core': 9.1.4_6fl4rox5ofo3yz2h7ukpny327a
+      '@nestjs/platform-express': 9.1.4_osbqhc5bxkxr7p4xaw5wgzf7bi
+      '@parcel/css': 1.14.0
+      compression: 1.7.4
+      dite: 0.1.9_esbuild@0.15.11+vite@3.1.8
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@esbuild-kit/cjs-loader/2.4.0:
@@ -3898,6 +3957,36 @@ packages:
     dependencies:
       path-type: 4.0.0
 
+  /dite/0.1.9_esbuild@0.15.11+vite@3.1.8:
+    resolution: {integrity: sha512-+Y7m3M88oxEu6Mk86pSm05kuKGcBkdX75dGLAOtoM3KWgrS+tVkXpuzrJExN2J97SdNaT215eTWBeCcwecLXeQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+    peerDependencies:
+      vite: ^3.0.0
+    dependencies:
+      '@dite/core': 0.1.9_esbuild@0.15.11
+      '@swc/core': 1.3.8
+      bundle-require: 3.1.0_esbuild@0.15.11
+      cac: 6.7.14
+      chalk: 4.1.2
+      chokidar: 3.5.3
+      consola: 2.15.3
+      cross-spawn: 7.0.3
+      debug: 4.3.4
+      dotenv: 16.0.3
+      exit-hook: 3.1.0
+      fs-extra: 10.1.0
+      lodash: 4.17.21
+      lodash.debounce: 4.0.8
+      mustache: 4.2.0
+      ora: 6.1.2
+      resolve-from: 5.0.0
+      vite: 3.1.8
+    transitivePeerDependencies:
+      - esbuild
+      - supports-color
+    dev: false
+
   /doctrine/2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
@@ -3933,7 +4022,6 @@ packages:
   /dotenv/16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
-    dev: true
 
   /dotenv/8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
@@ -4555,7 +4643,6 @@ packages:
   /exit-hook/3.1.0:
     resolution: {integrity: sha512-KiF9SiLZsKhSutx4V9sG2InYb0v1+2sfKlGD18et8/aGg2m4ij6MJbUHy/cnqJf4ncE7rWjqchE2SNIi4Lgg4A==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dev: true
 
   /express/4.18.1:
     resolution: {integrity: sha512-zZBcOX9TfehHQhtupq57OF8lFZ3UZi08Y97dwFCkD8p9d/d2Y3M+ykKcwaMDEL+4qyUolgBDX6AblpR3fL212Q==}
@@ -6465,7 +6552,6 @@ packages:
   /mustache/4.2.0:
     resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
     hasBin: true
-    dev: true
 
   /mute-stream/0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
