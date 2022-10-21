@@ -1,6 +1,10 @@
+import fs from 'fs-extra';
 import type { Format } from 'tsup';
 import { defineConfig } from 'tsup';
-import pkg from './package.json';
+
+const pkg = fs.readJSONSync('package.json');
+const isDev = process.argv.slice(2).includes('--watch');
+const isProd = !isDev;
 
 const banner = ({ format }: { format: Format }) => ({
   js:
@@ -10,9 +14,6 @@ const banner = ({ format }: { format: Format }) => ({
       : '',
 });
 
-const isDev = process.env.NODE_ENV !== 'production';
-const isProd = !isDev;
-
 export default defineConfig([
   {
     entry: {
@@ -21,6 +22,7 @@ export default defineConfig([
       index: 'src/node/index.ts',
     },
     minifyIdentifiers: false,
+    skipNodeModulesBundle: isDev,
     bundle: true,
     dts: true,
     sourcemap: true,
@@ -31,10 +33,10 @@ export default defineConfig([
     shims: true,
     format: ['cjs', 'esm'],
     external: [
-      'esbuild',
+      // 'esbuild',
       '@swc/core',
       ...Object.keys(pkg.dependencies),
-      ...(isProd ? [] : Object.keys(pkg.devDependencies)),
+      // ...(isProd ? [] : Object.keys(pkg.devDependencies)),
     ],
     banner,
   },
