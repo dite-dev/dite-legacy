@@ -1,5 +1,6 @@
 import type { Format } from 'tsup';
 import { defineConfig } from 'tsup';
+import pkg from './package.json';
 
 const banner = ({ format }: { format: Format }) => ({
   js:
@@ -27,6 +28,7 @@ export default defineConfig([
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
+    external: [...Object.keys(pkg.dependencies)],
     banner,
   },
   {
