@@ -1,6 +1,6 @@
 {
   "name": "create-dite",
-  "version": "0.1.9",
+  "version": "0.1.10-canary.2",
   "description": "create-dite",
   "keywords": [
     "dite"
@@ -29,7 +29,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "dite": "0.1.9"
+    "dite": "0.1.10-canary.2"
   },
   "engines": {
     "node": ">=14"

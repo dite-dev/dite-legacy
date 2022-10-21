@@ -1,5 +1,7 @@
-import { DiteConfig, readConfig } from '@dite/core';
-import { Worker } from 'worker_threads';
+import { DiteConfig, logger, readConfig } from '@dite/core';
+import type { ChildProcess } from 'child_process';
+import { fork } from 'child_process';
+import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
 
 export interface DiteServer {
   config: DiteConfig;
@@ -23,29 +25,51 @@ export interface DiteServer {
   restart(forceOptimize?: boolean): Promise<void>;
 }
 
-export async function createServer(diteRoot: string) {
-  const config = await readConfig(diteRoot);
+export async function createServer(
+  diteRoot: string,
+  cb?: (server: DiteServer) => void,
+): Promise<DiteServer>;
+export async function createServer(
+  config: DiteConfig,
+  cb?: (server: DiteServer) => void,
+): Promise<DiteServer>;
+export async function createServer(
+  opt: any,
+  cb?: (server: DiteServer) => void,
+) {
+  const config = typeof opt === 'string' ? await readConfig(opt) : opt;
 
-  let serverWorker: Worker | undefined;
+  let childRef: ChildProcess | undefined;
+  // const spinner = ora('dite');
 
-  const makeWorker = () => {
-    const worker = new Worker(config.serverBuildPath, {
+  const createChildProcess = ({ port }: { port?: number } = {}) => {
+    const ref = fork(config.serverBuildPath, {
       env: {
         ...process.env,
-        PORT: String(config.port),
+        PORT: String(port ?? config.port),
       },
+      stdio: 'inherit',
     });
-    worker.on('exit', () => {
-      console.log('worker exit');
+
+    ref.on('message', (msg) => {
+      if (msg === 'dite:ready') {
+        // spinner.stop();
+        logger.ready('Server is ready.');
+      }
     });
-    return worker;
+
+    ref.on('error', () => {
+      // spinner.stop();
+    });
+    return ref;
   };
 
   const server: DiteServer = {
     config,
-    listen: async (port = 3000, isRestart = false) => {
+    listen: async (port: number, isRestart = false) => {
       if (!isRestart) {
-        serverWorker = makeWorker();
+        childRef = createChildProcess({ port });
+        childRef.on('exit', () => (childRef = undefined));
       }
       return Promise.resolve(server);
     },
@@ -53,20 +77,24 @@ export async function createServer(diteRoot: string) {
       console.log('111');
     },
     close: async () => {
-      await serverWorker?.terminate();
+      childRef?.pid && killProcessSync(childRef.pid);
     },
     restart: async () => {
-      if (serverWorker) {
-        serverWorker.removeAllListeners('exit');
-        serverWorker.on('exit', () => {
-          serverWorker = makeWorker();
-          serverWorker.on('exit', () => (serverWorker = undefined));
+      if (childRef) {
+        childRef.removeAllListeners('exit');
+        childRef.on('exit', () => {
+          childRef = createChildProcess();
+          childRef.on('exit', () => (childRef = undefined));
         });
-        serverWorker.stdin && serverWorker.stdin.destroy();
-        await serverWorker.terminate();
+        childRef.stdin && childRef.stdin.destroy();
+        childRef.pid && killProcessSync(childRef.pid);
+      } else {
+        childRef = createChildProcess();
+        childRef.on('exit', () => (childRef = undefined));
       }
     },
   };
 
+  cb?.(server);
   return server;
 }

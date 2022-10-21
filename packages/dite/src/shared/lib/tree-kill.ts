@@ -59,7 +59,11 @@ const killPid = (pid: number, signal?: string | number) => {
   }
 };
 
-export function treeKillSync(pid: number, signal?: string | number): void {
+export function treeKillSync(
+  id: number | string,
+  signal?: string | number,
+): void {
+  const pid: number = typeof id === 'string' ? Number(id) : id;
   if (process.platform === 'win32') {
     execSync('taskkill /pid ' + pid + ' /T /F');
     return;

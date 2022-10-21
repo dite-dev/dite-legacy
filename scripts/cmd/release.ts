@@ -95,7 +95,7 @@ async function main() {
   // git push
   await $`git push origin ${branch} --tags`;
 
-  const innersPkgs: string[] = [];
+  const innersPkgs: string[] = ['@dite/codemod'];
   const publishPkgs = pkgs.filter(
     // do not publish
     (pkg) => !innersPkgs.includes(pkg),

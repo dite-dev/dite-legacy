@@ -2,11 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "module": "esnext",
     "target": "esnext",
     "outDir": "./dist",
     "lib": ["esnext", "dom"],
     "rootDir": "./src"
   },
-  "include": ["src"]
+  "include": ["src", "package.json"]
 }

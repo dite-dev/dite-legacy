@@ -1,6 +1,6 @@
 {
   "name": "dite",
-  "version": "0.1.9",
+  "version": "0.1.10-canary.2",
   "description": "dite",
   "keywords": [
     "dite"
@@ -40,9 +40,19 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/core": "0.1.9",
+    "@dite/core": "0.1.10-canary.2",
     "@swc/core": "^1.3.8",
-    "bundle-require": "^3.1.0",
+    "esbuild": "^0.15.10",
+    "lodash.debounce": "^4.0.8",
+    "resolve-from": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.0",
+    "@types/debug": "^4.1.7",
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash": "^4.14.186",
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/mustache": "^4.2.1",
     "cac": "^6.7.14",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.1",
@@ -53,18 +63,8 @@
     "exit-hook": "^3.1.0",
     "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",
-    "lodash.debounce": "^4.0.8",
     "mustache": "^4.2.0",
     "ora": "^6.1.2",
-    "resolve-from": "^5.0.0"
-  },
-  "devDependencies": {
-    "@types/cross-spawn": "^6.0.0",
-    "@types/debug": "^4.1.7",
-    "@types/fs-extra": "^9.0.13",
-    "@types/lodash": "^4.14.186",
-    "@types/lodash.debounce": "^4.0.6",
-    "@types/mustache": "^4.2.1",
     "vite": "^3.0.0"
   },
   "peerDependencies": {
