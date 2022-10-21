@@ -28,16 +28,12 @@ export default defineConfig([
     sourcemap: true,
     splitting: true,
     minify: isProd,
+    treeshake: true,
     outDir: 'dist/node',
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
-    external: [
-      // 'esbuild',
-      '@swc/core',
-      ...Object.keys(pkg.dependencies),
-      // ...(isProd ? [] : Object.keys(pkg.devDependencies)),
-    ],
+    external: ['@swc/core'],
     banner,
   },
   {
