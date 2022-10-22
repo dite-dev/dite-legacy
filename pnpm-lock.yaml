@@ -219,6 +219,7 @@ importers:
   packages/dite:
     specifiers:
       '@dite/core': 0.1.13-alpha.0
+      '@swc/core': ^1.3.8
       '@types/cross-spawn': ^6.0.0
       '@types/debug': ^4.1.7
       '@types/fs-extra': ^9.0.13
@@ -246,6 +247,7 @@ importers:
       esbuild: 0.15.11
       lodash.debounce: 4.0.8
     devDependencies:
+      '@swc/core': 1.3.8
       '@types/cross-spawn': 6.0.2
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.13
@@ -2149,7 +2151,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@swc/wasm': 1.2.122
-    dev: false
     optional: true
 
   /@swc/core-android-arm64/1.3.8:
@@ -2160,7 +2161,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@swc/wasm': 1.2.130
-    dev: false
     optional: true
 
   /@swc/core-darwin-arm64/1.3.8:
@@ -2169,7 +2169,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-darwin-x64/1.3.8:
@@ -2178,7 +2177,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-freebsd-x64/1.3.8:
@@ -2189,7 +2187,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@swc/wasm': 1.2.130
-    dev: false
     optional: true
 
   /@swc/core-linux-arm-gnueabihf/1.3.8:
@@ -2200,7 +2197,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@swc/wasm': 1.2.130
-    dev: false
     optional: true
 
   /@swc/core-linux-arm64-gnu/1.3.8:
@@ -2209,7 +2205,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-arm64-musl/1.3.8:
@@ -2218,7 +2213,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-x64-gnu/1.3.8:
@@ -2227,7 +2221,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-x64-musl/1.3.8:
@@ -2236,7 +2229,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-win32-arm64-msvc/1.3.8:
@@ -2247,7 +2239,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@swc/wasm': 1.2.130
-    dev: false
     optional: true
 
   /@swc/core-win32-ia32-msvc/1.3.8:
@@ -2258,7 +2249,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@swc/wasm': 1.2.130
-    dev: false
     optional: true
 
   /@swc/core-win32-x64-msvc/1.3.8:
@@ -2267,7 +2257,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core/1.3.8:
@@ -2289,18 +2278,15 @@ packages:
       '@swc/core-win32-arm64-msvc': 1.3.8
       '@swc/core-win32-ia32-msvc': 1.3.8
       '@swc/core-win32-x64-msvc': 1.3.8
-    dev: false
 
   /@swc/wasm/1.2.122:
     resolution: {integrity: sha512-sM1VCWQxmNhFtdxME+8UXNyPNhxNu7zdb6ikWpz0YKAQQFRGT5ThZgJrubEpah335SUToNg8pkdDF7ibVCjxbQ==}
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/wasm/1.2.130:
     resolution: {integrity: sha512-rNcJsBxS70+pv8YUWwf5fRlWX6JoY/HJc25HD/F8m6Kv7XhJdqPPMhyX6TKkUBPAG7TWlZYoxa+rHAjPy4Cj3Q==}
     requiresBuild: true
-    dev: false
     optional: true
 
   /@tootallnate/once/2.0.0:
