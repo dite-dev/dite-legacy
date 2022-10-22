@@ -1,17 +1,16 @@
-import path from 'path';
-import { afterAll, describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import * as commands from '../../../src/node/cli/commands';
 
 describe('node/cli/commands.ts', () => {
-  const rootPath = path.join(__dirname, '../../fixtures/demo-app');
+  // const rootPath = path.join(__dirname, '../../fixtures/demo-app');
   describe('watch', () => {
     it('should be success', async () => {
-      const closeWatcher = await commands.watch(rootPath);
-      expect(closeWatcher).toBeDefined();
-
-      afterAll(() => {
-        closeWatcher();
-      });
+      // const CommandBuildSpy = vi.spyOn(commands, 'build');
+      // await commands.build(rootPath);
+      // expect(CommandBuildSpy).toHaveBeenCalled();
+      const CommandHelpSpy = vi.spyOn(commands, 'help');
+      await commands.help();
+      expect(CommandHelpSpy).toHaveBeenCalled();
     });
   });
 });

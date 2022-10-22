@@ -42,3 +42,7 @@ export async function start(diteRoot: string, opts: { port?: number }) {
     server.close();
   });
 }
+
+export async function help() {
+  console.log('help');
+}
