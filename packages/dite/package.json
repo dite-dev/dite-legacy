@@ -1,6 +1,6 @@
 {
   "name": "dite",
-  "version": "0.1.13-alpha.1",
+  "version": "0.1.13-alpha.2",
   "description": "dite",
   "keywords": [
     "dite"
@@ -40,7 +40,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/core": "0.1.13-alpha.1",
+    "@dite/core": "0.1.13-alpha.2",
     "cac": "^6.7.14",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.1",
