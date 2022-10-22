@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 import { run } from '../dist/node/cli.js'
 
-// disable since it's conflicted with typescript cjs + dynamic import
-// require('v8-compile-cache');
-
 // patch console for debug
 // ref: https://remysharp.com/2014/05/23/where-is-that-console-log
 if (process.env.DEBUG_CONSOLE) {

@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { isValidServerMode, ServerMode } from '../../src/config/server-mode';
+import {
+  isValidServerMode,
+  ServerMode,
+} from '../../../src/node/config/server-mode';
 
 describe('src/config/server-mode', () => {
   describe('ServerMode', () => {

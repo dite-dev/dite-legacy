@@ -2,12 +2,17 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "resolveJsonModule": true,
     "module": "esnext",
     "target": "esnext",
     "outDir": "./dist",
-    "lib": ["esnext", "dom"],
-    "rootDir": "./src"
+    "lib": ["esnext", "dom"]
   },
-  "include": ["src", "package.json"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/**/*.spec.ts",
+    "test/**/*",
+    "bin",
+    "templates"
+  ]
 }

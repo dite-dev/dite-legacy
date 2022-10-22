@@ -1,7 +1,6 @@
 ---
 'dite': major
 '@dite/node': major
-'@dite/core': major
 'create-dite': major
 '@dite/lint': major
 '@dite/nest': major

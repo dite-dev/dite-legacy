@@ -1,13 +1,10 @@
 import { cac } from 'cac';
-import dotenv from 'dotenv';
 import exitHook from 'exit-hook';
-import * as commands from './cli/commands';
+import { VERSION } from '../node/constants';
+import * as commands from './commands';
 
 export async function run(argv: string[] = process.argv) {
-  dotenv.config();
-
-  const pkg = require('./../../package.json');
-  const cli = cac('dite').version(pkg.version).help();
+  const cli = cac('dite').version(VERSION).help();
 
   cli
     .command('dev [root]', 'start dev server')

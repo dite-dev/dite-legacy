@@ -5,14 +5,13 @@ import type { JscConfig } from '@swc/wasm';
 import type { Plugin } from 'esbuild';
 import fs from 'fs';
 import path from 'path';
-import { localRequire } from '../utils';
 
 export const swcPlugin = (): Plugin => {
   return {
     name: 'swc',
 
     async setup(build) {
-      const swc: typeof import('@swc/wasm') = localRequire('@swc/wasm');
+      const swc: typeof import('@swc/wasm') = await import('@swc/wasm');
 
       if (!swc) {
         console.warn(

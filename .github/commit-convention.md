@@ -2,7 +2,7 @@
 
 > This is adapted from [Angular's commit convention](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular).
 
-#### TL;DR:
+#### TL;DR
 
 Messages must be matched by the following regex:
 
@@ -14,13 +14,13 @@ Messages must be matched by the following regex:
 
 Appears under "Features" header, `theme` subheader:
 
-```
+```md
 feat(theme): add home page feature
 ```
 
 Appears under "Bug Fixes" header, `theme` subheader, with a link to issue #28:
 
-```
+```md
 fix(theme): remove underline on sidebar hover style
 
 close #28
@@ -28,7 +28,7 @@ close #28
 
 Appears under "Performance Improvements" header, and under "Breaking Changes" with the breaking change explanation:
 
-```
+```md
 perf: improve store getters performance by removing 'foo' option
 
 BREAKING CHANGE: The 'foo' option has been removed.
@@ -36,7 +36,7 @@ BREAKING CHANGE: The 'foo' option has been removed.
 
 The following commit and commit `667ecc1` do not appear in the changelog if they are under the same release. If not, the revert commit appears under the "Reverts" header.
 
-```
+```md
 revert: feat(theme): add home page feature
 
 This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
@@ -46,7 +46,7 @@ This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
 
 A commit message consists of a **header**, **body** and **footer**. The header has a **type**, **scope** and **subject**:
 
-```
+```html
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
@@ -58,7 +58,7 @@ The **header** is mandatory and the **scope** of the header is optional.
 
 ### Revert
 
-If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body, it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
+If the commit reverts a previous commit, it should begin with `revert:`, followed by the header of the reverted commit. In the body, it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
 
 ### Type
 

@@ -1,17 +1,17 @@
 import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'fs';
 import { isAbsolute, join } from 'path';
+import type { DiteConfig, DiteUserConfig } from '../shared/types';
 import { isValidServerMode, ServerMode } from './config/server-mode';
-import type { DiteConfig, DiteUserConfig } from './types';
 
-import { configFiles } from './shared/constants';
+import { configFiles } from '../shared/constants/config';
 
 export type {
   DiteAdapter,
   DiteConfig,
   DiteIntegration,
   DiteUserConfig,
-} from './types';
+} from '../shared/types';
 
 interface ResolveConfigOptions {
   root: string;

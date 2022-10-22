@@ -1,13 +1,16 @@
-import type { DiteConfig } from '@dite/core';
-import { logger } from '@dite/core';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
-import fs from 'fs-extra';
 import debounce from 'lodash.debounce';
+import { createRequire } from 'module';
 import Mustache from 'mustache';
-import { dirname, join, sep } from 'path';
+import fs from 'node:fs';
+import { dirname, join, sep } from 'node:path';
 import { templateDir } from '../../shared/constants';
+import { logger } from '../../shared/logger';
+import type { DiteConfig } from '../config';
 import { swcPlugin } from './swc';
+
+const __require = createRequire(import.meta.url);
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -23,8 +26,8 @@ async function buildEverything(
   config: DiteConfig,
   options: Required<BuildOptions> & { incremental?: boolean },
 ): Promise<(esbuild.BuildResult | undefined)[]> {
-  logger.wait('config', config);
   try {
+    logger.debug('config', config);
     const serverBuildPromise = createServerBuild(config, options);
     const browserBuildPromise = createBrowserBuild(config, options);
 
@@ -134,53 +137,52 @@ export async function watch(
   };
 }
 
-export function createServerBuild(
+export async function createServerBuild(
   config: DiteConfig,
   { mode, incremental }: Required<BuildOptions> & { incremental?: boolean },
 ) {
   // auto externalize node_modules
-  const pkg = fs.readJSONSync(join(config.root, 'package.json'));
+  const pkg = JSON.parse(
+    fs.readFileSync(join(config.root, 'package.json'), 'utf8'),
+  );
   const localeTpl = fs.readFileSync(
     join(templateDir, 'server.mustache'),
     'utf-8',
   );
   const entryPath = join(config.root, config.buildPath, 'src/server.ts');
-  fs.ensureDirSync(dirname(entryPath));
+  fs.mkdirSync(dirname(entryPath), { recursive: true });
   const entryContent = Mustache.render(localeTpl, {
     config: JSON.stringify(config),
     serverPath: join(config.root, 'server/index.ts'),
   });
   fs.writeFileSync(entryPath, entryContent);
 
-  return esbuild
-    .build({
-      absWorkingDir: join(config.root, 'server'),
-      entryPoints: [entryPath],
-      outfile: config.serverBuildPath,
-      minifySyntax: true,
-      jsx: 'automatic',
-      sourceRoot: config.root,
-      write: false,
-      format: 'cjs',
-      minify: mode === 'production',
-      platform: 'node',
-      bundle: true,
-      mainFields: ['browser', 'module', 'main'],
-      splitting: false,
-      plugins: [swcPlugin()],
-      keepNames: true,
-      sourcemap: true,
-      incremental,
-      treeShaking: true,
-      external: [
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.devDependencies || {}),
-      ],
-    })
-    .then(async (build) => {
-      await writeServerBuildResult(config, { mode }, build.outputFiles);
-      return build;
-    });
+  const build = await esbuild.build({
+    absWorkingDir: join(config.root, 'server'),
+    entryPoints: [entryPath],
+    outfile: config.serverBuildPath,
+    minifySyntax: true,
+    jsx: 'automatic',
+    sourceRoot: config.root,
+    write: false,
+    format: 'cjs',
+    minify: mode === 'production',
+    platform: 'node',
+    bundle: true,
+    mainFields: ['browser', 'module', 'main'],
+    splitting: false,
+    plugins: [swcPlugin()],
+    keepNames: true,
+    sourcemap: true,
+    incremental,
+    treeShaking: true,
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.devDependencies || {}),
+    ],
+  });
+  await writeServerBuildResult(config, { mode }, build.outputFiles);
+  return build;
 }
 
 export function createBrowserBuild(
@@ -233,12 +235,12 @@ export async function writeServerBuildResult(
 ) {
   if (!outputFiles) return;
 
-  await fs.ensureDir(dirname(config.serverBuildPath));
+  fs.mkdirSync(dirname(config.serverBuildPath), { recursive: true });
   for (const file of outputFiles) {
-    await fs.ensureDir(dirname(file.path));
+    fs.mkdirSync(dirname(file.path), { recursive: true });
     if (file.path.endsWith('.js')) {
       if (mode === 'development') {
-        delete require.cache[file.path];
+        delete __require.cache[file.path];
       }
       // fix sourceMappingURL to be relative to current path instead of /build
       const filename = file.path.substring(file.path.lastIndexOf(sep) + 1);
@@ -246,15 +248,15 @@ export async function writeServerBuildResult(
       const pattern = `(//# sourceMappingURL=)(.*)${escapedFilename}`;
       let contents = Buffer.from(file.contents).toString('utf-8');
       contents = contents.replace(new RegExp(pattern), `$1${filename}`);
-      await fs.writeFile(file.path, contents);
+      fs.writeFileSync(file.path, contents);
     } else if (file.path.endsWith('.map')) {
       // remove route: prefix from source filenames so breakpoints work
       let contents = Buffer.from(file.contents).toString('utf-8');
       contents = contents.replace(/"route:/gm, '"');
-      await fs.writeFile(file.path, contents);
+      fs.writeFileSync(file.path, contents);
     } else {
-      await fs.ensureDir(dirname(file.path));
-      await fs.writeFile(file.path, file.contents);
+      fs.mkdirSync(dirname(file.path), { recursive: true });
+      fs.writeFileSync(file.path, file.contents);
     }
   }
 }

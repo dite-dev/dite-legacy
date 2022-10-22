@@ -1,8 +1,9 @@
-import { readConfig, ServerMode } from '@dite/core';
 import exitHook from 'exit-hook';
 import ora from 'ora';
-import * as compiler from '../compiler';
-import { createServer } from '../server';
+import * as compiler from '../node/compiler';
+import { readConfig } from '../node/config';
+import { ServerMode } from '../node/config/server-mode';
+import { createServer } from '../node/server';
 
 export async function watch(diteRoot: string) {
   const config = await readConfig(diteRoot);

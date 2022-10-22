@@ -1,7 +1,8 @@
-import { DiteConfig, logger, readConfig } from '@dite/core';
 import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
+import { logger } from '../../shared/logger';
+import { DiteConfig, readConfig } from '../config';
 
 export interface DiteServer {
   config: DiteConfig;
