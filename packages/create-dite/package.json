@@ -1,6 +1,6 @@
 {
   "name": "create-dite",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "create-dite",
   "keywords": [
     "dite"
@@ -29,7 +29,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "dite": "0.1.14"
+    "dite": "0.1.15"
   },
   "engines": {
     "node": ">=14"
