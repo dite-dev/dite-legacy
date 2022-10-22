@@ -1,7 +1,7 @@
 /**
  * Use SWC to emit decorator metadata
  */
-import { JscConfig } from '@swc/core';
+import type { JscConfig } from '@swc/core';
 import { Plugin } from 'esbuild';
 import path from 'path';
 import { localRequire } from '../utils';

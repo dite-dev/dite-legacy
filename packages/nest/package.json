@@ -1,6 +1,6 @@
 {
   "name": "@dite/nest",
-  "version": "0.1.12",
+  "version": "0.1.13-alpha.2",
   "description": "@dite/server",
   "keywords": [
     "dite"
@@ -25,7 +25,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/node": "0.1.12",
+    "@dite/node": "0.1.13-alpha.2",
     "compression": "^1.7.4"
   },
   "devDependencies": {

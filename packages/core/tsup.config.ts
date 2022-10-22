@@ -1,9 +1,17 @@
 import fs from 'fs-extra';
-import { defineConfig } from 'tsup';
+import { defineConfig, Format } from 'tsup';
 
 const pkg = fs.readJSONSync('package.json');
 const isDev = process.argv.slice(2).includes('--watch');
 const isProd = !isDev;
+
+const banner = ({ format }: { format: Format }) => ({
+  js:
+    format === 'esm'
+      ? `import {createRequire as __createRequire} from 'module';var require = __createRequire(import` +
+        `.meta.url);`
+      : '',
+});
 
 export default defineConfig([
   {
@@ -16,10 +24,11 @@ export default defineConfig([
     sourcemap: true,
     splitting: true,
     minify: process.env.NODE_ENV === 'production',
-    skipNodeModulesBundle: isDev,
+    skipNodeModulesBundle: true,
     outDir: 'dist',
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
+    banner,
   },
 ]);

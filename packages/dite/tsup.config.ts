@@ -22,7 +22,7 @@ export default defineConfig([
       index: 'src/node/index.ts',
     },
     minifyIdentifiers: false,
-    skipNodeModulesBundle: isDev,
+    skipNodeModulesBundle: true,
     bundle: true,
     dts: true,
     sourcemap: true,
@@ -33,7 +33,7 @@ export default defineConfig([
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
-    external: ['@swc/core'],
+    // external: [...Object.keys(pkg.dependencies)],
     banner,
   },
   {
