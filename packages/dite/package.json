@@ -1,6 +1,6 @@
 {
   "name": "dite",
-  "version": "0.1.12",
+  "version": "0.1.13-alpha.0",
   "description": "dite",
   "keywords": [
     "dite"
@@ -40,7 +40,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/core": "0.1.12",
+    "@dite/core": "0.1.13-alpha.0",
     "esbuild": "^0.15.10",
     "lodash.debounce": "^4.0.8"
   },
