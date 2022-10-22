@@ -1,8 +1,9 @@
 /**
  * Use SWC to emit decorator metadata
  */
-import type { JscConfig } from '@swc/core';
-import { Plugin } from 'esbuild';
+import type { JscConfig } from '@swc/wasm';
+import type { Plugin } from 'esbuild';
+import fs from 'fs';
 import path from 'path';
 import { localRequire } from '../utils';
 
@@ -10,8 +11,8 @@ export const swcPlugin = (): Plugin => {
   return {
     name: 'swc',
 
-    setup(build) {
-      const swc: typeof import('@swc/core') = localRequire('@swc/core');
+    async setup(build) {
+      const swc: typeof import('@swc/wasm') = localRequire('@swc/wasm');
 
       if (!swc) {
         console.warn(
@@ -40,7 +41,9 @@ export const swcPlugin = (): Plugin => {
           target: 'es2022',
         };
 
-        const result = await swc.transformFile(args.path, {
+        const fileContent = fs.readFileSync(args.path, 'utf-8');
+
+        const result = await swc.transformSync(fileContent, {
           jsc,
           sourceMaps: true,
           configFile: false,
