@@ -33,7 +33,7 @@ export default defineConfig([
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
-    external: ['@swc/core'],
+    external: [...Object.keys(pkg.dependencies)],
     banner,
   },
   {
