@@ -36,15 +36,17 @@
     "dev": "pnpm build --watch",
     "test": "pnpm test"
   },
-  "devDependencies": {
-    "@types/debug": "^4.1.7",
-    "@types/fs-extra": "^9.0.13",
-    "@types/lodash": "^4.14.186",
+  "dependencies": {
     "bundle-require": "^3.1.0",
     "chalk": "^4.1.2",
     "consola": "^2.15.3",
     "debug": "^4.3.4",
     "fs-extra": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash": "^4.14.186"
   },
   "engines": {
     "node": ">=14"

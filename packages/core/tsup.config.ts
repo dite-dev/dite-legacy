@@ -18,7 +18,7 @@ export default defineConfig([
     entry: {
       index: 'src/index.ts',
     },
-    minifyIdentifiers: false,
+    minifyIdentifiers: isProd,
     bundle: true,
     dts: true,
     sourcemap: true,
