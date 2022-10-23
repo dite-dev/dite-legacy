@@ -6,7 +6,6 @@ describe('node/logger', () => {
     const infoSpy = vi.spyOn(logger, 'info');
     logger.info('hello');
     expect(infoSpy).toHaveBeenCalledWith('hello');
-    expect(infoSpy).toHaveBeenCalled();
 
     const waitSpy = vi.spyOn(logger, 'wait');
     logger.wait('hello');
@@ -27,5 +26,9 @@ describe('node/logger', () => {
     const fatalSpy = vi.spyOn(logger, 'fatal');
     logger.fatal('hello');
     expect(fatalSpy).toHaveBeenCalled();
+
+    const eventSpy = vi.spyOn(logger, 'event');
+    logger.event('hello');
+    expect(eventSpy).toHaveBeenCalled();
   });
 });
