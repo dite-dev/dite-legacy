@@ -67,7 +67,6 @@ async function main() {
       pkg,
       version,
       deps: [
-        '@dite/core',
         '@dite/nest',
         '@dite/node',
         '@dite/runtime',

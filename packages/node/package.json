@@ -52,7 +52,7 @@
   "peerDependencies": {
     "@nestjs/common": "^8.4.7 || ^9.0.0",
     "@nestjs/core": "^8.4.7 || ^9.0.0",
-    "dite": "*",
+    "dite": "0.1.16",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5"
   },
