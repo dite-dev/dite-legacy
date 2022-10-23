@@ -10,7 +10,7 @@ import {
 } from '../../src/node/config';
 import { ServerMode } from '../../src/node/config/server-mode';
 
-import path from 'path';
+import path from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname;
 

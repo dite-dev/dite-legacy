@@ -22,7 +22,6 @@ const cliConfig: Options = {
   clean: !isWatch,
   shims: true,
   format: ['esm'],
-  noExternal: ['bundle-require'],
 };
 
 export default defineConfig([

@@ -39,8 +39,9 @@ export async function loadConfigFromFile<T = Partial<DiteConfig>>(
   const filepath = configFiles
     .map((configFile) => join(cwd, configFile))
     .find((p) => existsSync(p));
+  console.log('filepath', filepath);
   if (filepath) {
-    const config = await bundleRequire({ filepath });
+    const config = await bundleRequire({ filepath, format: 'esm' });
     return {
       path: filepath,
       config: (config.mod.dite || config.mod.default || config.mod) as T,
