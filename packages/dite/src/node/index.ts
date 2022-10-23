@@ -1,4 +1,4 @@
-import type { DiteAdapter, DiteConfig, DiteIntegration } from '@dite/core';
-import { defineConfig } from '@dite/core';
+import type { DiteAdapter, DiteConfig, DiteIntegration } from '../core/config';
+import { defineConfig } from '../core/config';
 
 export { defineConfig, DiteConfig, DiteIntegration, DiteAdapter };

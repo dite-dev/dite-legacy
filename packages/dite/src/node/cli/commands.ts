@@ -1,6 +1,7 @@
-import { readConfig, ServerMode } from '@dite/core';
 import exitHook from 'exit-hook';
 import ora from 'ora';
+import { readConfig } from '../../core/config';
+import { ServerMode } from '../../core/config/server-mode';
 import * as compiler from '../compiler';
 import { createServer } from '../server';
 

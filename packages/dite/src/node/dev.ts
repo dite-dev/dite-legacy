@@ -1,4 +1,4 @@
-import { logger } from '@dite/core';
+import { logger } from './logger';
 
 export async function createDevServer(root: string) {
   // Write your code here

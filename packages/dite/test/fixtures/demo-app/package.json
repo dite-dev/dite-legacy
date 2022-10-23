@@ -8,11 +8,11 @@
     "start": "dite start"
   },
   "dependencies": {
-    "@dite/nest": "0.1.9",
-    "@dite/node": "0.1.9",
+    "@dite/nest": "workspace:*",
+    "@dite/node": "workspace:*",
     "@nestjs/common": "^9.1.4",
     "@nestjs/core": "^9.1.4",
-    "dite": "0.1.9",
+    "dite": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reflect-metadata": "^0.1.13",

@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { isValidServerMode, ServerMode } from '../../src/config/server-mode';
+import {
+  isValidServerMode,
+  ServerMode,
+} from '../../../src/core/config/server-mode';
 
-describe('src/config/server-mode', () => {
+describe('core/config/server-mode', () => {
   describe('ServerMode', () => {
     it('should be success', () => {
       expect(ServerMode.Development).toEqual('development');

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { DiteUserConfig } from '../src/config';
+import type { DiteUserConfig } from '../../src/core/config';
 import {
   defineConfig,
   generateConfig,
@@ -7,8 +7,8 @@ import {
   readConfig,
   resolveConfig,
   resolveUserConfig,
-} from '../src/config';
-import { ServerMode } from '../src/config/server-mode';
+} from '../../src/core/config';
+import { ServerMode } from '../../src/core/config/server-mode';
 
 import path from 'path';
 
@@ -17,7 +17,7 @@ describe('src/config', () => {
     port: 3001,
   };
 
-  const configPath = path.join(__dirname, './fixtures/config');
+  const configPath = path.join(__dirname, '../fixtures/config');
 
   describe('defineConfig', () => {
     it('should return the config', () => {

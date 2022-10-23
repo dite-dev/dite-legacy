@@ -1,5 +1,3 @@
-import type { DiteConfig } from '@dite/core';
-import { logger } from '@dite/core';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
@@ -7,6 +5,8 @@ import debounce from 'lodash.debounce';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'path';
 import { templateDir } from '../../shared/constants';
+import type { DiteConfig } from '../../shared/types';
+import { logger } from '../logger';
 import { swcPlugin } from './swc';
 
 function defaultWarningHandler(message: string, key: string) {
@@ -23,8 +23,8 @@ async function buildEverything(
   config: DiteConfig,
   options: Required<BuildOptions> & { incremental?: boolean },
 ): Promise<(esbuild.BuildResult | undefined)[]> {
-  logger.wait('config', config);
   try {
+    logger.debug('config', config);
     const serverBuildPromise = createServerBuild(config, options);
     const browserBuildPromise = createBrowserBuild(config, options);
 

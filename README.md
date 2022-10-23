@@ -15,8 +15,8 @@ English | [简体中文](./README_zh-CN.md) | [Gitter](https://gitter.im/ditejs/
   <a href="https://github.com/ditejs/dite">
     <img src="https://img.shields.io/badge/node-%3E=14-green.svg?color=4dc71f" alt="Node" />
   </a>
-  <a href="https://codecov.io/gh/ditejs/dite" > 
-    <img src="https://codecov.io/gh/ditejs/dite/branch/master/graph/badge.svg" alt="codecov"/> 
+  <a href="https://codecov.io/gh/ditejs/dite" >
+    <img src="https://codecov.io/gh/ditejs/dite/branch/master/graph/badge.svg" alt="codecov"/>
   </a>
   <a href="https://packagephobia.com/result?p=dite">
     <img src="https://packagephobia.com/badge?p=dite" alt="install size" />
@@ -28,6 +28,7 @@ English | [简体中文](./README_zh-CN.md) | [Gitter](https://gitter.im/ditejs/
 </p>
 
 ## 🚀 Features
+
 - 🔋 **SSR Friendly**
 
 ## 🦄 Usage
@@ -38,13 +39,11 @@ English | [简体中文](./README_zh-CN.md) | [Gitter](https://gitter.im/ditejs/
 
 | Package                                   | Version (click for changelogs)                                                                                |
 |-------------------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| [create-dite](packages/create-dite)       | [![create-vite version](https://badgen.net/npm/v/create-dite)](packages/create-dite/CHANGELOG.md)             |
 | [dite](packages/dite)                     | [![dite version](https://badgen.net/npm/v/dite)](packages/dite/CHANGELOG.md)                                  |
-| [@dite/core](packages/core)               | [![@dite/core version](https://badgen.net/npm/v/@dite/core)](packages/core/CHANGELOG.md)                      |
+| [create-dite](packages/create-dite)       | [![create-vite version](https://badgen.net/npm/v/create-dite)](packages/create-dite/CHANGELOG.md)             |
 | [@dite/node](packages/node)               | [![@dite/node version](https://badgen.net/npm/v/@dite/node)](packages/node/CHANGELOG.md)                      |
 | [@dite/nest](packages/nest)               | [![@dite/nest version](https://badgen.net/npm/v/@dite/nest)](packages/nest/CHANGELOG.md)                      |
 | [@dite/react](packages/react)             | [![@dite/react version](https://badgen.net/npm/v/@dite/react)](packages/react/CHANGELOG.md)                   |
-
 
 ## 🌈 Preview
 

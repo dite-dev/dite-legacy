@@ -20,12 +20,12 @@
     ".": {
       "types": "./dist/node/index.d.ts",
       "import": "./dist/node/index.js",
-      "require": "./dist/node/index.cjs"
+      "require": "./dist/node/index.js"
     },
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
-  "main": "dist/node/index.cjs",
+  "main": "dist/node/index.js",
   "module": "dist/node/index.js",
   "types": "dist/node/index.d.ts",
   "bin": {
@@ -41,8 +41,8 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/core": "0.1.16",
     "@swc/wasm": "^1.3.0",
+    "bundle-require": "^3.1.0",
     "cac": "^6.7.14",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.1",

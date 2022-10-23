@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strict": true,
+    "target": "ESNext",
+    "jsx": "react"
+  },
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/fixtures",
+    "**/dist",
+    "**/*.test.ts"
+  ]
+}
