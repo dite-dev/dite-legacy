@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { DiteUserConfig } from '../../src/node/config';
 import {
   defineConfig,
+  findConfigFile,
   generateConfig,
   loadConfigFromFile,
   readConfig,
@@ -24,6 +25,13 @@ describe('src/config', () => {
   describe('defineConfig', () => {
     it('should return the config', () => {
       expect(defineConfig(config)).toEqual(config);
+    });
+  });
+
+  describe('findConfigFile', () => {
+    it('should return config file path', () => {
+      const filepath = findConfigFile(configPath);
+      expect(filepath).toEqual(path.join(configPath, '.diterc.ts'));
     });
   });
 

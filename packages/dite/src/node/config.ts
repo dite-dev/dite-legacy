@@ -1,5 +1,4 @@
 import { bundleRequire } from 'bundle-require';
-import { existsSync } from 'fs';
 import { isAbsolute, join } from 'path';
 import type { DiteConfig, DiteUserConfig } from '../shared/types';
 import { isValidServerMode, ServerMode } from './config/server-mode';
@@ -29,6 +28,13 @@ export function defineConfig(config: DiteUserConfig): DiteUserConfig {
   return config;
 }
 
+export function findConfigFile(cwd: string) {
+  const filepath = configFiles.map((configFile) => join(cwd, configFile));
+  // .find((p) => existsSync(p));
+  console.log('filepath', filepath);
+  return filepath as unknown as string;
+}
+
 export async function loadConfigFromFile<T = Partial<DiteConfig>>(
   cwd: string,
 ): Promise<{
@@ -36,10 +42,7 @@ export async function loadConfigFromFile<T = Partial<DiteConfig>>(
   config: T;
   dependencies: string[];
 } | null> {
-  const filepath = configFiles
-    .map((configFile) => join(cwd, configFile))
-    .find((p) => existsSync(p));
-  console.log('filepath', filepath);
+  const filepath = findConfigFile(cwd);
   if (filepath) {
     const config = await bundleRequire({ filepath, format: 'esm' });
     return {
