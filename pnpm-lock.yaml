@@ -7,7 +7,6 @@ importers:
       '@changesets/changelog-github': 0.4.7
       '@changesets/cli': 2.25.0
       '@dite/codemod': workspace:*
-      '@dite/core': workspace:*
       '@dite/lint': workspace:*
       '@dite/nest': workspace:*
       '@dite/node': workspace:*
@@ -56,7 +55,6 @@ importers:
       '@changesets/changelog-github': 0.4.7
       '@changesets/cli': 2.25.0
       '@dite/codemod': link:codemod
-      '@dite/core': link:packages/core
       '@dite/lint': link:packages/lint
       '@dite/nest': link:packages/nest
       '@dite/node': link:packages/node
@@ -186,30 +184,6 @@ importers:
       prettier: 2.7.1
       tsconfig-paths: 4.1.0
       typescript: 4.8.4
-
-  packages/core:
-    specifiers:
-      '@types/debug': ^4.1.7
-      '@types/fs-extra': ^9.0.13
-      '@types/lodash': ^4.14.186
-      bundle-require: ^3.1.0
-      chalk: ^4.1.2
-      consola: ^2.15.3
-      debug: ^4.3.4
-      fs-extra: ^10.1.0
-    dependencies:
-      bundle-require: 3.1.0_esbuild@0.15.11
-      chalk: 4.1.2
-      consola: 2.15.3
-      debug: 4.3.4
-      fs-extra: 10.1.0
-    devDependencies:
-      '@types/debug': 4.1.7
-      '@types/fs-extra': 9.0.13
-      '@types/lodash': 4.14.186
-
-  packages/core/test/fixtures/config:
-    specifiers: {}
 
   packages/create-dite:
     specifiers:
