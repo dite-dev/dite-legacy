@@ -39,8 +39,8 @@ English | [简体中文](./README_zh-CN.md) | [Gitter](https://gitter.im/ditejs/
 
 | Package                                   | Version (click for changelogs)                                                                                |
 |-------------------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| [create-dite](packages/create-dite)       | [![create-vite version](https://badgen.net/npm/v/create-dite)](packages/create-dite/CHANGELOG.md)             |
 | [dite](packages/dite)                     | [![dite version](https://badgen.net/npm/v/dite)](packages/dite/CHANGELOG.md)                                  |
+| [create-dite](packages/create-dite)       | [![create-vite version](https://badgen.net/npm/v/create-dite)](packages/create-dite/CHANGELOG.md)             |
 | [@dite/node](packages/node)               | [![@dite/node version](https://badgen.net/npm/v/@dite/node)](packages/node/CHANGELOG.md)                      |
 | [@dite/nest](packages/nest)               | [![@dite/nest version](https://badgen.net/npm/v/@dite/nest)](packages/nest/CHANGELOG.md)                      |
 | [@dite/react](packages/react)             | [![@dite/react version](https://badgen.net/npm/v/@dite/react)](packages/react/CHANGELOG.md)                   |
