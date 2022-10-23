@@ -1,6 +1,6 @@
 import { bundleRequire } from 'bundle-require';
-import { existsSync } from 'fs';
-import { isAbsolute, join } from 'path';
+import { existsSync } from 'node:fs';
+import { isAbsolute, join } from 'node:path';
 import type { DiteConfig, DiteUserConfig } from '../shared/types';
 import { isValidServerMode, ServerMode } from './config/server-mode';
 

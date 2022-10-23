@@ -10,7 +10,7 @@ import {
 } from '../../src/core/config';
 import { ServerMode } from '../../src/core/config/server-mode';
 
-import path from 'path';
+import path from 'node:path';
 
 describe('src/config', () => {
   const config = {

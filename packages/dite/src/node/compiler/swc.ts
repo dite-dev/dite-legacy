@@ -3,8 +3,8 @@
  */
 import type { JscConfig } from '@swc/wasm';
 import type { Plugin } from 'esbuild';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { localRequire } from '../utils';
 
 export const swcPlugin = (): Plugin => {

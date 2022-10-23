@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { run } from '../dist/node/cli.js'
+import { run } from '../dist/cli/index.js'
 
 // disable since it's conflicted with typescript cjs + dynamic import
 // require('v8-compile-cache');

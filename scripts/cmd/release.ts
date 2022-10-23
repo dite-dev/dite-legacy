@@ -3,7 +3,6 @@ import { join } from 'path';
 import 'zx/globals';
 import { examplesDir } from '../internal/const';
 import { getPkgs } from '../utils';
-// import { clean } from './clean';
 
 function setDepsVersion(opts: {
   deps: string[];

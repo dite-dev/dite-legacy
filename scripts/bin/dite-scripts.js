@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const { join } = require('path')
-const { existsSync } = require('fs')
+const { join } = require('node:path')
+const { existsSync } = require('node:fs')
 const { sync } = require('cross-spawn')
 const chalk = require('chalk')
 const assert = require('assert')

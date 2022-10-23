@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import type { Format } from 'tsup';
+import type { Format, Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
 const pkg = fs.readJSONSync('package.json');
@@ -14,11 +14,29 @@ const banner = ({ format }: { format: Format }) => ({
       : '',
 });
 
+const cliConfig: Options = {
+  entry: {
+    index: 'src/node/cli.ts',
+    dev: 'src/node/dev.ts',
+  },
+  minifyIdentifiers: false,
+  skipNodeModulesBundle: true,
+  bundle: true,
+  dts: true,
+  sourcemap: true,
+  splitting: true,
+  minify: isProd,
+  treeshake: true,
+  outDir: 'dist/cli',
+  clean: true,
+  shims: true,
+  format: ['esm'],
+};
+
 export default defineConfig([
+  cliConfig,
   {
     entry: {
-      cli: 'src/node/cli.ts',
-      dev: 'src/node/dev.ts',
       index: 'src/node/index.ts',
     },
     minifyIdentifiers: false,
@@ -34,7 +52,7 @@ export default defineConfig([
     shims: true,
     format: ['cjs', 'esm'],
     // external: [...Object.keys(pkg.dependencies)],
-    banner,
+    // banner,
   },
   {
     entry: {

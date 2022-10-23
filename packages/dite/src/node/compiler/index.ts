@@ -2,12 +2,15 @@ import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
 import debounce from 'lodash.debounce';
+import { createRequire } from 'module';
 import Mustache from 'mustache';
-import { dirname, join, sep } from 'path';
+import { dirname, join, sep } from 'node:path';
 import { templateDir } from '../../shared/constants';
 import type { DiteConfig } from '../../shared/types';
 import { logger } from '../logger';
 import { swcPlugin } from './swc';
+
+const __require = createRequire(import.meta.url);
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -238,7 +241,7 @@ export async function writeServerBuildResult(
     await fs.ensureDir(dirname(file.path));
     if (file.path.endsWith('.js')) {
       if (mode === 'development') {
-        delete require.cache[file.path];
+        delete __require.cache[file.path];
       }
       // fix sourceMappingURL to be relative to current path instead of /build
       const filename = file.path.substring(file.path.lastIndexOf(sep) + 1);

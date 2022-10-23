@@ -3,6 +3,7 @@
   "compilerOptions": {
     "module": "ES2015",
     "declaration": true,
+    "strict": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -17,7 +18,7 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
+    "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "noFallthroughCasesInSwitch": false
   },
