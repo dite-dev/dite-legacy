@@ -1,17 +1,21 @@
-name: Compressed Size
+name: Doc
 
 env:
   NODE_OPTIONS: --max-old-space-size=6144
 
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'docs/**'
   pull_request:
     types:
       - 'opened'
       - 'synchronize'
-    paths-ignore:
-      - 'examples/**'
+    paths:
       - 'docs/**'
-      - '**/*.md'
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -38,11 +42,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Packages
-        run: pnpm run build
-
-      - uses: preactjs/compressed-size-action@v2
-        with:
-          build-script: 'build'
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
-          pattern: './packages/*/{dist}/**/*.{js,d.ts}'
+      - name: Build Doc
+        run: pnpm run doc:build
