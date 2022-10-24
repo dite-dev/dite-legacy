@@ -5,9 +5,9 @@ import debounce from 'lodash.debounce';
 import { createRequire } from 'module';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';
-import { templateDir } from '../../shared/constants';
 import type { DiteConfig } from '../../shared/types';
-import { logger } from '../logger';
+import { templateDir } from '../constants';
+import { logger } from '../shared/logger';
 import { swcPlugin } from './swc';
 
 const __require = createRequire(import.meta.url);
@@ -137,7 +137,7 @@ export async function watch(
   };
 }
 
-export function createServerBuild(
+export async function createServerBuild(
   config: DiteConfig,
   { mode, incremental }: Required<BuildOptions> & { incremental?: boolean },
 ) {
@@ -155,35 +155,32 @@ export function createServerBuild(
   });
   fs.writeFileSync(entryPath, entryContent);
 
-  return esbuild
-    .build({
-      absWorkingDir: join(config.root, 'server'),
-      entryPoints: [entryPath],
-      outfile: config.serverBuildPath,
-      minifySyntax: true,
-      jsx: 'automatic',
-      sourceRoot: config.root,
-      write: false,
-      format: 'cjs',
-      minify: mode === 'production',
-      platform: 'node',
-      bundle: true,
-      mainFields: ['browser', 'module', 'main'],
-      splitting: false,
-      plugins: [swcPlugin()],
-      keepNames: true,
-      sourcemap: true,
-      incremental,
-      treeShaking: true,
-      external: [
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.devDependencies || {}),
-      ],
-    })
-    .then(async (build) => {
-      await writeServerBuildResult(config, { mode }, build.outputFiles);
-      return build;
-    });
+  const build = await esbuild.build({
+    absWorkingDir: join(config.root, 'server'),
+    entryPoints: [entryPath],
+    outfile: config.serverBuildPath,
+    minifySyntax: true,
+    jsx: 'automatic',
+    sourceRoot: config.root,
+    write: false,
+    format: 'cjs',
+    minify: mode === 'production',
+    platform: 'node',
+    bundle: true,
+    mainFields: ['browser', 'module', 'main'],
+    splitting: false,
+    plugins: [swcPlugin()],
+    keepNames: true,
+    sourcemap: true,
+    incremental,
+    treeShaking: true,
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.devDependencies || {}),
+    ],
+  });
+  await writeServerBuildResult(config, { mode }, build.outputFiles);
+  return build;
 }
 
 export function createBrowserBuild(

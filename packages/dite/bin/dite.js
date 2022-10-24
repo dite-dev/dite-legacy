@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { run } from '../dist/cli/index.js'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { performance } from 'node:perf_hooks'
 
-// disable since it's conflicted with typescript cjs + dynamic import
-// require('v8-compile-cache');
+global.__dite_start_time = performance.now()
 
 // patch console for debug
 // ref: https://remysharp.com/2014/05/23/where-is-that-console-log
@@ -21,7 +22,17 @@ if (process.env.DEBUG_CONSOLE) {
   });
 }
 
-run().catch((e) => {
-  console.error(e)
-  process.exit(1)
-})
+// Start Dite CLI
+async function start() {
+  const { Service } = await import('../dist/node/cli.js')
+  const service = Service.create()
+  await service.run()
+  return start
+}
+
+(async () => {
+  const pkgRoot = path.dirname(path.join(fileURLToPath(import.meta.url), '..'));
+  process.env.DITE_PKG_ROOT = pkgRoot;
+
+  await start()
+})()

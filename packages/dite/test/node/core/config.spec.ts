@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { DiteUserConfig } from '../../src/core/config';
+import type { DiteUserConfig } from '../../../src/node/core/config';
 import {
   defineConfig,
   generateConfig,
@@ -7,8 +7,9 @@ import {
   readConfig,
   resolveConfig,
   resolveUserConfig,
-} from '../../src/core/config';
-import { ServerMode } from '../../src/core/config/server-mode';
+} from '../../../src/node/core/config';
+import { ServerMode } from '../../../src/node/core/config/server-mode';
+import { TEST_FIXTURES_ROOT } from '../../utils/constants';
 
 import path from 'node:path';
 
@@ -17,10 +18,10 @@ describe('src/config', () => {
     port: 3001,
   };
 
-  const configPath = path.join(__dirname, '../fixtures/config');
+  const configPath = path.resolve(TEST_FIXTURES_ROOT, 'config');
 
   describe('defineConfig', () => {
-    it('should return the config', () => {
+    it('should return define config', () => {
       expect(defineConfig(config)).toEqual(config);
     });
   });
@@ -36,13 +37,13 @@ describe('src/config', () => {
     });
 
     it('should return null if no config file found', async () => {
-      const config2 = await loadConfigFromFile(__dirname);
-      expect(config2).toBeNull();
+      const config = await loadConfigFromFile(process.cwd());
+      expect(config).toBeNull();
     });
   });
 
   describe('resolveUserConfig', () => {
-    it('should be success', async () => {
+    it('resolveUserConfig should be success', async () => {
       const userConfig = await resolveUserConfig({
         root: configPath,
         mode: ServerMode.Development,

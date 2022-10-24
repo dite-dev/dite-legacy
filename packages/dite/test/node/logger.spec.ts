@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { logger } from '../../src/node/logger';
+import { logger } from '../../src/node/shared/logger';
 
 describe('node/logger', () => {
   it('should log', () => {

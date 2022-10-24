@@ -1,4 +1,4 @@
-import { defineConfig } from '../../../src/core/config'
+import { defineConfig } from '../../../src/node/index'
 
 export default defineConfig({
   port: 3001

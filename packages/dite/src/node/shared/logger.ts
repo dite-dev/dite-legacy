@@ -1,8 +1,9 @@
 import colors from 'chalk';
-import { Consola } from 'consola';
+import consola from 'consola';
 import makeDebug from 'debug';
 
 export const prefixes = {
+  start: colors.blue('start') + '  -',
   wait: colors.cyan('wait') + '  -',
   error: colors.red('error') + ' -',
   fatal: colors.red('fatal') + ' -',
@@ -14,7 +15,13 @@ export const prefixes = {
 };
 
 const debugLogger = makeDebug('dite');
-const consolaLogger = new Consola({});
+
+const createConsola = () => {
+  const logger = consola.create({});
+  return logger;
+};
+
+const consolaLogger = createConsola();
 
 export function wait(...message: any[]) {
   consolaLogger.log(prefixes.wait, ...message);
@@ -48,7 +55,23 @@ export function fatal(...message: any[]) {
   consolaLogger.error(prefixes.fatal, ...message);
 }
 
-export const logger = {
+export function start(...message: any[]) {
+  consolaLogger.start(prefixes.start, ...message);
+}
+
+interface DiteLogger {
+  wait: typeof wait;
+  error: typeof error;
+  warn: typeof warn;
+  ready: typeof ready;
+  info: typeof info;
+  event: typeof event;
+  debug: typeof debug;
+  fatal: typeof fatal;
+  start: typeof start;
+}
+
+const logger: DiteLogger = {
   wait,
   error,
   warn,
@@ -57,4 +80,7 @@ export const logger = {
   event,
   debug,
   fatal,
+  start,
 };
+
+export { logger, logger as default };

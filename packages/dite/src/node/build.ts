@@ -1,4 +1,4 @@
-import { logger } from './logger';
+import { logger } from './shared/logger';
 
 export async function build(root: string) {
   // Write your code here
