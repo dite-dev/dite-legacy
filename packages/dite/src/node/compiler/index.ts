@@ -7,6 +7,7 @@ import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';
 import type { DiteConfig } from '../../shared/types';
 import { templateDir } from '../constants';
+import { ServerMode } from '../core/config/server-mode';
 import { logger } from '../shared/logger';
 import { swcPlugin } from './swc';
 
@@ -39,7 +40,7 @@ async function buildEverything(
 }
 
 interface BuildConfig {
-  mode: 'development' | 'production';
+  mode: ServerMode;
 }
 
 interface BuildOptions extends Partial<BuildConfig> {
@@ -60,7 +61,7 @@ interface WatchOptions extends BuildOptions {
 export async function watch(
   config: DiteConfig,
   {
-    mode = 'development',
+    mode = ServerMode.Development,
     onFileChanged,
     onFileCreated,
     onFileDeleted,
@@ -144,7 +145,7 @@ export async function createServerBuild(
   // auto externalize node_modules
   const pkg = fs.readJSONSync(join(config.root, 'package.json'));
   const localeTpl = fs.readFileSync(
-    join(templateDir, 'server.mustache'),
+    join(templateDir, 'server/main.ts.mustache'),
     'utf-8',
   );
   const entryPath = join(config.root, config.buildPath, 'src/server.ts');
@@ -213,7 +214,7 @@ export function createBrowserBuild(
 export async function build(
   config: DiteConfig,
   {
-    mode = 'production',
+    mode = ServerMode.Production,
     onWarning = defaultWarningHandler,
     onBuildFailure = defaultBuildFailureHandler,
   }: BuildOptions = {},

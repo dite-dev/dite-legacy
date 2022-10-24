@@ -1,9 +1,9 @@
 import { createRequire } from 'node:module';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 const __require = createRequire(import.meta.url);
 
-export const pkgRoot = join(__require.resolve('dite/package.json'), '..');
+export const pkgRoot = dirname(__require.resolve('dite/package.json'));
 export const templateDir = join(pkgRoot, 'templates');
 
 export const configFiles = [
@@ -12,3 +12,7 @@ export const configFiles = [
   'dite.config.ts',
   'dite.config.js',
 ];
+
+export const PATHS = {
+  TEMPLATE_DIR: templateDir,
+};
