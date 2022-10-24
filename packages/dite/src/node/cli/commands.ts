@@ -22,6 +22,7 @@ export async function watch(diteRoot: string) {
     },
     async onRebuildFinish() {
       spinner.stop();
+      spinner.succeed('Server rebuild success!');
       await server.restart();
     },
   });

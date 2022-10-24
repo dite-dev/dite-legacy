@@ -33,7 +33,7 @@ async function buildEverything(
 
     return await Promise.all([serverBuildPromise, browserBuildPromise]);
   } catch (e) {
-    console.log('e', e);
+    logger.error('e', e);
     return [undefined, undefined];
   }
 }
@@ -192,7 +192,7 @@ export function createBrowserBuild(
 ) {
   return esbuild.build({
     absWorkingDir: config.root,
-    entryPoints: { index: 'app/root.tsx' },
+    entryPoints: { index: 'src/root.tsx' },
     outdir: join(config.root, config.buildPath, 'browser'),
     minifySyntax: true,
     jsx: 'automatic',

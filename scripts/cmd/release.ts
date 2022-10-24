@@ -1,3 +1,5 @@
+import assert from 'assert';
+import consola from 'consola';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import 'zx/globals';
@@ -24,6 +26,47 @@ function setDepsVersion(opts: {
 
 async function main() {
   const pkgs = getPkgs();
+  consola.info(`pkgs: ${pkgs.join(', ')}`);
+
+  // check git status
+  consola.info('check git status');
+  const isGitClean = (await $`git status --porcelain`).stdout.trim().length;
+  assert(!isGitClean, 'git status is not clean');
+
+  // check git remote update
+  consola.info('check git remote update');
+  await $`git fetch`;
+  const gitStatus = (await $`git status --short --branch`).stdout.trim();
+  assert(!gitStatus.includes('behind'), `git status is behind remote`);
+
+  // check npm registry
+  consola.info('check npm registry');
+  const registry = (await $`npm config get registry`).stdout.trim();
+  assert(
+    registry === 'https://registry.npmjs.org/',
+    'npm registry is not https://registry.npmjs.org/',
+  );
+
+  // check package changed
+  consola.info('check package changed');
+  const changed = (await $`lerna changed --loglevel error`).stdout.trim();
+  assert(changed, `no package is changed`);
+
+  // check npm ownership
+  consola.info('check npm ownership');
+  const whoami = (await $`npm whoami`).stdout.trim();
+  await Promise.all(
+    ['dite', '@dite/core'].map(async (pkg) => {
+      const owners = (await $`npm owner ls ${pkg}`).stdout
+        .trim()
+        .split('\n')
+        .map((line) => {
+          return line.split(' ')[0];
+        });
+      assert(owners.includes(whoami), `${pkg} is not owned by ${whoami}`);
+    }),
+  );
+
   $.verbose = false;
   const branch = await $`git rev-parse --abbrev-ref HEAD`;
   console.log('pnpm i');
@@ -34,8 +77,6 @@ async function main() {
   console.log('pnpm build');
   await $`pnpm build`;
 
-  // console.log('pnpm build:deps');
-  // await $`pnpm build:deps`;
   await $`lerna version --exact --no-commit-hooks --no-git-tag-version --no-push --loglevel error`;
   const version = require('../../lerna.json').version;
 
