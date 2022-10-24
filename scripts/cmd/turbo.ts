@@ -21,7 +21,5 @@ import { spawnSync } from '../utils';
   }
 
   const command = `turbo run ${args.join(' ')}`;
-  spawnSync(command, {
-    cwd: PATHS.ROOT,
-  });
+  spawnSync(command, { cwd: PATHS.ROOT });
 })();

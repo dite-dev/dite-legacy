@@ -1,3 +1,5 @@
-(async function main() {
-  console.log('bootstrap');
+import chalk from 'chalk';
+
+(async () => {
+  console.log(chalk.green(`dite bootstrapped`));
 })();

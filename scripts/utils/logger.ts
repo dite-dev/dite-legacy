@@ -1,6 +1,5 @@
 import colors from 'chalk';
 import { Consola } from 'consola';
-import makeDebug from 'debug';
 
 export const prefixes = {
   wait: colors.cyan('wait') + '  -',
@@ -10,10 +9,8 @@ export const prefixes = {
   ready: colors.green('ready') + ' -',
   info: colors.cyan('info') + ' -',
   event: colors.magenta('event') + ' -',
-  debug: colors.gray('debug') + ' -',
 };
 
-const debugLogger = makeDebug('dite');
 const consolaLogger = new Consola({});
 
 export function wait(...message: any[]) {
@@ -40,10 +37,6 @@ export function event(...message: any[]) {
   consolaLogger.log(prefixes.event, ...message);
 }
 
-export function debug(...message: any[]) {
-  debugLogger(prefixes.debug, ...message);
-}
-
 export function fatal(...message: any[]) {
   consolaLogger.error(prefixes.fatal, ...message);
 }
@@ -55,6 +48,5 @@ export const logger = {
   ready,
   info,
   event,
-  debug,
   fatal,
 };

@@ -75,7 +75,7 @@ export async function createServer(
       return Promise.resolve(server);
     },
     printUrls: () => {
-      console.log('111');
+      // console.log('111');
     },
     close: async () => {
       childRef?.pid && killProcessSync(childRef.pid);

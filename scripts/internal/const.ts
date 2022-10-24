@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-export const examplesDir = join(__dirname, '../../examples');
+// export const examplesDir = join(__dirname, '../../examples');
 
 export const packagesDir = join(__dirname, '../../packages');
 
