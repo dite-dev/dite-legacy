@@ -15,8 +15,7 @@
     "directory": "packages/create-dite"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
   "bin": {
     "create-dite": "bin/create-dite.js"
   },
@@ -29,11 +28,15 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {
-    "dite": "0.1.18"
+  "devDependencies": {
+    "@types/prompts": "^2.4.0",
+    "execa": "^5.1.1",
+    "fast-glob": "^3.2.7",
+    "fs-extra": "^10.0.0",
+    "prompts": "^2.4.1"
   },
   "engines": {
-    "node": ">=14"
+    "node": "^14.18.0 || >=16.0.0"
   },
   "publishConfig": {
     "access": "public"

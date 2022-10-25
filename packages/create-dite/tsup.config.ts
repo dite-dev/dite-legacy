@@ -11,11 +11,11 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   splitting: true,
-  minify: prod,
   skipNodeModulesBundle: true,
+  minify: prod,
   silent: prod,
   outDir: 'dist',
   clean: true,
   shims: true,
-  format: 'cjs',
+  format: 'esm',
 });
