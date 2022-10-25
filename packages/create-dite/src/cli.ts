@@ -1,8 +1,11 @@
 import chalk from 'chalk';
 import fs from 'fs';
+import Mustache from 'mustache';
 import { fileURLToPath } from 'node:url';
 import path from 'path';
 import prompts from 'prompts';
+// @ts-expect-error
+import { version } from '../package.json';
 
 const defaultTargetDir = 'my-dite-app';
 const cwd = process.cwd();
@@ -81,7 +84,7 @@ export async function run(argv: string[]) {
 
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
   const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
-  const isYarn1 = pkgManager === 'yarn' && pkgInfo?.version.startsWith('1.');
+  // const isYarn1 = pkgManager === 'yarn' && pkgInfo?.version.startsWith('1.');
 
   console.log(`\nScaffolding project in ${chalk.green(root)}`);
 
@@ -105,13 +108,16 @@ export async function run(argv: string[]) {
     write(file);
   }
 
-  const pkg = JSON.parse(
-    fs.readFileSync(path.join(templateDir, `package.json.mustache`), 'utf-8'),
+  write(
+    'package.json',
+    Mustache.render(
+      fs.readFileSync(path.join(templateDir, `package.json.mustache`), 'utf-8'),
+      {
+        version,
+        projectName: packageName || getProjectName(),
+      },
+    ),
   );
-
-  pkg.name = packageName || getProjectName();
-
-  write('package.json', JSON.stringify(pkg, null, 2));
 
   console.log(`\nDone. Now run:\n`);
   if (root !== cwd) {

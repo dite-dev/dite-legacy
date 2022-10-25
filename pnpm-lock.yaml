@@ -183,19 +183,23 @@ importers:
 
   packages/create-dite:
     specifiers:
+      '@types/mustache': ^4.2.1
       '@types/prompts': ^2.4.0
       chalk: ^5.1.2
       execa: ^6.0.0
       fast-glob: ^3.2.7
       fs-extra: ^10.0.0
+      mustache: ^4.2.0
       prompts: ^2.4.1
     dependencies:
       chalk: 5.1.2
       execa: 6.1.0
       fast-glob: 3.2.12
       fs-extra: 10.1.0
+      mustache: 4.2.0
       prompts: 2.4.2
     devDependencies:
+      '@types/mustache': 4.2.1
       '@types/prompts': 2.4.1
 
   packages/dite:
