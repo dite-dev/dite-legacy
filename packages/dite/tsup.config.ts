@@ -1,8 +1,6 @@
-import fs from 'fs-extra';
 import type { Format } from 'tsup';
 import { defineConfig } from 'tsup';
 
-const pkg = fs.readJSONSync('package.json');
 const isDev = process.argv.slice(2).includes('--watch');
 const isProd = !isDev;
 

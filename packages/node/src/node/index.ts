@@ -14,6 +14,7 @@ export function createIntegration(): DiteIntegration {
     hooks: {
       onConfigDone({ config, setAdapter }) {
         setAdapter(getAdapter());
+        console.log('config', config);
       },
     },
   };

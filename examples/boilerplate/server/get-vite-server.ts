@@ -13,7 +13,6 @@ let viteDevServer: ViteDevServer;
  */
 export async function getViteServer({ force } = { force: false }) {
   if (!viteDevServer || force) {
-    console.log('resolveAppPath', resolveAppPath('public'));
     viteDevServer = await createServer({
       publicDir: resolveAppPath('public'),
       appType: 'custom',
