@@ -1,6 +1,5 @@
 import { cac } from 'cac';
 import dotenv from 'dotenv';
-import exitHook from 'exit-hook';
 // @ts-expect-error
 import { version } from '../../package.json';
 import * as commands from './cli/commands';
@@ -24,17 +23,13 @@ export class Service {
       .command('dev [root]', 'start dev server')
       .alias('dev')
       .action(async (root: string) => {
-        const closeWatcher = await commands.watch(root);
-        let resolve: () => void;
-        exitHook(() => {
-          closeWatcher();
-          resolve();
-        });
-        return new Promise<void>((r) => {
-          resolve = r;
-        }).then(async () => {
-          await closeWatcher();
-        });
+        const createServer = async () => {
+          const { createDevServer }: typeof import('./cli/dev') = await import(
+            `./dev.js?t=${Date.now()}`
+          );
+          await createDevServer(root);
+        };
+        await createServer();
       });
 
     cli

@@ -14,6 +14,7 @@
     "format": "prettier --cache --write .",
     "preinstall": "npx only-allow pnpm",
     "lint": "dite-scripts lint",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx --quiet --cache ./",
     "prepare": "husky install",
     "publish:pkg": "dite-scripts publish",
     "release": "dite-scripts release",

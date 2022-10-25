@@ -14,5 +14,6 @@ export const configFiles = [
 ];
 
 export const PATHS = {
+  ROOT: pkgRoot,
   TEMPLATE_DIR: templateDir,
 };

@@ -15,6 +15,7 @@ export default defineConfig([
     outDir: 'dist',
     clean: true,
     shims: true,
+    format: ['esm'],
   },
   {
     entry: {
@@ -30,6 +31,6 @@ export default defineConfig([
     outDir: 'dist/client',
     clean: true,
     shims: true,
-    format: ['cjs', 'esm'],
+    format: 'esm',
   },
 ]);

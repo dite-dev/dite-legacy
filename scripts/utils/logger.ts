@@ -2,14 +2,15 @@ import colors from 'chalk';
 import consola from 'consola';
 
 export const prefixes = {
-  start: colors.blue('start') + '  -',
-  wait: colors.cyan('wait') + '  -',
+  start: colors.blue('start') + ' -',
+  wait: colors.cyan('wait') + ' -',
   error: colors.red('error') + ' -',
   fatal: colors.red('fatal') + ' -',
   warn: colors.yellow('warn') + '  -',
   ready: colors.green('ready') + ' -',
   info: colors.cyan('info') + ' -',
   event: colors.magenta('event') + ' -',
+  debug: colors.gray('debug') + ' -',
 };
 
 const createConsola = () => {
@@ -48,7 +49,7 @@ export function fatal(...message: any[]) {
 }
 
 export function start(...message: any[]) {
-  consolaLogger.start(prefixes.start, ...message);
+  consolaLogger.log(prefixes.start, ...message);
 }
 
 interface DiteLogger {

@@ -17,7 +17,7 @@ export const swcPlugin = (): Plugin => {
       if (!swc) {
         console.warn(
           build.initialOptions.format!,
-          `You have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin`,
+          'You have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin',
         );
         return;
       }
@@ -25,7 +25,7 @@ export const swcPlugin = (): Plugin => {
       // Force esbuild to keep class names as well
       build.initialOptions.keepNames = true;
 
-      build.onLoad({ filter: /\.[jt]sx?$/ }, async (args) => {
+      build.onLoad({ filter: /\.[jt]sx?$/ }, (args) => {
         const isTs = /\.tsx?$/.test(args.path);
 
         const jsc: JscConfig = {
@@ -43,7 +43,7 @@ export const swcPlugin = (): Plugin => {
 
         const fileContent = fs.readFileSync(args.path, 'utf-8');
 
-        const result = await swc.transformSync(fileContent, {
+        const result = swc.transformSync(fileContent, {
           jsc,
           sourceMaps: true,
           configFile: false,

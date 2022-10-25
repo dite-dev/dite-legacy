@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
@@ -18,9 +19,7 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "noFallthroughCasesInSwitch": false
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["api", "src"]
+  "include": ["api", "app"]
 }

@@ -1,10 +1,6 @@
 import 'zx/globals';
 
-async function main() {
-  await $`eslint --cache --ext js,jsx,ts,tsx packages`;
-}
-
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+(async () => {
+  const argv = process.argv.slice(2);
+  await $`eslint --cache --ext js,jsx,ts,tsx ./`;
+})();

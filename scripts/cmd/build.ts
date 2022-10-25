@@ -107,7 +107,7 @@ function getBuildMetadata(config: PickRequired<Config, 'cwd'>) {
   const assetsOptions = {
     baseDir: config.assets?.baseDir || 'src',
     outDir: config.assets?.outDir || outDir,
-    patterns: [...assetPatterns, `!**/*.{ts,js,tsx,jsx}`],
+    patterns: [...assetPatterns, '!**/*.{ts,js,tsx,jsx}'],
   };
 
   return { outDir, esbuildOptions, assetsOptions, tsConfig };

@@ -1,7 +1,7 @@
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash-es';
 import { createRequire } from 'module';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';

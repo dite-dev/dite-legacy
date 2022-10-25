@@ -12,12 +12,12 @@ import { spawnSync } from '../utils';
   // filter
   if (!args.includes('--filter')) {
     // Tips: should use double quotes, single quotes are not valid on windows.
-    args.push(`--filter="./packages/*"`);
+    args.push('--filter="./packages/*"');
   }
 
   // turbo cache
   if (!args.includes('--cache-dir')) {
-    args.push(`--cache-dir=".turbo"`);
+    args.push('--cache-dir=".turbo"');
   }
 
   const command = `turbo run ${args.join(' ')}`;

@@ -3,8 +3,8 @@ import consola from 'consola';
 import makeDebug from 'debug';
 
 export const prefixes = {
-  start: colors.blue('start') + '  -',
-  wait: colors.cyan('wait') + '  -',
+  start: colors.blue('start') + ' -',
+  wait: colors.cyan('wait') + ' -',
   error: colors.red('error') + ' -',
   fatal: colors.red('fatal') + ' -',
   warn: colors.yellow('warn') + '  -',
@@ -56,7 +56,7 @@ export function fatal(...message: any[]) {
 }
 
 export function start(...message: any[]) {
-  consolaLogger.start(prefixes.start, ...message);
+  consolaLogger.log(prefixes.start, ...message);
 }
 
 interface DiteLogger {

@@ -26,16 +26,11 @@ export interface DiteServer {
   restart(forceOptimize?: boolean): Promise<void>;
 }
 
+/**
+ * Create a new Dite server.
+ */
 export async function createServer(
-  diteRoot: string,
-  cb?: (server: DiteServer) => void,
-): Promise<DiteServer>;
-export async function createServer(
-  config: DiteConfig,
-  cb?: (server: DiteServer) => void,
-): Promise<DiteServer>;
-export async function createServer(
-  opt: any,
+  opt: DiteConfig | string,
   cb?: (server: DiteServer) => void,
 ) {
   const config = typeof opt === 'string' ? await readConfig(opt) : opt;

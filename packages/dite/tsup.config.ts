@@ -9,8 +9,8 @@ const isProd = !isDev;
 const banner = ({ format }: { format: Format }) => ({
   js:
     format === 'esm'
-      ? `import {createRequire as __createRequire} from 'module';var require = __createRequire(import` +
-        `.meta.url);`
+      ? "import {createRequire as __createRequire} from 'module';var require = __createRequire(import" +
+        '.meta.url);'
       : '',
 });
 

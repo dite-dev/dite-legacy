@@ -39,7 +39,7 @@ export async function run(argv: string[]) {
             (targetDir === '.'
               ? 'Current directory'
               : `Target directory "${targetDir}"`) +
-            ` is not empty. Remove existing files and continue?`,
+            ' is not empty. Remove existing files and continue?',
         },
         {
           type: (_, { overwrite }: { overwrite?: boolean }) => {
@@ -111,7 +111,7 @@ export async function run(argv: string[]) {
   write(
     'package.json',
     Mustache.render(
-      fs.readFileSync(path.join(templateDir, `package.json.mustache`), 'utf-8'),
+      fs.readFileSync(path.join(templateDir, 'package.json.mustache'), 'utf-8'),
       {
         version,
         projectName: packageName || getProjectName(),
@@ -119,7 +119,7 @@ export async function run(argv: string[]) {
     ),
   );
 
-  console.log(`\nDone. Now run:\n`);
+  console.log('\nDone. Now run:\n');
   if (root !== cwd) {
     console.log(`  cd ${path.relative(cwd, root)}`);
   }
