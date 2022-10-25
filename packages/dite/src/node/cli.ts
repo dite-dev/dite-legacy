@@ -1,8 +1,10 @@
 import { cac } from 'cac';
 import dotenv from 'dotenv';
+import { join } from 'path';
 // @ts-expect-error
 import { version } from '../../package.json';
 import * as commands from './cli/commands';
+import { defineConventionalRoutes } from './cli/routes';
 
 export class Service {
   public readonly root: string = process.env.DITE_PKG_ROOT!;
@@ -43,6 +45,19 @@ export class Service {
       .option('--port <port>', 'port to use for serve')
       .action(async (root: string, { port }: { port: number }) => {
         await commands.start(root, { port });
+      });
+
+    cli
+      .command('routes [root]', 'routes for dite')
+      .action(async (root: string, { port }: { port: number }) => {
+        // await commands.start(root, { port });
+        let diteRoot = root;
+
+        if (!diteRoot) {
+          diteRoot = process.env.DITE_ROOT || process.cwd!();
+        }
+        const routes = defineConventionalRoutes(join(diteRoot, 'app'));
+        console.log(routes);
       });
 
     cli.parse(this.argv);

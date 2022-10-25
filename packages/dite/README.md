@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-$ npm i dite -S
+npm i dite -S
 ```
 
 ### Command line interface

@@ -5,11 +5,11 @@ import {
 } from 'vue-router';
 
 // @ts-expect-error
-const pages = import.meta.glob('../pages/*.vue');
+const pages = import.meta.glob('../views/*.vue');
 const routes = Object.keys(pages).map((path) => {
   const name = path.match(/\.\.\/pages\/(.*)\.vue$/)[1].toLowerCase();
   const routePath = `/${name}`;
-  if (routePath === '/home') {
+  if (routePath === '/index') {
     return {
       path: '/',
       name,
