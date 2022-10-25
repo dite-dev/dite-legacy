@@ -119,8 +119,8 @@ export interface RouteManifest {
 export function defineRoutes(
   callback: (defineRoute: DefineRouteFunction) => void,
 ): RouteManifest {
-  let routes: RouteManifest = Object.create(null);
-  let parentRoutes: ConfigRoute[] = [];
+  const routes: RouteManifest = {};
+  const parentRoutes: ConfigRoute[] = [];
   let alreadyReturned = false;
 
   const defineRoute: DefineRouteFunction = (
