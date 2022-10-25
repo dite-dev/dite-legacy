@@ -1,4 +1,3 @@
-import exitHook from 'exit-hook';
 import ora from 'ora';
 import * as compiler from '../compiler';
 import { readConfig } from '../core/config';
@@ -12,7 +11,7 @@ export async function watch(diteRoot: string) {
   const spinner = ora('dite');
 
   const closeWatcher = await compiler.watch(config, {
-    mode: 'development',
+    mode: ServerMode.Development,
     async onInitialBuild() {
       await server.listen(config.port);
     },
@@ -30,21 +29,4 @@ export async function watch(diteRoot: string) {
     server.close();
     closeWatcher();
   };
-}
-
-export async function build(diteRoot: string) {
-  const config = await readConfig(diteRoot);
-  await compiler.build(config, { mode: ServerMode.Production });
-}
-
-export async function start(diteRoot: string, opts: { port?: number }) {
-  const server = await createServer(diteRoot);
-  await server.listen(opts.port);
-  exitHook(() => {
-    server.close();
-  });
-}
-
-export async function help() {
-  console.log('help');
 }
