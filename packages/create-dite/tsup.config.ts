@@ -4,6 +4,7 @@ const prod = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
   entry: {
+    index: 'src/index.ts',
     cli: 'src/cli.ts',
   },
   minifyIdentifiers: false,
