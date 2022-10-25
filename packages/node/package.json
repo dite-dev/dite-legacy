@@ -1,6 +1,6 @@
 {
   "name": "@dite/node",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "@dite/node",
   "keywords": [
     "dite"
@@ -39,7 +39,7 @@
     "@nestjs/platform-express": "^9.1.4",
     "@parcel/css": "1.14.0",
     "compression": "^1.7.4",
-    "dite": "0.1.19"
+    "dite": "0.1.20"
   },
   "devDependencies": {
     "@nestjs/common": "^9.1.4",
