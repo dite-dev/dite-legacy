@@ -5,6 +5,13 @@
   "bracketSameLine": true,
   "singleQuote": true,
   "trailingComma": "all",
-  "overrides": [{ "files": ".prettierrc", "options": { "parser": "json" } }],
-  "plugins": ["prettier-plugin-packagejson", "./scripts/prettier-plugin"]
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ],
+  "plugins": ["prettier-plugin-packagejson", "prettier-plugin-organize-imports"]
 }

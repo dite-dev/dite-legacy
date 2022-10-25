@@ -2,7 +2,7 @@ import type { SpawnSyncOptions } from 'child_process';
 import spawn from 'cross-spawn';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
-import { isArray } from 'lodash';
+import { isArray } from 'lodash-es';
 import { dirname, join } from 'path';
 import { packagesDir } from '../internal/const';
 

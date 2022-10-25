@@ -1,12 +1,15 @@
 import assert from 'assert';
 import { existsSync } from 'fs';
 import getGitRepoInfo from 'git-repo-info';
+import { createRequire } from 'module';
 import { join } from 'path';
 import rimraf from 'rimraf';
 import 'zx/globals';
 import { PATHS } from '../internal/const';
 import { eachPkg, getPkgs } from '../utils';
 import { logger } from '../utils/logger';
+
+const require = createRequire(import.meta.url);
 
 (async () => {
   const { branch } = getGitRepoInfo();

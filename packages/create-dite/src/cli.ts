@@ -76,7 +76,6 @@ export async function run(argv: string[]) {
   } else if (!fs.existsSync(root)) {
     fs.mkdirSync(root, { recursive: true });
   }
-  console.log(result, targetDir);
 
   const template = 'app';
 

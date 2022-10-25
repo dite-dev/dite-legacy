@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 
-const { join } = require('node:path')
-const { existsSync } = require('node:fs')
-const { sync } = require('cross-spawn')
-const chalk = require('chalk')
-const assert = require('assert')
+import { dirname, join } from 'node:path'
+import { existsSync } from 'node:fs'
+import { sync } from 'cross-spawn'
+import chalk from 'chalk'
+import assert from 'assert'
+import { fileURLToPath } from 'node:url'
 
 const argv = process.argv.slice(2)
 const name = argv[0]
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const scriptsPath = join(__dirname, `../cmd/${name}.ts`)
 
 assert(

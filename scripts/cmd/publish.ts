@@ -1,5 +1,8 @@
+import { createRequire } from 'module';
 import 'zx/globals';
 import { getPkgs } from '../utils';
+
+const require = createRequire(import.meta.url);
 
 function getVersion() {
   return require('../../lerna.json').version;
