@@ -1,3 +1,1 @@
-import vite from 'vite';
-
-export { vite };
+export * from './config';

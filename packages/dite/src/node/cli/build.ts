@@ -1,6 +1,5 @@
+import { resolveConfig, ServerMode } from '@dite/core';
 import * as compiler from '../compiler';
-import { resolveConfig } from '../core/config';
-import { ServerMode } from '../core/config/server-mode';
 
 export async function build(diteRoot: string) {
   const config = await resolveConfig({

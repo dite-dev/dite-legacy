@@ -1,5 +1,5 @@
+import { DiteConfig } from '@dite/core';
 import { exitHook } from '@dite/utils';
-import { DiteConfig } from '../core/config';
 import { watch } from './watch';
 
 export async function createDevServer(config: DiteConfig) {

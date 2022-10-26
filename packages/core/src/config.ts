@@ -1,17 +1,9 @@
 import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import type { DiteConfig, DiteUserConfig } from '../../shared/types';
 import { isValidServerMode, ServerMode } from './config/server-mode';
-
-import { configFiles } from '../constants';
-
-export type {
-  DiteAdapter,
-  DiteConfig,
-  DiteIntegration,
-  DiteUserConfig,
-} from '../../shared/types';
+import type { DiteConfig, DiteUserConfig } from './config/types';
+import { configFiles } from './constants';
 
 interface ResolveConfigOptions {
   root: string;
@@ -104,3 +96,5 @@ export async function resolveConfig(opts: ResolveConfigOptions) {
 
   return config;
 }
+
+export { ServerMode, DiteConfig, DiteUserConfig, isValidServerMode };

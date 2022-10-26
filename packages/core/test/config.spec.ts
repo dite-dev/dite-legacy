@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { DiteUserConfig } from '../../../src/node/core/config';
+import type { DiteUserConfig } from '../src/config';
 import {
   defineConfig,
   generateConfig,
@@ -7,9 +7,9 @@ import {
   readConfig,
   resolveConfig,
   resolveUserConfig,
-} from '../../../src/node/core/config';
-import { ServerMode } from '../../../src/node/core/config/server-mode';
-import { TEST_FIXTURES_ROOT } from '../../utils/constants';
+} from '../src/config';
+import { ServerMode } from '../src/config/server-mode';
+import { TEST_FIXTURES_ROOT } from './utils/constants';
 
 import path from 'node:path';
 

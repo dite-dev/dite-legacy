@@ -25,9 +25,13 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bundle-require": "^3.1.0"
+  },
   "devDependencies": {},
-  "peerDependencies": {},
+  "peerDependencies": {
+    "esbuild": "^0.15.12"
+  },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },

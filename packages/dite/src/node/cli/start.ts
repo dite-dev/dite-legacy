@@ -1,6 +1,5 @@
+import { resolveConfig, ServerMode } from '@dite/core';
 import { exitHook } from '@dite/utils';
-import { resolveConfig } from '../core/config';
-import { ServerMode } from '../core/config/server-mode';
 import { createServer } from '../server';
 
 export async function start(diteRoot: string, opts: { port?: number }) {

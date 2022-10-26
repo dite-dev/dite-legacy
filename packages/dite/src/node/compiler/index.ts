@@ -1,3 +1,5 @@
+import type { DiteConfig } from '@dite/core';
+import { ServerMode } from '@dite/core';
 import { logger } from '@dite/utils';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
@@ -5,9 +7,7 @@ import fs from 'fs-extra';
 import _ from 'lodash';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';
-import type { DiteConfig } from '../../shared/types';
 import { templateDir } from '../constants';
-import { ServerMode } from '../core/config/server-mode';
 import { swcPlugin } from './swc';
 
 function defaultWarningHandler(message: string, key: string) {

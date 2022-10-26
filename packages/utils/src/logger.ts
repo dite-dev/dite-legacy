@@ -1,7 +1,7 @@
 import colors from 'chalk';
 import consola from 'consola';
 
-export const prefixes = {
+const prefixes = {
   start: colors.blue('start') + ' -',
   wait: colors.cyan('wait') + ' -',
   error: colors.red('error') + ' -',
@@ -20,50 +20,39 @@ const createConsola = () => {
 
 const consolaLogger = createConsola();
 
-export function wait(...message: any[]) {
+function wait(...message: any[]) {
   consolaLogger.log(prefixes.wait, ...message);
 }
 
-export function error(...message: any[]) {
+function error(...message: any[]) {
   consolaLogger.error(prefixes.error, ...message);
 }
 
-export function warn(...message: any[]) {
+function warn(...message: any[]) {
   consolaLogger.warn(prefixes.warn, ...message);
 }
 
-export function ready(...message: any[]) {
+function ready(...message: any[]) {
   consolaLogger.log(prefixes.ready, ...message);
 }
 
-export function info(...message: any[]) {
+function info(...message: any[]) {
   consolaLogger.log(prefixes.info, ...message);
 }
 
-export function event(...message: any[]) {
+function event(...message: any[]) {
   consolaLogger.log(prefixes.event, ...message);
 }
 
-export function fatal(...message: any[]) {
+function fatal(...message: any[]) {
   consolaLogger.error(prefixes.fatal, ...message);
 }
 
-export function start(...message: any[]) {
+function start(...message: any[]) {
   consolaLogger.log(prefixes.start, ...message);
 }
 
-interface DiteLogger {
-  wait: typeof wait;
-  error: typeof error;
-  warn: typeof warn;
-  ready: typeof ready;
-  info: typeof info;
-  event: typeof event;
-  fatal: typeof fatal;
-  start: typeof start;
-}
-
-const logger: DiteLogger = {
+export const logger = {
   wait,
   error,
   warn,
@@ -73,5 +62,3 @@ const logger: DiteLogger = {
   fatal,
   start,
 };
-
-export { logger, logger as default };

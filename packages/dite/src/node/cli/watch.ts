@@ -1,7 +1,6 @@
+import { DiteConfig, ServerMode } from '@dite/core';
 import { logger } from '@dite/utils';
 import * as compiler from '../compiler';
-import { DiteConfig } from '../core/config';
-import { ServerMode } from '../core/config/server-mode';
 import { createServer } from '../server';
 
 export async function watch(config: DiteConfig) {

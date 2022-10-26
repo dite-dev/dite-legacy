@@ -1,9 +1,8 @@
-import { logger } from '@dite/utils';
-import _ from 'lodash';
+import { DiteConfig } from '@dite/core';
+import { lodash, logger } from '@dite/utils';
 import type { ChildProcess, Serializable } from 'node:child_process';
 import { fork } from 'node:child_process';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
-import { DiteConfig } from '../core/config';
 
 export interface DiteServer {
   config: DiteConfig;
@@ -31,7 +30,7 @@ function isReadyPayload(
   payload: unknown,
 ): payload is { type: 'dite:ready'; duration: number; memoryUsage: string } {
   return (
-    _.isObject(payload) &&
+    lodash.isObject(payload) &&
     (payload as Record<string, unknown>).type === 'dite:ready'
   );
 }

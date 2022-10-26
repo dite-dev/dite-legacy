@@ -1,3 +1,4 @@
+import { resolveConfig, ServerMode } from '@dite/core';
 import { cac } from 'cac';
 import dotenv from 'dotenv';
 import { join } from 'path';
@@ -5,15 +6,12 @@ import { join } from 'path';
 import { version } from '../../package.json';
 import * as commands from './cli/commands';
 import { defineConventionalRoutes } from './cli/routes';
-import { resolveConfig } from './core/config';
-import { ServerMode } from './core/config/server-mode';
 
 export class Service {
   public readonly root: string = process.env.DITE_PKG_ROOT!;
   protected argv: string[];
   constructor({ argv }: { argv: string[] } = { argv: process.argv }) {
     dotenv.config();
-    console.log('__dirname', __dirname);
     this.argv = argv;
   }
 
