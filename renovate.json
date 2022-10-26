@@ -13,6 +13,8 @@
     "dite",
     "@dite/nest",
     "@dite/node",
+    "@dite/core",
+    "@dite/utils",
     "@dite/react",
     "@dite/vue"
   ],
