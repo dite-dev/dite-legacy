@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: {
-    index: 'src/node/index.ts',
+    index: 'src/index.ts',
   },
   minifyIdentifiers: false,
   bundle: true,
@@ -11,9 +11,9 @@ export default defineConfig({
   splitting: true,
   minify: process.env.NODE_ENV === 'production',
   skipNodeModulesBundle: true,
-  outDir: 'dist/node',
+  outDir: 'dist',
   clean: true,
-  format: ['cjs', 'esm'],
   platform: 'node',
   shims: true,
+  format: ['cjs', 'esm'],
 });

@@ -27,7 +27,7 @@ const require = createRequire(import.meta.url);
   logger.event('check git remote update');
   await $`git fetch`;
   const gitStatus = (await $`git status --short --branch`).stdout.trim();
-  assert(!gitStatus.includes('behind'), `git status is behind remote`);
+  assert(!gitStatus.includes('behind'), 'git status is behind remote');
 
   // check npm registry
   logger.event('check npm registry');
@@ -40,7 +40,7 @@ const require = createRequire(import.meta.url);
   // check package changed
   logger.event('check package changed');
   const changed = (await $`lerna changed --loglevel error`).stdout.trim();
-  assert(changed, `no package is changed`);
+  assert(changed, 'no package is changed');
 
   // check npm ownership
   logger.event('check npm ownership');

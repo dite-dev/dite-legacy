@@ -1,4 +1,7 @@
+import { performance } from 'node:perf_hooks';
 import { createServer } from '{{{ serverPath }}}';
+
+global.__dite_server_start_time = performance.now();
 
 function getMemoryUsage() {
   const size = 1 << 20;
@@ -11,9 +14,10 @@ function getMemoryUsage() {
 
 const config = {{{ config }}};
 
+global.__dite_config = config;
+
 (async () => {
-  config.port = process.env.PORT || config.port || 3001;
+  config.port = process.env.PORT || config.port;
   await createServer({ config });
-  console.info(getMemoryUsage());
-  process.send('dite:ready');
+  process.send({ type: 'dite:ready', duration: parseInt(performance.now() - global.__dite_server_start_time), memoryUsage: getMemoryUsage() });
 })();

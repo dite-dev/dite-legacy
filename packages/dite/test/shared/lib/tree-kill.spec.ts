@@ -1,9 +1,8 @@
-import cp from 'child_process';
 import { describe, expect, it } from 'vitest';
 import { treeKillSync } from '../../../src/shared/lib/tree-kill';
 
 describe('shared/lib/tree-kill.spec.ts', () => {
-  let proc: cp.ChildProcess;
+  // let proc: cp.ChildProcess;
 
   describe('treeKillSync', () => {
     // it('should be success', () => {

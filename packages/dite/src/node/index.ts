@@ -1,4 +1,6 @@
-import type { DiteAdapter, DiteConfig, DiteIntegration } from './core/config';
-import { defineConfig } from './core/config';
+import type { DiteConfig } from '@dite/core';
+import { defineConfig } from '@dite/core';
+import { matchRoutes } from './core/router';
 
-export { defineConfig, DiteConfig, DiteIntegration, DiteAdapter };
+export type { DiteConfig };
+export { defineConfig, matchRoutes };

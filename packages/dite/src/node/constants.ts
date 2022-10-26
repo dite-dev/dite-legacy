@@ -1,18 +1,10 @@
-import { createRequire } from 'node:module';
+import { __require } from '@dite/utils';
 import { dirname, join } from 'node:path';
-
-const __require = createRequire(import.meta.url);
 
 export const pkgRoot = dirname(__require.resolve('dite/package.json'));
 export const templateDir = join(pkgRoot, 'templates');
 
-export const configFiles = [
-  '.diterc.ts',
-  '.diterc.js',
-  'dite.config.ts',
-  'dite.config.js',
-];
-
 export const PATHS = {
+  ROOT: pkgRoot,
   TEMPLATE_DIR: templateDir,
 };

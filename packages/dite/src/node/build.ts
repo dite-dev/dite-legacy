@@ -1,4 +1,4 @@
-import { logger } from './shared/logger';
+import { logger } from '@dite/utils';
 
 export async function build(root: string) {
   // Write your code here

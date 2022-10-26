@@ -1,23 +1,22 @@
 /**
  * Use SWC to emit decorator metadata
  */
+import { localRequire } from '@dite/utils';
 import type { JscConfig } from '@swc/wasm';
 import type { Plugin } from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
-import { localRequire } from '../utils';
 
 export const swcPlugin = (): Plugin => {
   return {
     name: 'swc',
-
     async setup(build) {
       const swc: typeof import('@swc/wasm') = localRequire('@swc/wasm');
 
       if (!swc) {
         console.warn(
           build.initialOptions.format!,
-          `You have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin`,
+          'You have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin',
         );
         return;
       }
@@ -25,7 +24,7 @@ export const swcPlugin = (): Plugin => {
       // Force esbuild to keep class names as well
       build.initialOptions.keepNames = true;
 
-      build.onLoad({ filter: /\.[jt]sx?$/ }, async (args) => {
+      build.onLoad({ filter: /\.[jt]sx?$/ }, (args) => {
         const isTs = /\.tsx?$/.test(args.path);
 
         const jsc: JscConfig = {
@@ -43,7 +42,7 @@ export const swcPlugin = (): Plugin => {
 
         const fileContent = fs.readFileSync(args.path, 'utf-8');
 
-        const result = await swc.transformSync(fileContent, {
+        const result = swc.transformSync(fileContent, {
           jsc,
           sourceMaps: true,
           configFile: false,

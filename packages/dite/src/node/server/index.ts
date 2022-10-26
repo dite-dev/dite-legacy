@@ -1,8 +1,8 @@
-import type { ChildProcess } from 'child_process';
-import { fork } from 'child_process';
+import { DiteConfig } from '@dite/core';
+import { lodash, logger } from '@dite/utils';
+import type { ChildProcess, Serializable } from 'node:child_process';
+import { fork } from 'node:child_process';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
-import { DiteConfig, readConfig } from '../core/config';
-import { logger } from '../shared/logger';
 
 export interface DiteServer {
   config: DiteConfig;
@@ -26,22 +26,25 @@ export interface DiteServer {
   restart(forceOptimize?: boolean): Promise<void>;
 }
 
+function isReadyPayload(
+  payload: unknown,
+): payload is { type: 'dite:ready'; duration: number; memoryUsage: string } {
+  return (
+    lodash.isObject(payload) &&
+    (payload as Record<string, unknown>).type === 'dite:ready'
+  );
+}
+
+/**
+ * Create a new Dite server.
+ */
 export async function createServer(
-  diteRoot: string,
-  cb?: (server: DiteServer) => void,
-): Promise<DiteServer>;
-export async function createServer(
-  config: DiteConfig,
-  cb?: (server: DiteServer) => void,
-): Promise<DiteServer>;
-export async function createServer(
-  opt: any,
+  opt: DiteConfig,
   cb?: (server: DiteServer) => void,
 ) {
-  const config = typeof opt === 'string' ? await readConfig(opt) : opt;
+  const config = opt;
 
   let childRef: ChildProcess | undefined;
-  // const spinner = ora('dite');
 
   const createChildProcess = ({ port }: { port?: number } = {}) => {
     const ref = fork(config.serverBuildPath, {
@@ -52,15 +55,16 @@ export async function createServer(
       stdio: 'inherit',
     });
 
-    ref.on('message', (msg) => {
-      if (msg === 'dite:ready') {
-        // spinner.stop();
-        logger.ready('Server is ready.');
+    function onReady(payload: Serializable) {
+      if (isReadyPayload(payload)) {
+        const { duration, memoryUsage } = payload;
+        logger.ready(`Server is ready in ${duration}ms. \n${memoryUsage}`);
+        ref.removeListener('message', onReady);
       }
-    });
-
+    }
+    ref.on('message', onReady);
     ref.on('error', () => {
-      // spinner.stop();
+      ref.removeListener('message', onReady);
     });
     return ref;
   };

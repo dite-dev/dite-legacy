@@ -1,9 +1,11 @@
+import { resolveConfig, ServerMode } from '@dite/core';
 import { cac } from 'cac';
 import dotenv from 'dotenv';
-import exitHook from 'exit-hook';
+import { join } from 'path';
 // @ts-expect-error
 import { version } from '../../package.json';
 import * as commands from './cli/commands';
+import { defineConventionalRoutes } from './cli/routes';
 
 export class Service {
   public readonly root: string = process.env.DITE_PKG_ROOT!;
@@ -24,17 +26,18 @@ export class Service {
       .command('dev [root]', 'start dev server')
       .alias('dev')
       .action(async (root: string) => {
-        const closeWatcher = await commands.watch(root);
-        let resolve: () => void;
-        exitHook(() => {
-          closeWatcher();
-          resolve();
-        });
-        return new Promise<void>((r) => {
-          resolve = r;
-        }).then(async () => {
-          await closeWatcher();
-        });
+        const createServer = async () => {
+          const { createDevServer }: typeof import('./cli/dev') = await import(
+            `./dev.cjs?t=${Date.now()}`
+          );
+          console.log(root);
+          const config = await resolveConfig({
+            root,
+            mode: ServerMode.Development,
+          });
+          await createDevServer(config);
+        };
+        await createServer();
       });
 
     cli
@@ -50,8 +53,17 @@ export class Service {
         await commands.start(root, { port });
       });
 
+    cli
+      .command('routes [root]', 'routes for dite')
+      .action(async (root: string) => {
+        const config = await resolveConfig({
+          root,
+          mode: ServerMode.Production,
+        });
+        const routes = defineConventionalRoutes(join(config.root, 'app'));
+        console.log(routes);
+      });
+
     cli.parse(this.argv);
   }
 }
-
-export default Service;

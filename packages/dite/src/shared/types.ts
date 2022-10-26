@@ -1,3 +1,5 @@
+import { ServerMode } from '../node/core/config/server-mode';
+
 export interface DiteAdapter {
   name: string;
   serverEntrypoint?: string;
@@ -20,6 +22,7 @@ export interface DiteConfig {
   serverBuildPath: string;
   buildPath: string;
   root: string;
+  mode: ServerMode;
   adapter?: DiteIntegration[];
 }
 
