@@ -1,6 +1,5 @@
 {
   "name": "config",
   "private": true,
-  "dependencies": {
-  }
+  "dependencies": {}
 }

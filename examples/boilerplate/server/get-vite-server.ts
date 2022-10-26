@@ -1,6 +1,7 @@
 import { createServer } from 'vite';
 import { resolveAppPath } from './utils/resolve-path';
 
+import { fileURLToPath } from 'url';
 import type { ViteDevServer } from 'vite';
 
 let viteDevServer: ViteDevServer;
@@ -18,6 +19,12 @@ export async function getViteServer({ force } = { force: false }) {
       appType: 'custom',
       server: {
         middlewareMode: true,
+      },
+      resolve: {
+        alias: {
+          // @ts-ignore
+          '@': fileURLToPath(new URL('app', import.meta.url)),
+        },
       },
       ssr: {
         external: ['reflect-metadata'],

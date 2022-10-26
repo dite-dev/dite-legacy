@@ -27,11 +27,11 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/lodash": "^4.14.0",
+    "@types/lodash": "^4.14.186",
     "chalk": "^5.1.2",
     "consola": "^2.15.3",
     "debug": "^4.3.4",
-    "exit-hook": "^3.1.0",
+    "exit-hook": "^3.1.2",
     "lodash": "^4.17.21",
     "resolve-from": "^5.0.0"
   },

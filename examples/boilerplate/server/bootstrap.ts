@@ -1,13 +1,34 @@
 import { hook } from '@dite/node';
 import { NestFactory } from '@nestjs/core';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import type { DiteConfig } from 'dite';
 import fs from 'fs';
 import path from 'path';
+import { createServer as createViteServer } from 'vite';
+
+import type { ViteDevServer } from 'vite';
 import { AppModule } from './app.module';
-import { getViteServer } from './get-vite-server';
 
 const adapter = hook(async ({ addMiddleware, addRequestHandler, config }) => {
-  const vite = await getViteServer();
+  const vite: ViteDevServer = await createViteServer({
+    appType: 'custom',
+    publicDir: path.resolve(config.root, 'app', 'public'),
+    plugins: [vue(), vueJsx()],
+    configFile: false,
+    server: {
+      middlewareMode: true,
+    },
+    resolve: {
+      alias: {
+        '@': path.join(config.root, 'app'),
+      },
+    },
+    ssr: {
+      external: ['reflect-metadata'],
+    },
+  });
+  console.log('vite', config.root);
   addMiddleware(vite.middlewares);
   const htmlTemplate = fs.readFileSync(
     path.resolve(config.root, 'app/index.html'),

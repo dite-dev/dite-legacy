@@ -79,12 +79,9 @@ export async function resolveConfig(opts: ResolveConfigOptions) {
     process.env.DITE_ROOT = diteRoot;
   }
 
-  console.log('process.env.DITE_ROOT', process.env.DITE_ROOT);
   if (!isValidServerMode(mode)) {
     throw new Error(`Invalid server mode "${mode}"`);
   }
-
-  console.log('diteRoot', diteRoot);
 
   const userConfig = await resolveUserConfig({
     root: diteRoot,
