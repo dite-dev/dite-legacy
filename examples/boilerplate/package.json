@@ -9,7 +9,7 @@
     "start": "dite start"
   },
   "dependencies": {
-    "@dite/core": "0.1.21",
+    "@dite/core": "0.1.16",
     "@dite/nest": "0.1.21",
     "@dite/node": "0.1.21",
     "@nestjs/common": "^9.1.4",

@@ -138,7 +138,7 @@ importers:
 
   examples/boilerplate:
     specifiers:
-      '@dite/core': 0.1.21
+      '@dite/core': 0.1.16
       '@dite/nest': 0.1.21
       '@dite/node': 0.1.21
       '@nestjs/common': ^9.1.4
@@ -165,7 +165,7 @@ importers:
       vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      '@dite/core': link:../../packages/core
+      '@dite/core': 0.1.16_esbuild@0.15.11
       '@dite/nest': link:../../packages/nest
       '@dite/node': link:../../packages/node
       '@nestjs/common': 9.1.4_yzt46al3aifnexifjjdb4dxxja
@@ -972,6 +972,20 @@ packages:
       fs-extra: 7.0.1
       human-id: 1.0.2
       prettier: 2.7.1
+    dev: false
+
+  /@dite/core/0.1.16_esbuild@0.15.11:
+    resolution: {integrity: sha512-dBkPp6/vXRzWh9M3+SLUkryeCGXnSu2kndhUf3J1AsfPK2f5mr/5RLG2PQAKfk39DBbKKEfHefo8i+Ts/LS/EQ==}
+    engines: {node: '>=14'}
+    dependencies:
+      bundle-require: 3.1.0_esbuild@0.15.11
+      chalk: 4.1.2
+      consola: 2.15.3
+      debug: 4.3.4
+      fs-extra: 10.1.0
+    transitivePeerDependencies:
+      - esbuild
+      - supports-color
     dev: false
 
   /@esbuild-kit/cjs-loader/2.4.0:
