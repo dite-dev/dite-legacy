@@ -1,14 +1,14 @@
-const About = () => {
-  const onClick = () => {
-    console.log(1);
-  };
-  return (
-    <div>
-      <button onClick={onClick} type="button">
-        About
-      </button>
-    </div>
-  );
-};
+import { defineComponent } from 'vue';
 
-export default About;
+export default defineComponent({
+  name: 'About',
+  setup() {
+    return () => {
+      return (
+        <div className="about">
+          <h1>This is an about page</h1>
+        </div>
+      );
+    };
+  },
+});

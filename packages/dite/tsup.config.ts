@@ -1,16 +1,7 @@
-import type { Format } from 'tsup';
 import { defineConfig } from 'tsup';
 
-const isDev = process.argv.slice(2).includes('--watch');
+const isDev = process.env.NODE_ENV !== 'production';
 const isProd = !isDev;
-
-const banner = ({ format }: { format: Format }) => ({
-  js:
-    format === 'esm'
-      ? "import {createRequire as __createRequire} from 'module';var require = __createRequire(import" +
-        '.meta.url);'
-      : '',
-});
 
 export default defineConfig([
   {
@@ -22,15 +13,17 @@ export default defineConfig([
     minifyIdentifiers: false,
     skipNodeModulesBundle: true,
     bundle: true,
+    platform: 'node',
     dts: true,
     sourcemap: true,
-    splitting: true,
+    splitting: false,
     minify: isProd,
     treeshake: true,
+    keepNames: true,
     outDir: 'dist/node',
     clean: isProd,
     shims: true,
-    format: ['esm'],
+    format: ['cjs', 'esm'],
   },
   {
     entry: {
@@ -47,6 +40,6 @@ export default defineConfig([
     format: ['cjs', 'esm'],
     clean: isProd,
     shims: true,
-    banner,
+    // banner,
   },
 ]);

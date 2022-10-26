@@ -7,10 +7,12 @@ importers:
       '@changesets/changelog-github': 0.4.7
       '@changesets/cli': 2.25.0
       '@dite/codemod': workspace:*
+      '@dite/core': workspace:*
       '@dite/lint': workspace:*
       '@dite/nest': workspace:*
       '@dite/node': workspace:*
       '@dite/react': workspace:*
+      '@dite/utils': workspace:*
       '@dite/vue': workspace:*
       '@pnpm/lockfile-file': ^6.0.0
       '@pnpm/logger': ^5.0.0
@@ -55,10 +57,12 @@ importers:
       '@changesets/changelog-github': 0.4.7
       '@changesets/cli': 2.25.0
       '@dite/codemod': link:codemod
+      '@dite/core': link:packages/core
       '@dite/lint': link:packages/lint
       '@dite/nest': link:packages/nest
       '@dite/node': link:packages/node
       '@dite/react': link:packages/react
+      '@dite/utils': link:packages/utils
       '@dite/vue': link:packages/vue
       '@pnpm/lockfile-file': 6.0.0_@pnpm+logger@5.0.0
       '@pnpm/logger': 5.0.0
@@ -134,6 +138,7 @@ importers:
 
   examples/boilerplate:
     specifiers:
+      '@dite/core': 0.1.21
       '@dite/nest': 0.1.21
       '@dite/node': 0.1.21
       '@nestjs/common': ^9.1.4
@@ -160,6 +165,7 @@ importers:
       vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
+      '@dite/core': link:../../packages/core
       '@dite/nest': link:../../packages/nest
       '@dite/node': link:../../packages/node
       '@nestjs/common': 9.1.4_yzt46al3aifnexifjjdb4dxxja
@@ -187,6 +193,9 @@ importers:
       tsconfig-paths: 4.1.0
       typescript: 4.8.4
 
+  packages/core:
+    specifiers: {}
+
   packages/create-dite:
     specifiers:
       '@types/mustache': ^4.2.1
@@ -210,10 +219,13 @@ importers:
 
   packages/dite:
     specifiers:
+      '@dite/core': workspace:*
+      '@dite/utils': workspace:*
       '@swc/wasm': ^1.3.0
       '@types/cross-spawn': ^6.0.0
       '@types/debug': ^4.1.7
       '@types/fs-extra': ^9.0.13
+      '@types/lodash': ^4.14.0
       '@types/lodash-es': ^4.17.6
       '@types/minimatch': ^5.1.2
       '@types/mustache': ^4.2.1
@@ -228,6 +240,7 @@ importers:
       esbuild: ^0.15.10
       exit-hook: ^3.1.0
       fs-extra: ^10.1.0
+      lodash: ^4.17.21
       lodash-es: ^4.17.21
       minimatch: ^5.1.0
       mustache: ^4.2.0
@@ -235,6 +248,8 @@ importers:
       resolve-from: ^5.0.0
       vite: ^3.0.0
     dependencies:
+      '@dite/core': link:../core
+      '@dite/utils': link:../utils
       '@swc/wasm': 1.3.10
       bundle-require: 3.1.0_esbuild@0.15.11
       cac: 6.7.14
@@ -247,6 +262,7 @@ importers:
       esbuild: 0.15.11
       exit-hook: 3.1.0
       fs-extra: 10.1.0
+      lodash: 4.17.21
       lodash-es: 4.17.21
       minimatch: 5.1.0
       mustache: 4.2.0
@@ -256,6 +272,7 @@ importers:
       '@types/cross-spawn': 6.0.2
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.13
+      '@types/lodash': 4.14.186
       '@types/lodash-es': 4.17.6
       '@types/minimatch': 5.1.2
       '@types/mustache': 4.2.1
@@ -341,28 +358,9 @@ importers:
 
   packages/node:
     specifiers:
-      '@nestjs/common': ^9.1.4
-      '@nestjs/core': ^9.1.4
-      '@nestjs/platform-express': ^9.1.4
-      '@parcel/css': 1.14.0
-      '@types/compression': ^1.7.2
       '@types/express': ^4.17.14
-      compression: ^1.7.4
-      dite: 0.1.21
-      reflect-metadata: ^0.1.13
-      rxjs: ^7.5.7
-    dependencies:
-      '@nestjs/platform-express': 9.1.4_osbqhc5bxkxr7p4xaw5wgzf7bi
-      '@parcel/css': 1.14.0
-      compression: 1.7.4
-      dite: link:../dite
     devDependencies:
-      '@nestjs/common': 9.1.4_yzt46al3aifnexifjjdb4dxxja
-      '@nestjs/core': 9.1.4_os3bpar6zvfsuh6rrdsifrg6hi
-      '@types/compression': 1.7.2
       '@types/express': 4.17.14
-      reflect-metadata: 0.1.13
-      rxjs: 7.5.7
 
   packages/react:
     specifiers:
@@ -386,6 +384,24 @@ importers:
       '@types/express': 4.17.14
       reflect-metadata: 0.1.13
       rxjs: 7.5.7
+
+  packages/utils:
+    specifiers:
+      '@types/lodash': ^4.14.0
+      chalk: ^5.1.2
+      consola: ^2.15.3
+      debug: ^4.3.4
+      exit-hook: ^3.1.0
+      lodash: ^4.17.21
+      resolve-from: ^5.0.0
+    devDependencies:
+      '@types/lodash': 4.14.186
+      chalk: 5.1.2
+      consola: 2.15.3
+      debug: 4.3.4
+      exit-hook: 3.1.0
+      lodash: 4.17.21
+      resolve-from: 5.0.0
 
   packages/vue:
     specifiers:
@@ -3463,7 +3479,6 @@ packages:
   /chalk/5.1.2:
     resolution: {integrity: sha512-E5CkT4jWURs1Vy5qGJye+XwCkNj7Od3Af7CP6SujMetSMkLs8Do2RWJK5yx1wamHV/op8Rz+9rltjaTQWDnEFQ==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
-    dev: false
 
   /chardet/0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
@@ -3893,8 +3908,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      JSONStream: 1.3.5
       is-text-path: 1.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -4845,7 +4860,6 @@ packages:
   /exit-hook/3.1.0:
     resolution: {integrity: sha512-KiF9SiLZsKhSutx4V9sG2InYb0v1+2sfKlGD18et8/aGg2m4ij6MJbUHy/cnqJf4ncE7rWjqchE2SNIi4Lgg4A==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dev: false
 
   /express/4.18.1:
     resolution: {integrity: sha512-zZBcOX9TfehHQhtupq57OF8lFZ3UZi08Y97dwFCkD8p9d/d2Y3M+ykKcwaMDEL+4qyUolgBDX6AblpR3fL212Q==}
@@ -6410,7 +6424,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: false
 
   /log-symbols/4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -7954,7 +7967,6 @@ packages:
   /resolve-from/5.0.0:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
-    dev: false
 
   /resolve/1.22.1:
     resolution: {integrity: sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==}

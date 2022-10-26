@@ -20,6 +20,13 @@ import { spawnSync } from '../utils';
     args.push('--cache-dir=".turbo"');
   }
 
+  //turbo env
+  if (args.includes('--prod')) {
+    process.env.NODE_ENV = 'production';
+    args.splice(args.indexOf('--prod'), 1);
+    args.push('--force');
+  }
+
   const command = `turbo run ${args.join(' ')}`;
-  spawnSync(command, { cwd: PATHS.ROOT });
+  spawnSync(command, { cwd: PATHS.ROOT, env: process.env });
 })();

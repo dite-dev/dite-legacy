@@ -3,25 +3,27 @@ import {
   createRouter as _createRouter,
   createWebHistory,
 } from 'vue-router';
+import About from '../pages/about';
+import Category from '../pages/category.vue';
+import Index from '../pages/index';
 
-// @ts-expect-error
-const pages = import.meta.glob('../views/*.vue');
-const routes = Object.keys(pages).map((path) => {
-  const name = path.match(/\.\.\/pages\/(.*)\.vue$/)[1].toLowerCase();
-  const routePath = `/${name}`;
-  if (routePath === '/index') {
-    return {
-      path: '/',
-      name,
-      component: pages[path],
-    };
-  }
-  return {
-    path: routePath,
-    name,
-    component: pages[path],
-  };
-});
+const routes = [
+  {
+    path: '/',
+    name: 'Index',
+    component: Index,
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About,
+  },
+  {
+    path: '/category',
+    name: 'Category',
+    component: Category,
+  },
+];
 
 export function createRouter() {
   return _createRouter({

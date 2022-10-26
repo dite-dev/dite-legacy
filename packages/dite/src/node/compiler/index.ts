@@ -1,17 +1,14 @@
+import { logger } from '@dite/utils';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
-import { debounce } from 'lodash-es';
-import { createRequire } from 'module';
+import _ from 'lodash';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';
 import type { DiteConfig } from '../../shared/types';
 import { templateDir } from '../constants';
 import { ServerMode } from '../core/config/server-mode';
-import { logger } from '../shared/logger';
 import { swcPlugin } from './swc';
-
-const __require = createRequire(import.meta.url);
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -28,7 +25,7 @@ async function buildEverything(
   options: Required<BuildOptions> & { incremental?: boolean },
 ): Promise<(esbuild.BuildResult | undefined)[]> {
   try {
-    logger.debug('config', config);
+    logger.info('config', config);
     const serverBuildPromise = createServerBuild(config, options);
     const browserBuildPromise = createBrowserBuild(config, options);
 
@@ -93,7 +90,7 @@ export async function watch(
     serverBuild = undefined;
   }
 
-  const rebuildEverything = debounce(async () => {
+  const rebuildEverything = _.debounce(async () => {
     if (onRebuildStart) onRebuildStart();
     if (!serverBuild?.rebuild) {
       disposeBuilders();
@@ -239,7 +236,7 @@ export async function writeServerBuildResult(
     await fs.ensureDir(dirname(file.path));
     if (file.path.endsWith('.js')) {
       if (mode === 'development') {
-        delete __require.cache[file.path];
+        delete require.cache[file.path];
       }
       // fix sourceMappingURL to be relative to current path instead of /build
       const filename = file.path.substring(file.path.lastIndexOf(sep) + 1);

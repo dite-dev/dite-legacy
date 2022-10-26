@@ -1,16 +1,15 @@
 /**
  * Use SWC to emit decorator metadata
  */
+import { localRequire } from '@dite/utils';
 import type { JscConfig } from '@swc/wasm';
 import type { Plugin } from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
-import { localRequire } from '../utils';
 
 export const swcPlugin = (): Plugin => {
   return {
     name: 'swc',
-
     async setup(build) {
       const swc: typeof import('@swc/wasm') = localRequire('@swc/wasm');
 

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { logger } from '../../src/node/shared/logger';
+import { logger } from '../src/logger';
 
 describe('node/logger', () => {
   it('should log', () => {
@@ -10,10 +10,6 @@ describe('node/logger', () => {
     const waitSpy = vi.spyOn(logger, 'wait');
     logger.wait('hello');
     expect(waitSpy).toHaveBeenCalled();
-
-    const debugSpy = vi.spyOn(logger, 'debug');
-    logger.debug('hello');
-    expect(debugSpy).toHaveBeenCalled();
 
     const errorSpy = vi.spyOn(logger, 'error');
     logger.error('hello');

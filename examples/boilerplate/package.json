@@ -3,11 +3,13 @@
   "private": true,
   "scripts": {
     "build": "dite build",
+    "build:tsup": "tsup",
     "dev": "dite dev",
     "routes": "dite routes",
     "start": "dite start"
   },
   "dependencies": {
+    "@dite/core": "0.1.21",
     "@dite/nest": "0.1.21",
     "@dite/node": "0.1.21",
     "@nestjs/common": "^9.1.4",

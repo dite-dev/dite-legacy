@@ -5,12 +5,15 @@ import { join } from 'path';
 import { version } from '../../package.json';
 import * as commands from './cli/commands';
 import { defineConventionalRoutes } from './cli/routes';
+import { resolveConfig } from './core/config';
+import { ServerMode } from './core/config/server-mode';
 
 export class Service {
   public readonly root: string = process.env.DITE_PKG_ROOT!;
   protected argv: string[];
   constructor({ argv }: { argv: string[] } = { argv: process.argv }) {
     dotenv.config();
+    console.log('__dirname', __dirname);
     this.argv = argv;
   }
 
@@ -27,9 +30,14 @@ export class Service {
       .action(async (root: string) => {
         const createServer = async () => {
           const { createDevServer }: typeof import('./cli/dev') = await import(
-            `./dev.js?t=${Date.now()}`
+            `./dev.cjs?t=${Date.now()}`
           );
-          await createDevServer(root);
+          console.log(root);
+          const config = await resolveConfig({
+            root,
+            mode: ServerMode.Development,
+          });
+          await createDevServer(config);
         };
         await createServer();
       });
@@ -49,19 +57,15 @@ export class Service {
 
     cli
       .command('routes [root]', 'routes for dite')
-      .action(async (root: string, { port }: { port: number }) => {
-        // await commands.start(root, { port });
-        let diteRoot = root;
-
-        if (!diteRoot) {
-          diteRoot = process.env.DITE_ROOT || process.cwd!();
-        }
-        const routes = defineConventionalRoutes(join(diteRoot, 'app'));
+      .action(async (root: string) => {
+        const config = await resolveConfig({
+          root,
+          mode: ServerMode.Production,
+        });
+        const routes = defineConventionalRoutes(join(config.root, 'app'));
         console.log(routes);
       });
 
     cli.parse(this.argv);
   }
 }
-
-export default Service;

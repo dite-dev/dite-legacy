@@ -22,6 +22,7 @@ const defaultConfig: DiteConfig = {
   root: process.cwd!(),
   serverBuildPath: '',
   port: 3001,
+  mode: ServerMode.Production,
   buildPath: '.dite',
 };
 
@@ -55,19 +56,8 @@ export async function resolveUserConfig(opts: ResolveConfigOptions) {
   return await loadConfigFromFile(root);
 }
 
-export async function readConfig(
-  diteRoot?: string,
-  serverMode = ServerMode.Production,
-) {
-  if (!diteRoot) {
-    diteRoot = process.env.DITE_ROOT || process.cwd!();
-  }
-
-  if (!isValidServerMode(serverMode)) {
-    throw new Error(`Invalid server mode "${serverMode}"`);
-  }
-
-  return resolveConfig({ root: diteRoot, mode: serverMode });
+export function readConfig() {
+  return (global as any).__dite_config as DiteConfig;
 }
 
 export function generateConfig(
@@ -90,6 +80,27 @@ export function generateConfig(
 }
 
 export async function resolveConfig(opts: ResolveConfigOptions) {
-  const userConfig = await resolveUserConfig(opts);
-  return generateConfig(userConfig, opts);
+  const { mode, root } = opts;
+  let diteRoot = root;
+  if (!diteRoot) {
+    diteRoot = process.env.DITE_ROOT || process.cwd!();
+    process.env.DITE_ROOT = diteRoot;
+  }
+
+  console.log('process.env.DITE_ROOT', process.env.DITE_ROOT);
+  if (!isValidServerMode(mode)) {
+    throw new Error(`Invalid server mode "${mode}"`);
+  }
+
+  console.log('diteRoot', diteRoot);
+
+  const userConfig = await resolveUserConfig({
+    root: diteRoot,
+    mode,
+  });
+  const config = generateConfig(userConfig, { root: diteRoot, mode });
+
+  (global as any).__dite_config = config;
+
+  return config;
 }

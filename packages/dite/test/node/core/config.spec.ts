@@ -91,7 +91,10 @@ describe('src/config', () => {
   describe('readConfig', () => {
     let config;
     it('should be success', async () => {
-      config = await readConfig(configPath);
+      config = await resolveConfig({
+        root: configPath,
+        mode: ServerMode.Development,
+      });
 
       expect(config).toMatchObject({
         root: configPath,
@@ -102,7 +105,7 @@ describe('src/config', () => {
 
       process.env.DITE_ROOT = configPath;
 
-      config = await readConfig();
+      config = readConfig();
 
       expect(config).toMatchObject({
         root: configPath,
@@ -114,7 +117,10 @@ describe('src/config', () => {
 
     it('should throw error if invalid server mode', async () => {
       await expect(
-        readConfig(configPath, 'invalid' as any),
+        resolveConfig({
+          root: configPath,
+          mode: 'invalid' as any,
+        }),
       ).rejects.toThrowError();
     });
   });

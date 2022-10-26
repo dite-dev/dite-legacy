@@ -1,16 +1,22 @@
 import fs from 'fs';
 import minimatch from 'minimatch';
 import path from 'path';
-import { readConfig } from '../core/config';
+import { resolveConfig } from '../core/config';
 import { generateRoutes } from '../core/config/routes';
+import { ServerMode } from '../core/config/server-mode';
 
-export async function routes(diteRoot: string, opts: { port?: number }) {
-  const config = await readConfig(diteRoot);
+export async function routes(diteRoot: string) {
+  const config = await resolveConfig({
+    root: diteRoot,
+    mode: ServerMode.Production,
+  });
   console.log('config', config);
 
   const routesConfig = generateRoutes(diteRoot);
   console.log(routesConfig);
+  return routesConfig;
 }
+
 /**
  * A route that was created using `defineRoutes` or created conventionally from
  * looking at the files on the filesystem.
@@ -144,7 +150,7 @@ export function defineRoutes(
       options = optionsOrChildren || {};
     }
 
-    let route: ConfigRoute = {
+    const route: ConfigRoute = {
       path: path ? path : undefined,
       index: options.index ? true : undefined,
       caseSensitive: options.caseSensitive ? true : undefined,
@@ -203,7 +209,7 @@ export function defineConventionalRoutes(
   appDir: string,
   ignoredFilePatterns?: string[],
 ): RouteManifest {
-  let files: { [routeId: string]: string } = {};
+  const files: { [routeId: string]: string } = {};
 
   // First, find all route modules in app/routes
   visitFiles(path.join(appDir, 'pages'), (file) => {
@@ -215,7 +221,7 @@ export function defineConventionalRoutes(
     }
 
     if (isRouteModuleFile(file)) {
-      let routeId = createRouteId(path.join('pages', file));
+      const routeId = createRouteId(path.join('pages', file));
       files[routeId] = path.join('pages', file);
       return;
     }
@@ -225,27 +231,27 @@ export function defineConventionalRoutes(
     );
   });
 
-  let routeIds = Object.keys(files).sort(byLongestFirst);
+  const routeIds = Object.keys(files).sort(byLongestFirst);
 
-  let uniqueRoutes = new Map<string, string>();
+  const uniqueRoutes = new Map<string, string>();
 
   // Then, recurse through all routes using the public defineRoutes() API
   function defineNestedRoutes(
     defineRoute: DefineRouteFunction,
     parentId?: string,
   ): void {
-    let childRouteIds = routeIds.filter(
+    const childRouteIds = routeIds.filter(
       (id) => findParentRouteId(routeIds, id) === parentId,
     );
 
-    for (let routeId of childRouteIds) {
-      let routePath: string | undefined = createRoutePath(
+    for (const routeId of childRouteIds) {
+      const routePath: string | undefined = createRoutePath(
         routeId.slice((parentId || 'pages').length + 1),
       );
 
-      let isIndexRoute = routeId.endsWith('/index');
-      let fullPath = createRoutePath(routeId.slice('pages'.length + 1));
-      let uniqueRouteId = (fullPath || '') + (isIndexRoute ? '?index' : '');
+      const isIndexRoute = routeId.endsWith('/index');
+      const fullPath = createRoutePath(routeId.slice('pages'.length + 1));
+      const uniqueRouteId = (fullPath || '') + (isIndexRoute ? '?index' : '');
 
       if (uniqueRouteId) {
         if (uniqueRoutes.has(uniqueRouteId)) {
@@ -262,7 +268,7 @@ export function defineConventionalRoutes(
       }
 
       if (isIndexRoute) {
-        let invalidChildRoutes = routeIds.filter(
+        const invalidChildRoutes = routeIds.filter(
           (id) => findParentRouteId(routeIds, id) === routeId,
         );
 
@@ -286,8 +292,8 @@ export function defineConventionalRoutes(
   return defineRoutes(defineNestedRoutes);
 }
 
-let escapeStart = '[';
-let escapeEnd = ']';
+const escapeStart = '[';
+const escapeEnd = ']';
 
 // TODO: Cleanup and write some tests for this function
 export function createRoutePath(partialRouteId: string): string | undefined {
@@ -297,24 +303,24 @@ export function createRoutePath(partialRouteId: string): string | undefined {
   let inEscapeSequence = 0;
   let skipSegment = false;
   for (let i = 0; i < partialRouteId.length; i++) {
-    let char = partialRouteId.charAt(i);
-    let lastChar = i > 0 ? partialRouteId.charAt(i - 1) : undefined;
-    let nextChar =
+    const char = partialRouteId.charAt(i);
+    const lastChar = i > 0 ? partialRouteId.charAt(i - 1) : undefined;
+    const nextChar =
       i < partialRouteId.length - 1 ? partialRouteId.charAt(i + 1) : undefined;
 
-    function isNewEscapeSequence() {
+    const isNewEscapeSequence = () => {
       return (
         !inEscapeSequence && char === escapeStart && lastChar !== escapeStart
       );
-    }
+    };
 
-    function isCloseEscapeSequence() {
+    const isCloseEscapeSequence = () => {
       return inEscapeSequence && char === escapeEnd && nextChar !== escapeEnd;
-    }
+    };
 
-    function isStartOfLayoutSegment() {
+    const isStartOfLayoutSegment = () => {
       return char === '_' && nextChar === '_' && !rawSegmentBuffer;
-    }
+    };
 
     if (skipSegment) {
       if (char === '/' || char === '.' || char === path.win32.sep) {
@@ -386,9 +392,9 @@ function visitFiles(
   visitor: (file: string) => void,
   baseDir = dir,
 ): void {
-  for (let filename of fs.readdirSync(dir)) {
-    let file = path.resolve(dir, filename);
-    let stat = fs.lstatSync(file);
+  for (const filename of fs.readdirSync(dir)) {
+    const file = path.resolve(dir, filename);
+    const stat = fs.lstatSync(file);
 
     if (stat.isDirectory()) {
       visitFiles(file, visitor, baseDir);
