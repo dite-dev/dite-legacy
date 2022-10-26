@@ -196,8 +196,10 @@ importers:
   packages/core:
     specifiers:
       bundle-require: ^3.1.0
+      esbuild: ^0.15.12
     dependencies:
       bundle-require: 3.1.0_esbuild@0.15.12
+      esbuild: 0.15.12
 
   packages/create-dite:
     specifiers:

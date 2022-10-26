@@ -39,7 +39,7 @@ jobs:
         run: pnpm install
 
       - name: Build Packages
-        run: pnpm run build:prod
+        run: pnpm run build
 
       - uses: preactjs/compressed-size-action@v2
         with:
