@@ -46,7 +46,7 @@ const require = createRequire(import.meta.url);
   logger.event('check npm ownership');
   const whoami = (await $`npm whoami`).stdout.trim();
   await Promise.all(
-    ['dite', '@dite/core'].map(async (pkg) => {
+    ['dite'].map(async (pkg) => {
       const owners = (await $`npm owner ls ${pkg}`).stdout
         .trim()
         .split('\n')
@@ -109,11 +109,13 @@ const require = createRequire(import.meta.url);
       pkg,
       version,
       deps: [
+        '@dite/core',
         '@dite/nest',
         '@dite/node',
-        '@dite/runtime',
-        '@dite/vue',
         '@dite/react',
+        '@dite/runtime',
+        '@dite/utils',
+        '@dite/vue',
         'create-dite',
         'dite',
       ],
