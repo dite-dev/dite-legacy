@@ -1,6 +1,6 @@
 {
   "name": "@dite/core",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "@dite/core",
   "keywords": [
     "dite"
@@ -28,7 +28,6 @@
   "dependencies": {
     "bundle-require": "^3.1.0"
   },
-  "devDependencies": {},
   "peerDependencies": {
     "esbuild": "^0.15.12"
   },

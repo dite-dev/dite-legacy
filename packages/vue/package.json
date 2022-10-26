@@ -1,6 +1,6 @@
 {
   "name": "@dite/vue",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "@dite/vue",
   "keywords": [
     "dite"
@@ -25,7 +25,6 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "vue": "^3.2.41"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@dite/utils",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "@dite/utils",
   "keywords": [
     "dite"
@@ -25,7 +25,6 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/lodash": "^4.14.186",
     "chalk": "^5.1.2",
@@ -35,7 +34,6 @@
     "lodash": "^4.17.21",
     "resolve-from": "^5.0.0"
   },
-  "peerDependencies": {},
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },

@@ -138,9 +138,9 @@ importers:
 
   examples/boilerplate:
     specifiers:
-      '@dite/core': 0.1.21
-      '@dite/nest': 0.1.21
-      '@dite/node': 0.1.21
+      '@dite/core': 0.1.22
+      '@dite/nest': 0.1.22
+      '@dite/node': 0.1.22
       '@nestjs/common': ^9.1.6
       '@nestjs/core': ^9.1.6
       '@nestjs/platform-express': ^9.1.6
@@ -151,7 +151,7 @@ importers:
       '@vitejs/plugin-vue': ^3.2.0
       '@vitejs/plugin-vue-jsx': ^2.1.0
       compression: ^1.7.4
-      dite: 0.1.21
+      dite: 0.1.22
       eslint: ^8.26.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-prettier: ^4.2.1
@@ -335,7 +335,7 @@ importers:
 
   packages/nest:
     specifiers:
-      '@dite/node': 0.1.21
+      '@dite/node': 0.1.22
       '@nestjs/common': ^9.1.6
       '@nestjs/core': ^9.1.6
       '@nestjs/platform-express': ^9.1.6

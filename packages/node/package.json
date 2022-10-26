@@ -1,6 +1,6 @@
 {
   "name": "@dite/node",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "@dite/node",
   "keywords": [
     "dite"
@@ -35,7 +35,6 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/express": "^4.17.14"
   },
