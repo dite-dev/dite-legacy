@@ -45,4 +45,4 @@ jobs:
         with:
           build-script: 'build'
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
-          pattern: './packages/*/{dist}/**/*.{js,d.ts}'
+          pattern: './packages/*/{dist,templates}/**/*.{js,cjs,mjs,mustache,d.ts}'
