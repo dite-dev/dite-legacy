@@ -83,7 +83,7 @@
     "vitest": "^0.24.3",
     "zx": "4.3.0"
   },
-  "packageManager": "pnpm@7.3.0",
+  "packageManager": "pnpm@7.14.0",
   "engines": {
     "node": "^14.18.0 || >=16.0.0",
     "pnpm": ">=7"
