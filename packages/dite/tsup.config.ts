@@ -1,7 +1,4 @@
-import { defineConfig } from 'tsup';
-
-const isDev = process.env.NODE_ENV !== 'production';
-const isProd = !isDev;
+import { defineConfig } from '../../tsup-base.config';
 
 export default defineConfig([
   {
@@ -17,11 +14,9 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     splitting: false,
-    minify: isProd,
     treeshake: true,
     keepNames: true,
     outDir: 'dist/node',
-    clean: isProd,
     shims: true,
     format: ['cjs', 'esm'],
   },
@@ -34,12 +29,9 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     splitting: true,
-    minify: isProd,
     skipNodeModulesBundle: true,
     outDir: 'dist/client',
     format: ['cjs', 'esm'],
-    clean: isProd,
     shims: true,
-    // banner,
   },
 ]);

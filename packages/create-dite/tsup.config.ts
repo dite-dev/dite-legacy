@@ -1,6 +1,4 @@
-import { defineConfig } from 'tsup';
-
-const prod = process.env.NODE_ENV === 'production';
+import { defineConfig } from '../../tsup-base.config';
 
 export default defineConfig({
   entry: {
@@ -13,8 +11,6 @@ export default defineConfig({
   sourcemap: true,
   splitting: true,
   skipNodeModulesBundle: true,
-  minify: prod,
-  silent: prod,
   outDir: 'dist',
   clean: true,
   shims: true,

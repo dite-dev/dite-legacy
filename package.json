@@ -2,6 +2,7 @@
   "private": true,
   "homepage": "https://dite.dev",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "bootstrap": "dite-scripts bootstrap",
     "build": "dite-scripts turbo build --prod",
