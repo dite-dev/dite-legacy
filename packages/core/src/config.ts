@@ -1,10 +1,9 @@
-import esbuild from 'esbuild';
 import { existsSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { isValidServerMode, ServerMode } from './config/server-mode';
 import type { DiteConfig, DiteUserConfig } from './config/types';
 import { configFiles } from './constants';
-import * as register from './utils/register';
+import dynamicImport from './utils/register';
 
 interface ResolveConfigOptions {
   root: string;
@@ -34,15 +33,7 @@ export function loadConfigFromFile<T = Partial<DiteConfig>>(
     .map((configFile) => join(cwd, configFile))
     .find((p) => existsSync(p));
   if (filepath) {
-    register.register({
-      implementor: esbuild,
-    });
-    register.clearFiles();
-    const config = register.__require(filepath);
-    for (const file of register.getFiles()) {
-      delete require.cache[file];
-    }
-    register.restore();
+    const config = dynamicImport(filepath);
     return {
       path: filepath,
       config: (config.dite || config.default || config) as T,

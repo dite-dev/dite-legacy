@@ -1,3 +1,4 @@
+import esbuild from 'esbuild';
 import { createRequire } from 'node:module';
 import { extname } from 'node:path';
 import { addHook } from 'pirates';
@@ -9,7 +10,7 @@ let registered = false;
 let files: string[] = [];
 let revert: () => void = () => {};
 
-export const __require =
+const __require =
   typeof require === 'function' ? require : createRequire(import.meta.url);
 
 function transform(opts: { code: string; filename: string; implementor: any }) {
@@ -30,14 +31,14 @@ function transform(opts: { code: string; filename: string; implementor: any }) {
   }
 }
 
-export function register(opts: { implementor: any; exts?: string[] }) {
+function register(opts: { implementor?: any; exts?: string[] } = {}) {
+  const { implementor = esbuild, exts = HOOK_EXTS } = opts;
   files = [];
   if (!registered) {
     revert = addHook(
-      (code, filename) =>
-        transform({ code, filename, implementor: opts.implementor }),
+      (code, filename) => transform({ code, filename, implementor }),
       {
-        ext: opts.exts || HOOK_EXTS,
+        exts,
         ignoreNodeModules: true,
       },
     );
@@ -45,15 +46,34 @@ export function register(opts: { implementor: any; exts?: string[] }) {
   }
 }
 
-export function getFiles() {
+function dynamicImport(filepath: string, opts: { clean?: boolean } = {}) {
+  const { clean = false } = opts;
+  let content;
+  register();
+  if (clean) {
+    clearFiles();
+    content = __require(filepath);
+    for (const file of getFiles()) {
+      delete __require.cache[file];
+    }
+  } else {
+    content = __require(filepath);
+  }
+  restore();
+  return content;
+}
+
+function getFiles() {
   return files;
 }
 
-export function clearFiles() {
+function clearFiles() {
   files = [];
 }
 
-export function restore() {
+function restore() {
   revert();
   registered = false;
 }
+
+export default dynamicImport;
