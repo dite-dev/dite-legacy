@@ -8,6 +8,7 @@ export function defineConfig(opts: Options | Options[]) {
     opt.clean = isProd;
     opt.minify = isProd;
     opt.sourcemap = !isProd;
+    opt.shims = true;
   });
   return defineBaseConfig(options);
 }

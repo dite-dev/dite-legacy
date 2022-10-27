@@ -1,9 +1,9 @@
-import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { isValidServerMode, ServerMode } from './config/server-mode';
 import type { DiteConfig, DiteUserConfig } from './config/types';
 import { configFiles } from './constants';
+import { bundleRequire } from './utils/bundle-require';
 
 interface ResolveConfigOptions {
   root: string;
