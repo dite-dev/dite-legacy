@@ -27,8 +27,8 @@ describe('src/config', () => {
   });
 
   describe('loadConfigFromFile', () => {
-    it('should return config', async () => {
-      const config = await loadConfigFromFile(configPath);
+    it('should return config', () => {
+      const config = loadConfigFromFile(configPath);
       expect(config).toBeDefined();
       expect(config?.path).toEqual(path.join(configPath, '.diterc.ts'));
       expect(config?.config).toMatchObject({
@@ -36,8 +36,8 @@ describe('src/config', () => {
       });
     });
 
-    it('should return null if no config file found', async () => {
-      const config = await loadConfigFromFile(process.cwd());
+    it('should return null if no config file found', () => {
+      const config = loadConfigFromFile(process.cwd());
       expect(config).toBeNull();
     });
   });
@@ -71,7 +71,7 @@ describe('src/config', () => {
   });
 
   describe('generateConfig', () => {
-    it('should be success', async () => {
+    it('should be success', () => {
       const userConfig: DiteUserConfig = {
         serverBuildPath: path.join(process.cwd(), 'dist/server'),
       };
@@ -90,8 +90,8 @@ describe('src/config', () => {
 
   describe('readConfig', () => {
     let config;
-    it('should be success', async () => {
-      config = await resolveConfig({
+    it('should be success', () => {
+      config = resolveConfig({
         root: configPath,
         mode: ServerMode.Development,
       });
@@ -115,11 +115,18 @@ describe('src/config', () => {
       });
     });
 
-    it('should throw error if invalid server mode', async () => {
-      await expect(
-        resolveConfig({
-          root: configPath,
-          mode: 'invalid' as any,
+    it('should throw error if invalid server mode', () => {
+      expect(
+        new Promise((resolve, reject) => {
+          try {
+            const config = resolveConfig({
+              root: configPath,
+              mode: 'invalid' as any,
+            });
+            resolve(config);
+          } catch (error) {
+            reject(error);
+          }
         }),
       ).rejects.toThrowError();
     });

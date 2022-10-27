@@ -1,5 +1,6 @@
 import { performance } from 'node:perf_hooks';
 import { createServer } from '{{{ serverPath }}}';
+import { readConfig } from '@dite/core';
 
 global.__dite_server_start_time = performance.now();
 
@@ -12,7 +13,7 @@ function getMemoryUsage() {
   } MB)`;
 }
 
-const config = {{{ config }}};
+const config = readConfig('/Users/heixing/Git/dite/examples/boilerplate');
 
 global.__dite_config = config;
 
