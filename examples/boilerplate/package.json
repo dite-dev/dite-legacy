@@ -8,7 +8,6 @@
     "start": "dite start"
   },
   "dependencies": {
-    "@dite/core": "0.1.24",
     "@dite/nest": "0.1.24",
     "@dite/node": "0.1.24",
     "@nestjs/common": "^9.1.6",

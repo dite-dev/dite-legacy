@@ -19,7 +19,7 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "forceConsistentCasingInFileNames": true
   },
   "include": ["api", "app"]
