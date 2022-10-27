@@ -1,6 +1,6 @@
 {
   "name": "@dite/core",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "@dite/core",
   "keywords": [
     "dite"
@@ -26,7 +26,6 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "esbuild": "^0.15.12",
     "pirates": "^4.0.5"
