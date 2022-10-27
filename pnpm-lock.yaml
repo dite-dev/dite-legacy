@@ -195,9 +195,11 @@ importers:
 
   packages/core:
     specifiers:
-      bundle-require: ^3.1.0
-    dependencies:
-      bundle-require: 3.1.0_esbuild@0.15.12
+      esbuild: ^0.15.12
+      pirates: ^4.0.5
+    devDependencies:
+      esbuild: 0.15.12
+      pirates: 4.0.5
 
   packages/create-dite:
     specifiers:
@@ -7489,7 +7491,6 @@ packages:
   /pirates/4.0.5:
     resolution: {integrity: sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==}
     engines: {node: '>= 6'}
-    dev: false
 
   /pkg-dir/4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}

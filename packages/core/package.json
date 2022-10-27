@@ -15,8 +15,9 @@
     "directory": "packages/core"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -25,8 +26,13 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {
-    "bundle-require": "^3.1.0"
+  "dependencies": {},
+  "devDependencies": {
+    "esbuild": "^0.15.12",
+    "pirates": "^4.0.5"
+  },
+  "peerDependencies": {
+    "esbuild": "^0.15.12"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"

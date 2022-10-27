@@ -16,15 +16,6 @@
   },
   "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./distindex.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./dist/*": "./dist/*",
-    "./package.json": "./package.json"
-  },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",

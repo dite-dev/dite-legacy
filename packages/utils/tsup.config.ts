@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from '../../tsup-base.config';
 
 export default defineConfig([
   {
@@ -9,11 +9,11 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     splitting: true,
-    minify: process.env.NODE_ENV === 'production',
     outDir: 'dist',
     clean: true,
     shims: true,
     platform: 'node',
+    skipNodeModulesBundle: false,
     format: ['cjs', 'esm'],
   },
 ]);

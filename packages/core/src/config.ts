@@ -1,9 +1,9 @@
-import { bundleRequire } from 'bundle-require';
 import { existsSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { isValidServerMode, ServerMode } from './config/server-mode';
 import type { DiteConfig, DiteUserConfig } from './config/types';
 import { configFiles } from './constants';
+import dynamicImport from './utils/register';
 
 interface ResolveConfigOptions {
   root: string;
@@ -22,34 +22,40 @@ export function defineConfig(config: DiteUserConfig): DiteUserConfig {
   return config;
 }
 
-export async function loadConfigFromFile<T = Partial<DiteConfig>>(
+export function loadConfigFromFile<T = Partial<DiteConfig>>(
   cwd: string,
-): Promise<{
+): {
   path: string;
   config: T;
   dependencies: string[];
-} | null> {
+} | null {
   const filepath = configFiles
     .map((configFile) => join(cwd, configFile))
     .find((p) => existsSync(p));
   if (filepath) {
-    const config = await bundleRequire({ filepath });
+    const config = dynamicImport(filepath);
     return {
       path: filepath,
-      config: (config.mod.dite || config.mod.default || config.mod) as T,
-      dependencies: config.dependencies,
+      config: (config.dite || config.default || config) as T,
+      dependencies: [],
     };
   }
   return null;
 }
 
-export async function resolveUserConfig(opts: ResolveConfigOptions) {
+export function resolveUserConfig(opts: ResolveConfigOptions) {
   const { root } = opts;
-  return await loadConfigFromFile(root);
+  return loadConfigFromFile(root);
 }
 
 export function readConfig() {
-  return (global as any).__dite_config as DiteConfig;
+  const now = Date.now();
+  const config = resolveConfig({
+    root: process.env.DITE_ROOT || (process.cwd() as string),
+    mode: ServerMode.Production,
+  });
+  console.log(`[dite] config loaded in ${Date.now() - now}ms`);
+  return config;
 }
 
 export function generateConfig(
@@ -71,7 +77,7 @@ export function generateConfig(
   return config as DiteConfig;
 }
 
-export async function resolveConfig(opts: ResolveConfigOptions) {
+export function resolveConfig(opts: ResolveConfigOptions) {
   const { mode, root } = opts;
   let diteRoot = root;
   if (!diteRoot) {
@@ -83,7 +89,7 @@ export async function resolveConfig(opts: ResolveConfigOptions) {
     throw new Error(`Invalid server mode "${mode}"`);
   }
 
-  const userConfig = await resolveUserConfig({
+  const userConfig = resolveUserConfig({
     root: diteRoot,
     mode,
   });

@@ -30,8 +30,7 @@ export class Service {
           const { createDevServer }: typeof import('./cli/dev') = await import(
             `./dev.cjs?t=${Date.now()}`
           );
-          console.log(root);
-          const config = await resolveConfig({
+          const config = resolveConfig({
             root,
             mode: ServerMode.Development,
           });

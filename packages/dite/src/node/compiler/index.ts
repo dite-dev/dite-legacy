@@ -25,7 +25,6 @@ async function buildEverything(
   options: Required<BuildOptions> & { incremental?: boolean },
 ): Promise<(esbuild.BuildResult | undefined)[]> {
   try {
-    logger.info('config', config);
     const serverBuildPromise = createServerBuild(config, options);
     const browserBuildPromise = createBrowserBuild(config, options);
 
