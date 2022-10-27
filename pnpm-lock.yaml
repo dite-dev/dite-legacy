@@ -138,9 +138,7 @@ importers:
 
   examples/boilerplate:
     specifiers:
-      '@dite/core': 0.1.24
-      '@dite/nest': 0.1.24
-      '@dite/node': 0.1.24
+      '@dite/nest': 0.1.25
       '@nestjs/common': ^9.1.6
       '@nestjs/core': ^9.1.6
       '@nestjs/platform-express': ^9.1.6
@@ -151,7 +149,7 @@ importers:
       '@vitejs/plugin-vue': ^3.2.0
       '@vitejs/plugin-vue-jsx': ^2.1.0
       compression: ^1.7.4
-      dite: 0.1.24
+      dite: 0.1.25
       eslint: ^8.26.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-prettier: ^4.2.1
@@ -165,9 +163,7 @@ importers:
       vue: ^3.2.41
       vue-router: ^4.1.6
     dependencies:
-      '@dite/core': link:../../packages/core
       '@dite/nest': link:../../packages/nest
-      '@dite/node': link:../../packages/node
       '@nestjs/common': 9.1.6_yzt46al3aifnexifjjdb4dxxja
       '@nestjs/core': 9.1.6_bx3wiubfryfbvpzqwr6ml4ajpu
       '@nestjs/platform-express': 9.1.6_6whalgrsvisgjemghedgkfq7dm
@@ -197,8 +193,9 @@ importers:
     specifiers:
       esbuild: ^0.15.12
       pirates: ^4.0.5
-    devDependencies:
+    dependencies:
       esbuild: 0.15.12
+    devDependencies:
       pirates: 4.0.5
 
   packages/create-dite:
@@ -224,8 +221,8 @@ importers:
 
   packages/dite:
     specifiers:
-      '@dite/core': 0.1.24
-      '@dite/utils': 0.1.24
+      '@dite/core': 0.1.25
+      '@dite/utils': 0.1.25
       '@swc/wasm': ^1.3.11
       '@types/cross-spawn': ^6.0.2
       '@types/debug': ^4.1.7
@@ -280,7 +277,7 @@ importers:
 
   packages/nest:
     specifiers:
-      '@dite/node': 0.1.24
+      '@dite/node': 0.1.25
       '@nestjs/common': ^9.1.6
       '@nestjs/core': ^9.1.6
       '@nestjs/platform-express': ^9.1.6
