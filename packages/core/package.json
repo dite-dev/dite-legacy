@@ -1,6 +1,6 @@
 {
   "name": "@dite/core",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "@dite/core",
   "keywords": [
     "dite"
@@ -27,7 +27,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/utils": "0.1.26"
+    "@dite/utils": "0.1.27"
   },
   "devDependencies": {
     "esbuild": "^0.15.12",
