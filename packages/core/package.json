@@ -26,12 +26,11 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
-  "devDependencies": {
-    "esbuild": "^0.15.12",
-    "pirates": "^4.0.5"
-  },
-  "peerDependencies": {
+  "dependencies": {
     "esbuild": "^0.15.12"
+  },
+  "devDependencies": {
+    "pirates": "^4.0.5"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
