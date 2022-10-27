@@ -237,9 +237,6 @@ importers:
       cross-spawn: ^7.0.3
       dotenv: ^16.0.3
       esbuild: ^0.15.12
-      exit-hook: ^3.1.2
-      lodash: ^4.17.21
-      lodash-es: ^4.17.21
       minimatch: ^5.1.0
       mustache: ^4.2.0
       ora: ^6.1.2
@@ -254,11 +251,7 @@ importers:
       cross-spawn: 7.0.3
       dotenv: 16.0.3
       esbuild: 0.15.12
-      exit-hook: 3.1.2
-      lodash: 4.17.21
-      lodash-es: 4.17.21
       minimatch: 5.1.0
-      mustache: 4.2.0
       resolve-from: 5.0.0
     devDependencies:
       '@types/cross-spawn': 6.0.2
@@ -267,6 +260,7 @@ importers:
       '@types/lodash-es': 4.17.6
       '@types/minimatch': 5.1.2
       '@types/mustache': 4.2.1
+      mustache: 4.2.0
       ora: 6.1.2
       vite: 3.2.0
 
@@ -337,21 +331,25 @@ importers:
   packages/utils:
     specifiers:
       '@types/lodash': ^4.14.186
+      '@types/mustache': ^4.2.1
       chalk: ^5.1.2
       consola: ^2.15.3
       debug: ^4.3.4
       exit-hook: ^3.1.2
       file-system-cache: ^2.0.1
       lodash: ^4.17.21
+      mustache: ^4.2.0
       resolve-from: ^5.0.0
     devDependencies:
       '@types/lodash': 4.14.186
+      '@types/mustache': 4.2.1
       chalk: 5.1.2
       consola: 2.15.3
       debug: 4.3.4
       exit-hook: 3.1.2
       file-system-cache: 2.0.1
       lodash: 4.17.21
+      mustache: 4.2.0
       resolve-from: 5.0.0
 
   packages/vue:
@@ -4793,6 +4791,7 @@ packages:
   /exit-hook/3.1.2:
     resolution: {integrity: sha512-CRCiyo8LiN5GGxBtID7IEm2UqCzXIsvPu5DNRcdIaRAUzXppaTzgmy+PXyk7xS4jDIvCGDHXm9DoKraOoJtcTw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: true
 
   /express/4.18.2:
     resolution: {integrity: sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==}
@@ -6718,7 +6717,6 @@ packages:
   /mustache/4.2.0:
     resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
     hasBin: true
-    dev: false
 
   /mute-stream/0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}

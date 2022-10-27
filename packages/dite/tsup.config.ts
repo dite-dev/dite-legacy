@@ -12,7 +12,7 @@ export default defineConfig([
     platform: 'node',
     dts: true,
     sourcemap: true,
-    splitting: false,
+    splitting: true,
     treeshake: true,
     keepNames: true,
     outDir: 'dist/node',

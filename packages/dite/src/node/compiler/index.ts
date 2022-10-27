@@ -1,10 +1,8 @@
 import { DiteConfig, ServerMode } from '@dite/core';
-import { logger, __require } from '@dite/utils';
+import { lodash, logger, Mustache, __require } from '@dite/utils';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs';
-import _ from 'lodash';
-import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';
 
 import { templateDir } from '../constants';
@@ -91,7 +89,7 @@ export async function watch(
     serverBuild = undefined;
   }
 
-  const rebuildEverything = _.debounce(async () => {
+  const rebuildEverything = lodash.debounce(async () => {
     if (onRebuildStart) onRebuildStart();
     if (!serverBuild?.rebuild) {
       disposeBuilders();
