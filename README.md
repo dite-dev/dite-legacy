@@ -5,7 +5,7 @@
     <img src="https://badgen.net/npm/v/dite" alt="Version">
   </a>
   <a href="https://github.com/ditejs/dite" target="_blank">
-    <img src="https://github.com/ditejs/dite/actions/workflows/ci.yml/badge.svg?branch=master" alt="build status"  />
+    <img src="https://github.com/ditejs/dite/actions/workflows/ci.yml/badge.svg?branch=main" alt="build status"  />
   </a>
   <a href="https://github.com/ditejs/dite/pulls">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
@@ -14,7 +14,7 @@
     <img src="https://img.shields.io/node/v/dite.svg" alt="Node" />
   </a>
   <a href="https://codecov.io/gh/ditejs/dite" >
-    <img src="https://codecov.io/gh/ditejs/dite/branch/master/graph/badge.svg" alt="codecov"/>
+    <img src="https://codecov.io/gh/ditejs/dite/branch/main/graph/badge.svg" alt="codecov"/>
   </a>
   <a href="https://packagephobia.com/result?p=dite">
     <img src="https://packagephobia.com/badge?p=dite" alt="install size" />
@@ -48,7 +48,7 @@
 
 Open this example on [StackBlitz](https://stackblitz.com):
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github.com/ditejs/dite/tree/master/examples/boilerplate?title=DiteStater)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github.com/ditejs/dite/tree/main/examples/boilerplate?title=DiteStater)
 
 ## 🧱 Contribute
 
@@ -60,4 +60,4 @@ See [Contributing Guide](./CONTRIBUTING.md).
 
 ## 📄 License
 
-[MIT License](https://github.com/ditejs/dite/blob/master/LICENSE) © 2021-PRESENT [Zack](https://github.com/loyep)
+[MIT License](https://github.com/ditejs/dite/blob/main/LICENSE) © 2021-PRESENT [Zack](https://github.com/loyep)

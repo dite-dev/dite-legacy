@@ -6,7 +6,7 @@ Hi! We're really excited that you are interested in contributing to `Dite`. Befo
 
 ## Pull Request Guidelines
 
-- Checkout a topic branch from the relevant branch, e.g. `master`, and merge back against that branch.
+- Checkout a topic branch from the relevant branch, e.g. `main`, and merge back against that branch.
 
 - If adding a new feature:
 
@@ -36,13 +36,13 @@ $ pnpm install
 You can run following command to build the dite cli:
 
 ```sh
-$ pnpm run dev
+pnpm run dev
 ```
 
 And then you can execute:
 
 ```sh
-$ pnpm run dev
+pnpm run dev
 ```
 
-Visit http://localhost:5173 and try modifying the source code. You'll get live update.
+Visit <http://localhost:5173> and try modifying the source code. You'll get live update.

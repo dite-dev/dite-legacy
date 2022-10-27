@@ -1,4 +1,4 @@
-# Welcome to Ditejs!
+# Welcome to Ditejs
 
 This is a boilerplate of a simple Ditejs app using the Ditejs App Server.
 
@@ -52,4 +52,4 @@ yarn start
 
 Open this example on [CodeSandbox](https://codesandbox.com):
 
-[![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/ditejs/dite/tree/master/examples/boilerplate)
+[![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/ditejs/dite/tree/main/examples/boilerplate)
