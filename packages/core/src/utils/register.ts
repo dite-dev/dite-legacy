@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import esbuild, { Loader } from 'esbuild';
+import type { Loader } from 'esbuild';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { createRequire } from 'node:module';
 import { extname } from 'node:path';
@@ -23,8 +23,12 @@ const md5 = (content: string, len = 8) => {
 const cacheDir = join(process.cwd(), '.cache');
 if (!existsSync(cacheDir)) mkdirSync(cacheDir);
 
-function transform(opts: { code: string; filename: string }) {
-  const { code: source, filename } = opts;
+function transform(opts: {
+  code: string;
+  filename: string;
+  implementor: typeof import('esbuild');
+}) {
+  const { code: source, filename, implementor } = opts;
   files.push(filename);
   try {
     const ext = extname(filename);
@@ -33,7 +37,7 @@ function transform(opts: { code: string; filename: string }) {
     const cacheFile = join(cacheDir, filebase + '.' + sourceHash + '.js');
     if (existsSync(cacheFile)) readFileSync(cacheFile, 'utf-8');
 
-    const { code } = esbuild.transformSync(source, {
+    const { code } = implementor.transformSync(source, {
       sourcefile: filename,
       loader: ext.slice(1) as Loader,
       target: 'es2019',
@@ -51,12 +55,17 @@ function transform(opts: { code: string; filename: string }) {
 function register(opts: { exts?: string[] } = {}) {
   const { exts = HOOK_EXTS } = opts;
 
+  const esbuild = __require(__require.resolve('esbuild'));
+
   files = [];
   if (!registered) {
-    revert = addHook((code, filename) => transform({ code, filename }), {
-      exts,
-      ignoreNodeModules: true,
-    });
+    revert = addHook(
+      (code, filename) => transform({ code, filename, implementor: esbuild }),
+      {
+        exts,
+        ignoreNodeModules: true,
+      },
+    );
     registered = true;
   }
 }

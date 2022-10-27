@@ -14,5 +14,6 @@ export default defineConfig([
     clean: true,
     shims: true,
     format: ['cjs', 'esm'],
+    external: ['esbuild'],
   },
 ]);
