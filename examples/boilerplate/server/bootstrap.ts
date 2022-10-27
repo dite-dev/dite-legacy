@@ -5,9 +5,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import type { DiteConfig } from 'dite';
 import fs from 'fs';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
-
 import type { ViteDevServer } from 'vite';
+import { createServer as createViteServer } from 'vite';
 import { AppModule } from './app.module';
 
 const adapter = hook(async ({ addMiddleware, addRequestHandler, config }) => {
