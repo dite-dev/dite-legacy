@@ -24,6 +24,13 @@ export interface DiteConfig {
   root: string;
   mode: ServerMode;
   adapter?: DiteIntegration[];
+  server: {
+    // format: 'cjs' | 'esm';
+    format: 'cjs';
+    outDir: string;
+    entry: string;
+    outputFile: string;
+  };
 }
 
 export type DiteUserConfig = Partial<DiteConfig>;

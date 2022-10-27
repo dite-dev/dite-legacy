@@ -1,7 +1,7 @@
 import { resolveConfig, ServerMode } from '@dite/core';
 import { cac } from 'cac';
 import dotenv from 'dotenv';
-import { join } from 'path';
+import { join } from 'node:path';
 // @ts-expect-error
 import { version } from '../../package.json';
 import * as commands from './cli/commands';

@@ -1,8 +1,8 @@
 import chalk from 'chalk';
-import fs from 'fs';
 import Mustache from 'mustache';
+import fs from 'node:fs';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import path from 'path';
 import prompts from 'prompts';
 // @ts-expect-error
 import { version } from '../package.json';

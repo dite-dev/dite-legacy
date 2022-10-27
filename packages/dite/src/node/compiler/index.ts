@@ -1,12 +1,12 @@
-import type { DiteConfig } from '@dite/core';
-import { ServerMode } from '@dite/core';
-import { logger } from '@dite/utils';
+import { DiteConfig, ServerMode } from '@dite/core';
+import { logger, __require } from '@dite/utils';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
-import fs from 'fs-extra';
+import fs from 'fs';
 import _ from 'lodash';
 import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';
+
 import { templateDir } from '../constants';
 import { swcPlugin } from './swc';
 
@@ -37,6 +37,7 @@ async function buildEverything(
 
 interface BuildConfig {
   mode: ServerMode;
+  format: 'cjs' | 'esm';
 }
 
 interface BuildOptions extends Partial<BuildConfig> {
@@ -71,6 +72,7 @@ export async function watch(
   const toWatch = [join(config.root, 'server')];
   const options = {
     mode,
+    format: config.server.format,
     onWarning,
     onBuildFailure,
     incremental: true,
@@ -99,7 +101,11 @@ export async function watch(
       serverBuild
         .rebuild()
         .then((build) =>
-          writeServerBuildResult(config, { mode }, build.outputFiles!),
+          writeServerBuildResult(
+            config,
+            { mode, format: config.server.format },
+            build.outputFiles!,
+          ),
         ),
     ]);
     if (onRebuildFinish) onRebuildFinish();
@@ -136,16 +142,20 @@ export async function watch(
 
 export async function createServerBuild(
   config: DiteConfig,
-  { mode, incremental }: Required<BuildOptions> & { incremental?: boolean },
+  {
+    mode,
+    incremental,
+    format,
+  }: Required<BuildOptions> & { incremental?: boolean },
 ) {
   // auto externalize node_modules
-  const pkg = fs.readJSONSync(join(config.root, 'package.json'));
+  const pkg = __require(join(config.root, 'package.json'));
   const localeTpl = fs.readFileSync(
     join(templateDir, 'server/main.ts.mustache'),
     'utf-8',
   );
   const entryPath = join(config.root, config.buildPath, 'src/server.ts');
-  fs.ensureDirSync(dirname(entryPath));
+  fs.mkdirSync(dirname(entryPath), { recursive: true });
   const entryContent = Mustache.render(localeTpl, {
     config: JSON.stringify(config),
     serverPath: join(config.root, 'server/index.ts'),
@@ -153,14 +163,13 @@ export async function createServerBuild(
   fs.writeFileSync(entryPath, entryContent);
 
   const build = await esbuild.build({
-    absWorkingDir: join(config.root, 'server'),
     entryPoints: [entryPath],
     outfile: config.serverBuildPath,
     minifySyntax: true,
     jsx: 'automatic',
     sourceRoot: config.root,
     write: false,
-    format: 'cjs',
+    format,
     minify: mode === 'production',
     platform: 'node',
     bundle: true,
@@ -174,9 +183,9 @@ export async function createServerBuild(
     external: [
       ...Object.keys(pkg.dependencies || {}),
       ...Object.keys(pkg.devDependencies || {}),
-    ],
+    ].filter((dep) => !dep.startsWith('@dite/')),
   });
-  await writeServerBuildResult(config, { mode }, build.outputFiles);
+  await writeServerBuildResult(config, { mode, format }, build.outputFiles);
   return build;
 }
 
@@ -217,6 +226,7 @@ export async function build(
 ) {
   const options = {
     mode,
+    format: config.server.format,
     onWarning,
     onBuildFailure,
   };
@@ -230,12 +240,11 @@ export async function writeServerBuildResult(
 ) {
   if (!outputFiles) return;
 
-  await fs.ensureDir(dirname(config.serverBuildPath));
   for (const file of outputFiles) {
-    await fs.ensureDir(dirname(file.path));
+    fs.mkdirSync(dirname(file.path), { recursive: true });
     if (file.path.endsWith('.js')) {
       if (mode === 'development') {
-        delete require.cache[file.path];
+        delete __require.cache[file.path];
       }
       // fix sourceMappingURL to be relative to current path instead of /build
       const filename = file.path.substring(file.path.lastIndexOf(sep) + 1);
@@ -243,15 +252,15 @@ export async function writeServerBuildResult(
       const pattern = `(//# sourceMappingURL=)(.*)${escapedFilename}`;
       let contents = Buffer.from(file.contents).toString('utf-8');
       contents = contents.replace(new RegExp(pattern), `$1${filename}`);
-      await fs.writeFile(file.path, contents);
+      fs.writeFileSync(file.path, contents, 'utf-8');
     } else if (file.path.endsWith('.map')) {
       // remove route: prefix from source filenames so breakpoints work
       let contents = Buffer.from(file.contents).toString('utf-8');
       contents = contents.replace(/"route:/gm, '"');
-      await fs.writeFile(file.path, contents);
+      fs.writeFileSync(file.path, contents, 'utf-8');
     } else {
-      await fs.ensureDir(dirname(file.path));
-      await fs.writeFile(file.path, file.contents);
+      fs.mkdirSync(dirname(file.path), { recursive: true });
+      fs.writeFileSync(file.path, file.contents, 'utf-8');
     }
   }
 }

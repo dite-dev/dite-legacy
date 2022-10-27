@@ -3,7 +3,7 @@ import spawn from 'cross-spawn';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
 import { isArray } from 'lodash-es';
-import { dirname, join } from 'path';
+import { dirname, join } from 'node:path';
 import { packagesDir } from '../internal/const';
 
 export function getPkgs(opts?: { base?: string }): string[] {

@@ -1,8 +1,8 @@
-import assert from 'assert';
-import { existsSync } from 'fs';
 import getGitRepoInfo from 'git-repo-info';
-import { createRequire } from 'module';
-import { join } from 'path';
+import assert from 'node:assert';
+import { existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { join } from 'node:path';
 import rimraf from 'rimraf';
 import 'zx/globals';
 import { PATHS } from '../internal/const';

@@ -1,9 +1,8 @@
-import { createHash } from 'crypto';
+import { getCache } from '@dite/utils';
 import type { Loader } from 'esbuild';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { extname } from 'node:path';
-import { basename, dirname, join } from 'path';
 import { addHook } from 'pirates';
 
 const COMPILE_EXTS = ['.ts', '.tsx', '.js', '.jsx'];
@@ -13,15 +12,13 @@ let registered = false;
 let files: string[] = [];
 let revert: () => void = () => {};
 
+/**
+ * cache for transform
+ */
+const cache = getCache('bundless-loader');
+
 const __require =
   typeof require === 'function' ? require : createRequire(import.meta.url);
-
-const md5 = (content: string, len = 8) => {
-  return createHash('md5').update(content).digest('hex').slice(0, len);
-};
-
-const cacheDir = join(process.cwd(), '.cache');
-if (!existsSync(cacheDir)) mkdirSync(cacheDir);
 
 function transform(opts: {
   code: string;
@@ -32,10 +29,9 @@ function transform(opts: {
   files.push(filename);
   try {
     const ext = extname(filename);
-    const sourceHash = md5(source, 16);
-    const filebase = basename(dirname(filename)) + '-' + basename(filename);
-    const cacheFile = join(cacheDir, filebase + '.' + sourceHash + '.js');
-    if (existsSync(cacheFile)) readFileSync(cacheFile, 'utf-8');
+    const cacheKey = [filename, statSync(filename).mtimeMs].join(':');
+    const cached = cache.getSync(cacheKey);
+    if (cached) return cached;
 
     const { code } = implementor.transformSync(source, {
       sourcefile: filename,
@@ -44,10 +40,10 @@ function transform(opts: {
       format: 'cjs',
       logLevel: 'error',
     });
-    writeFileSync(cacheFile, code, 'utf-8');
+    cache.set(cacheKey, code);
     return code;
   } catch (e) {
-    // @ts-ignore
+    // @ts-expect-error
     throw new Error(`Parse file failed: [${filename}]`, { cause: e });
   }
 }

@@ -50,7 +50,6 @@
     "dotenv": "^16.0.3",
     "esbuild": "^0.15.12",
     "exit-hook": "^3.1.2",
-    "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "minimatch": "^5.1.0",
@@ -61,7 +60,6 @@
   "devDependencies": {
     "@types/cross-spawn": "^6.0.2",
     "@types/debug": "^4.1.7",
-    "@types/fs-extra": "^9.0.13",
     "@types/lodash": "^4.14.186",
     "@types/lodash-es": "^4.17.6",
     "@types/minimatch": "^5.1.2",

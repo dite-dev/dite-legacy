@@ -26,6 +26,9 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
+  "dependencies": {
+    "@dite/utils": "0.1.26"
+  },
   "devDependencies": {
     "esbuild": "^0.15.12",
     "pirates": "^4.0.5"

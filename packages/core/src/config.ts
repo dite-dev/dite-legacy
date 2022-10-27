@@ -10,14 +10,6 @@ interface ResolveConfigOptions {
   mode: ServerMode;
 }
 
-const defaultConfig: DiteConfig = {
-  root: process.cwd!(),
-  serverBuildPath: '',
-  port: 3001,
-  mode: ServerMode.Production,
-  buildPath: '.dite',
-};
-
 export function defineConfig(config: DiteUserConfig): DiteUserConfig {
   return config;
 }
@@ -49,12 +41,10 @@ export function resolveUserConfig(opts: ResolveConfigOptions) {
 }
 
 export function readConfig() {
-  const now = Date.now();
   const config = resolveConfig({
     root: process.env.DITE_ROOT || (process.cwd() as string),
     mode: ServerMode.Production,
   });
-  console.log(`[dite] config loaded in ${Date.now() - now}ms`);
   return config;
 }
 
@@ -62,11 +52,20 @@ export function generateConfig(
   userConfig: Awaited<ReturnType<typeof resolveUserConfig>>,
   opts: ResolveConfigOptions,
 ) {
-  const config: DiteConfig = Object.assign(
-    {},
-    defaultConfig,
-    userConfig?.config ?? {},
-  );
+  const config: DiteConfig = {
+    root: process.cwd!(),
+    serverBuildPath: '',
+    port: 3001,
+    mode: ServerMode.Production,
+    buildPath: '.dite',
+    server: {
+      format: 'cjs',
+      outDir: 'server',
+      entry: 'server/index.ts',
+      outputFile: 'server/index.js',
+    },
+    ...(userConfig?.config || {}),
+  };
   config.serverBuildPath = isAbsolute(config.serverBuildPath)
     ? config.serverBuildPath
     : join(

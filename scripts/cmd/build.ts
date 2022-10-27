@@ -1,7 +1,7 @@
 import cpy from 'cpy';
 import type { Plugin } from 'esbuild';
 import { build } from 'esbuild';
-import path from 'path';
+import path from 'node:path';
 import rimraf from 'rimraf';
 import ts, {
   BuildOptions,

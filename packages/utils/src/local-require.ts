@@ -1,4 +1,4 @@
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 import resolveFrom from 'resolve-from';
 
 export const __require = (() => {

@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import rimraf from 'rimraf';
 import { eachPkg, getPkgs } from '../utils';
 
