@@ -3,13 +3,13 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
+    "module": "es2020",
     "skipLibCheck": true,
     "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "strict": true,
-    "target": "es2015",
+    "target": "es2020",
     "jsx": "react"
   },
   "exclude": [

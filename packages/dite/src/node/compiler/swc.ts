@@ -42,7 +42,7 @@ export const swcPlugin = (config: DiteConfig): Plugin => {
             decoratorMetadata: true,
           },
           keepClassNames: true,
-          target: 'es2022',
+          target: 'es2020',
         };
 
         const fileContent = fs.readFileSync(args.path, 'utf-8');

@@ -39,7 +39,7 @@ function transform(opts: {
     const { code } = implementor.transformSync(source, {
       sourcefile: filename,
       loader: ext.slice(1) as Loader,
-      target: 'es2019',
+      target: 'es2020',
       format: 'cjs',
       logLevel: 'error',
     });

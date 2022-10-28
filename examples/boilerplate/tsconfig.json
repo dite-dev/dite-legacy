@@ -1,7 +1,7 @@
 {
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
   "compilerOptions": {
-    "module": "ES2015",
+    "module": "es2020",
     "declaration": true,
     "strict": true,
     "removeComments": true,
