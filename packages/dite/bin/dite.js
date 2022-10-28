@@ -22,6 +22,7 @@ if (process.env.DEBUG_CONSOLE) {
   });
 }
 
+process.env.DEBUG = 'dite:*'
 // Start Dite CLI
 async function start() {
   const { Service } = await import('../dist/node/cli.js')

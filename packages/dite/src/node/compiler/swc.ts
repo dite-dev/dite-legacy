@@ -1,22 +1,26 @@
 /**
  * Use SWC to emit decorator metadata
  */
-import { localRequire } from '@dite/utils';
+import { DiteConfig } from '@dite/core/config';
+import { logger } from '@dite/utils';
 import type { JscConfig } from '@swc/wasm';
+import swc from '@swc/wasm';
 import type { Plugin } from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
 
-export const swcPlugin = (): Plugin => {
+export const swcPlugin = (config: DiteConfig): Plugin => {
   return {
-    name: 'swc',
+    name: 'dite-server-swc',
     async setup(build) {
-      const swc: typeof import('@swc/wasm') = localRequire('@swc/wasm');
+      logger.debug('dite-server-swc setup');
+      // const swc: typeof import('@swc/wasm') = localRequire('@swc/wasm');
+      // logger.debug('dite-server-swc load swc done');
 
       if (!swc) {
         console.warn(
           build.initialOptions.format!,
-          'You have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin',
+          'You have emitDecoratorMetadata enabled but @swc/wasm was not installed, skipping swc plugin',
         );
         return;
       }
@@ -24,8 +28,9 @@ export const swcPlugin = (): Plugin => {
       // Force esbuild to keep class names as well
       build.initialOptions.keepNames = true;
 
-      build.onLoad({ filter: /\.[jt]sx?$/ }, (args) => {
+      build.onLoad({ filter: /\.[jt]sx?$/ }, async (args) => {
         const isTs = /\.tsx?$/.test(args.path);
+        logger.debug(`dite-server-swc onLoad' ${args.path}`);
 
         const jsc: JscConfig = {
           parser: {
@@ -42,9 +47,9 @@ export const swcPlugin = (): Plugin => {
 
         const fileContent = fs.readFileSync(args.path, 'utf-8');
 
-        const result = swc.transformSync(fileContent, {
+        const result = await swc.transform(fileContent, {
           jsc,
-          sourceMaps: true,
+          sourceMaps: config.mode === 'development',
           configFile: false,
           swcrc: false,
         });

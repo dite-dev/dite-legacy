@@ -1,17 +1,8 @@
 import { performance } from 'node:perf_hooks';
 import { createServer } from '{{{ serverPath }}}';
-import { readConfig } from '@dite/core';
+import { readConfig } from '@dite/core/config';
 
 global.__dite_server_start_time = performance.now();
-
-function getMemoryUsage() {
-  const size = 1 << 20;
-  const used = process.memoryUsage().heapUsed / size;
-  const rss = process.memoryUsage().rss / size;
-  return `Memory Usage: ${Math.round(used * 100) / 100} MB (RSS: ${
-    Math.round(rss * 100) / 100
-  } MB)`;
-}
 
 const config = readConfig('/Users/heixing/Git/dite/examples/boilerplate');
 
@@ -20,5 +11,10 @@ global.__dite_config = config;
 (async () => {
   config.port = process.env.PORT || config.port;
   await createServer({ config });
-  process.send({ type: 'dite:ready', duration: parseInt(performance.now() - global.__dite_server_start_time), memoryUsage: getMemoryUsage() });
+  const payload = {
+    type: 'dite:ready',
+    port: config.port,
+    finishTime: Math.ceil(performance.now()),
+  };
+  process.send?.(payload);
 })();

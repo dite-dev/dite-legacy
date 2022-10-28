@@ -1,7 +1,8 @@
-import { DiteConfig } from '@dite/core';
+import { DiteConfig } from '@dite/core/config';
 import { lodash, logger } from '@dite/utils';
+import spawn from 'cross-spawn';
 import type { ChildProcess, Serializable } from 'node:child_process';
-import { fork } from 'node:child_process';
+import { performance } from 'node:perf_hooks';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
 
 export interface DiteServer {
@@ -28,11 +29,20 @@ export interface DiteServer {
 
 function isReadyPayload(
   payload: unknown,
-): payload is { type: 'dite:ready'; duration: number; memoryUsage: string } {
+): payload is { type: 'dite:ready'; finishTime: number; memoryUsage: string } {
   return (
     lodash.isObject(payload) &&
     (payload as Record<string, unknown>).type === 'dite:ready'
   );
+}
+
+function getMemoryUsage() {
+  const size = 1 << 20;
+  const used = process.memoryUsage().heapUsed / size;
+  const rss = process.memoryUsage().rss / size;
+  return `Memory Usage: ${Math.round(used * 100) / 100} MB (RSS: ${
+    Math.round(rss * 100) / 100
+  } MB)`;
 }
 
 /**
@@ -47,18 +57,25 @@ export async function createServer(
   let childRef: ChildProcess | undefined;
 
   const createChildProcess = ({ port }: { port?: number } = {}) => {
-    const ref = fork(config.serverBuildPath, {
+    const now = Math.ceil(performance.now());
+    const ref = spawn('node', [config.serverBuildPath], {
       env: {
         ...process.env,
         PORT: String(port ?? config.port),
       },
-      stdio: 'inherit',
+      cwd: process.cwd(),
+      stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
+      shell: true,
     });
 
     function onReady(payload: Serializable) {
       if (isReadyPayload(payload)) {
-        const { duration, memoryUsage } = payload;
-        logger.ready(`Server is ready in ${duration}ms. \n${memoryUsage}`);
+        logger.debug('dite createServer fork onReady');
+        const { finishTime } = payload;
+        const memoryUsage = getMemoryUsage();
+        logger.ready(
+          `Server is ready in ${finishTime - now}ms. \n${memoryUsage || ''}`,
+        );
         ref.removeListener('message', onReady);
       }
     }

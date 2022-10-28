@@ -1,4 +1,4 @@
-import { resolveConfig, ServerMode } from '@dite/core';
+import { resolveConfig, ServerMode } from '@dite/core/config';
 import { cac } from 'cac';
 import dotenv from 'dotenv';
 import { join } from 'node:path';

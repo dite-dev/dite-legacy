@@ -1,4 +1,4 @@
-import { getCache } from '@dite/utils';
+import { getCache, logger } from '@dite/utils';
 import type { Loader } from 'esbuild';
 import { statSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -18,7 +18,9 @@ let revert: () => void = () => {};
 const cache = getCache('bundless-loader');
 
 const __require =
-  typeof require === 'function' ? require : createRequire(import.meta.url);
+  typeof require === 'function' && typeof require.resolve === 'function'
+    ? require
+    : createRequire(import.meta.url);
 
 function transform(opts: {
   code: string;
@@ -27,6 +29,7 @@ function transform(opts: {
 }) {
   const { code: source, filename, implementor } = opts;
   files.push(filename);
+  const now = Date.now();
   try {
     const ext = extname(filename);
     const cacheKey = [filename, statSync(filename).mtimeMs].join(':');
@@ -41,6 +44,7 @@ function transform(opts: {
       logLevel: 'error',
     });
     cache.set(cacheKey, code);
+    console.log('333', Date.now() - now);
     return code;
   } catch (e) {
     // @ts-expect-error
@@ -50,7 +54,7 @@ function transform(opts: {
 
 function register(opts: { exts?: string[] } = {}) {
   const { exts = HOOK_EXTS } = opts;
-
+  logger.debug('register loader');
   const esbuild = __require(__require.resolve('esbuild'));
 
   files = [];
@@ -64,6 +68,7 @@ function register(opts: { exts?: string[] } = {}) {
     );
     registered = true;
   }
+  logger.debug('register loader done');
 }
 
 function dynamicImport(filepath: string, opts: { clean?: boolean } = {}) {

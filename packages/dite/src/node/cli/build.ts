@@ -1,4 +1,4 @@
-import { resolveConfig, ServerMode } from '@dite/core';
+import { resolveConfig, ServerMode } from '@dite/core/config';
 import * as compiler from '../compiler';
 
 export async function build(diteRoot: string) {

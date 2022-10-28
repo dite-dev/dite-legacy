@@ -27,6 +27,7 @@
     "dev": "pnpm build --watch"
   },
   "devDependencies": {
+    "@types/debug": "^4.1.7",
     "@types/lodash": "^4.14.186",
     "@types/mustache": "^4.2.1",
     "chalk": "^5.1.2",

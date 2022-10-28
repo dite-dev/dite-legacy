@@ -18,7 +18,6 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/node/index.d.ts",
       "import": "./dist/node/index.js",
       "require": "./dist/node/index.cjs"
     },
@@ -27,7 +26,6 @@
   },
   "main": "dist/node/index.cjs",
   "module": "dist/node/index.js",
-  "types": "dist/node/index.d.ts",
   "bin": {
     "dite": "bin/dite.js"
   },

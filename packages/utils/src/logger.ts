@@ -1,5 +1,6 @@
 import colors from 'chalk';
 import consola from 'consola';
+import makeDebug from 'debug';
 
 const prefixes = {
   start: colors.blue('start') + ' -',
@@ -19,6 +20,7 @@ const createConsola = () => {
 };
 
 const consolaLogger = createConsola();
+const debugLogger = makeDebug('dite:log');
 
 function wait(...message: any[]) {
   consolaLogger.log(prefixes.wait, ...message);
@@ -52,6 +54,10 @@ function start(...message: any[]) {
   consolaLogger.log(prefixes.start, ...message);
 }
 
+function debug(...message: any[]) {
+  debugLogger('', ...message);
+}
+
 export const logger = {
   wait,
   error,
@@ -61,4 +67,5 @@ export const logger = {
   event,
   fatal,
   start,
+  debug,
 };

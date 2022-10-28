@@ -16,8 +16,22 @@
   },
   "license": "MIT",
   "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./config": {
+      "import": "./dist/config.js",
+      "require": "./dist/config.cjs"
+    },
+    "./route": {
+      "import": "./dist/route.js",
+      "require": "./dist/route.cjs"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -27,11 +41,13 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/utils": "0.1.27"
-  },
-  "devDependencies": {
+    "@dite/utils": "0.1.27",
     "esbuild": "^0.15.12",
     "pirates": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/minimatch": "^5.1.2",
+    "minimatch": "^5.1.0"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
