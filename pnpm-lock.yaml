@@ -241,6 +241,7 @@ importers:
       cross-spawn: ^7.0.3
       dotenv: ^16.0.3
       esbuild: ^0.15.12
+      fast-glob: ^3.2.12
       minimatch: ^5.1.0
       mustache: ^4.2.0
       ora: ^6.1.2
@@ -255,6 +256,7 @@ importers:
       cross-spawn: 7.0.3
       dotenv: 16.0.3
       esbuild: 0.15.12
+      fast-glob: 3.2.12
       minimatch: 5.1.0
       resolve-from: 5.0.0
     devDependencies:

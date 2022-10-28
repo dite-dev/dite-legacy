@@ -58,7 +58,6 @@ export async function createServer(
 
   const createChildProcess = ({ port }: { port?: number } = {}) => {
     const now = Math.ceil(performance.now());
-    let mounted = false;
     const ref = spawn('node', [config.serverBuildPath], {
       env: {
         ...process.env,
@@ -66,7 +65,6 @@ export async function createServer(
       },
       cwd: process.cwd(),
       stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
-      shell: true,
     });
 
     function onReady(payload: Serializable) {

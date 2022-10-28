@@ -1,8 +1,14 @@
 import { getCache, logger } from '@dite/utils';
 import type { Loader } from 'esbuild';
-import { statSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs';
 import { createRequire } from 'node:module';
-import { extname } from 'node:path';
+import { basename, dirname, extname, resolve } from 'node:path';
 import { addHook } from 'pirates';
 
 const COMPILE_EXTS = ['.ts', '.tsx', '.js', '.jsx'];
@@ -29,7 +35,6 @@ function transform(opts: {
 }) {
   const { code: source, filename, implementor } = opts;
   files.push(filename);
-  const now = Date.now();
   try {
     const ext = extname(filename);
     const cacheKey = [filename, statSync(filename).mtimeMs].join(':');
@@ -43,8 +48,7 @@ function transform(opts: {
       format: 'cjs',
       logLevel: 'error',
     });
-    cache.set(cacheKey, code);
-    console.log('333', Date.now() - now);
+    cache.setSync(cacheKey, code);
     return code;
   } catch (e) {
     // @ts-expect-error
@@ -71,20 +75,47 @@ function register(opts: { exts?: string[] } = {}) {
   logger.debug('register loader done');
 }
 
+function dynamicRequire(filename: string) {
+  files.push(filename);
+  const ext = extname(filename);
+  const cacheKey = [basename(filename), statSync(filename).mtimeMs].join('-');
+  const cacheFile = resolve(`./.cache/${cacheKey}.js`);
+  mkdirSync(dirname(cacheFile), { recursive: true });
+  console.log(`cacheFile: ${cacheFile}`);
+  if (existsSync(cacheFile)) {
+    return __require(cacheFile);
+  }
+  const esbuild = __require(__require.resolve('esbuild'));
+
+  const source = readFileSync(filename, 'utf-8');
+  const { code } = esbuild.transformSync(source, {
+    sourcefile: filename,
+    loader: ext.slice(1) as Loader,
+    target: 'es2020',
+    format: 'cjs',
+    logLevel: 'error',
+  });
+  console.log('code', code);
+
+  writeFileSync(cacheFile, code, 'utf-8');
+  __require(cacheFile);
+  return code;
+}
+
 function dynamicImport(filepath: string, opts: { clean?: boolean } = {}) {
   const { clean = false } = opts;
   let content;
-  register();
+  // register();
   if (clean) {
     clearFiles();
-    content = __require(filepath);
+    content = dynamicRequire(filepath);
     for (const file of getFiles()) {
       delete __require.cache[file];
     }
   } else {
-    content = __require(filepath);
+    content = dynamicRequire(filepath);
   }
-  restore();
+  // restore();
   return content;
 }
 

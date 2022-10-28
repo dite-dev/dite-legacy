@@ -1,13 +1,15 @@
 import { DiteConfig, ServerMode } from '@dite/core/config';
 import { lodash, logger, Mustache, __require } from '@dite/utils';
+import swc from '@swc/wasm';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
+import glob from 'fast-glob';
 import fs from 'fs';
 import { dirname, join, sep } from 'node:path';
+import { basename } from 'path';
 
 import { templateDir } from '../constants';
 // import { resolvePlugin } from './resolve';
-import { swcPlugin } from './swc';
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -164,35 +166,91 @@ export async function createServerBuild(
   });
   fs.writeFileSync(entryPath, entryContent);
   logger.debug('write server entry file');
+  const serverRoot = join(config.root, 'server');
+  const outputDir = join(config.root, config.buildPath, 'dist/server');
+  const outputFiles = await Promise.all(
+    await glob('**/*.(jsx|tsx|js|ts)', {
+      objectMode: true,
+      onlyFiles: true,
+      cwd: serverRoot,
+    }).then((files) => {
+      return files.map(async (args) => {
+        const { path, ...rest } = args;
+        const filePath = join(serverRoot, path);
+        logger.debug('args', args);
+        const source = await fs.promises.readFile(filePath, 'utf-8');
+        const isTs = /\.tsx?$/.test(path);
+        const contents = await swc.transform(source, {
+          jsc: {
+            parser: {
+              syntax: isTs ? 'typescript' : 'ecmascript',
+              decorators: true,
+            },
+            transform: {
+              legacyDecorator: true,
+              decoratorMetadata: true,
+            },
+            keepClassNames: true,
+            target: 'es2020',
+          },
+          sourceMaps: false,
+          // sourceMaps: config.mode === 'development',
+          configFile: false,
+          swcrc: false,
+        });
+        const output: esbuild.OutputFile = {
+          path: join(outputDir, `${dirname(path)}/${basename(path)}.js`),
+          contents: Buffer.from(contents.code),
+          text: '',
+        };
+        return output;
+      });
+    }),
+  );
 
-  const build = await esbuild.build({
-    entryPoints: [entryPath],
-    outfile: config.serverBuildPath,
-    minifySyntax: true,
-    jsx: 'automatic',
-    sourceRoot: config.root,
-    write: false,
-    format,
-    minify: mode === 'production',
-    platform: 'node',
-    target: 'es2020',
-    bundle: true,
-    mainFields: ['module', 'main'],
-    splitting: false,
-    plugins: [swcPlugin(config)],
-    keepNames: true,
-    sourcemap: true,
-    incremental,
-    treeShaking: true,
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.devDependencies || {}),
-    ].filter((dep) => !dep.startsWith('@dite/')),
-  });
+  // const build = await esbuild.build({
+  //   entryPoints: [entryPath],
+  //   outfile: config.serverBuildPath,
+  //   minifySyntax: true,
+  //   jsx: 'automatic',
+  //   sourceRoot: config.root,
+  //   write: false,
+  //   format,
+  //   minify: mode === 'production',
+  //   platform: 'node',
+  //   target: 'es2020',
+  //   bundle: true,
+  //   mainFields: ['module', 'main'],
+  //   splitting: false,
+  //   plugins: [swcPlugin(config)],
+  //   keepNames: true,
+  //   sourcemap: true,
+  //   incremental,
+  //   treeShaking: true,
+  //   external: [
+  //     ...Object.keys(pkg.dependencies || {}),
+  //     ...Object.keys(pkg.devDependencies || {}),
+  //   ].filter((dep) => !dep.startsWith('@dite/')),
+  // });
   logger.debug('server build done');
-  await writeServerBuildResult(config, { mode, format }, build.outputFiles);
+  await writeServerBuildResult(config, { mode, format }, outputFiles);
   logger.debug('server write output done');
-  return build;
+  const rebuild: esbuild.BuildInvalidate = async function () {
+    return {
+      outputFiles: [],
+      rebuild: rebuild,
+      warnings: [],
+      errors: [],
+    };
+  };
+  rebuild.dispose = async function () {};
+  const buildResult: esbuild.BuildResult = {
+    rebuild,
+    warnings: [],
+    errors: [],
+    outputFiles,
+  };
+  return buildResult;
 }
 
 export function createBrowserBuild(

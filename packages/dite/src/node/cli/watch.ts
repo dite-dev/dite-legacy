@@ -4,7 +4,7 @@ import * as compiler from '../compiler';
 import { createServer } from '../server';
 
 export async function watch(config: DiteConfig) {
-  logger.debug('dite watch', { config: JSON.stringify(config) });
+  logger.debug('dite watch');
   const server = await createServer(config);
   logger.debug('dite watch server');
 
@@ -12,7 +12,7 @@ export async function watch(config: DiteConfig) {
     mode: ServerMode.Development,
     async onInitialBuild() {
       logger.debug('dite watch onInitialBuild');
-      await server.listen(config.port);
+      // await server.listen(config.port);
       logger.debug('dite watch onInitialBuild server.listen');
     },
     onRebuildStart: () => {
@@ -22,7 +22,7 @@ export async function watch(config: DiteConfig) {
     async onRebuildFinish() {
       // spinner.stop();
       // spinner.succeed('Server rebuild success!');
-      await server.restart();
+      // await server.restart();
     },
   });
   return () => {

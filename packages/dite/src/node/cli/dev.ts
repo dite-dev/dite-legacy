@@ -3,7 +3,7 @@ import { exitHook, logger } from '@dite/utils';
 import { watch } from './watch';
 
 export async function createDevServer(config: DiteConfig) {
-  logger.debug('dite createDevServer', { config: JSON.stringify(config) });
+  // logger.debug('dite createDevServer', { config: JSON.stringify(config) });
   const closeWatcher = await watch(config);
   logger.debug('dite createDevServer closeWatcher');
   let resolve: () => void;
