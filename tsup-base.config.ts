@@ -7,7 +7,8 @@ export function defineConfig(opts: Options | Options[]) {
   options.forEach((opt) => {
     opt.clean = isProd;
     opt.minify = isProd;
-    opt.sourcemap = !isProd;
+    opt.sourcemap = !isProd ? 'inline' : false;
+    opt.target ||= 'es2020';
     opt.shims = true;
   });
   return defineBaseConfig(options);

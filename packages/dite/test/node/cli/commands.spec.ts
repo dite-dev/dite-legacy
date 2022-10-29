@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import * as commands from '../../../src/node/cli/commands';
+import * as commands from '../../../src/cli/commands';
 
 describe('node/cli/commands.ts', () => {
   // const rootPath = path.join(__dirname, '../../fixtures/demo-app');

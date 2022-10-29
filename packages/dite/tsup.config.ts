@@ -4,20 +4,22 @@ export default defineConfig([
   {
     entry: {
       index: 'src/node/index.ts',
-      cli: 'src/node/cli.ts',
-      dev: 'src/node/cli/dev.ts',
+      cli: 'src/cli/cli.ts',
+      dev: 'src/cli/dev.ts',
     },
     minifyIdentifiers: false,
     bundle: true,
+    skipNodeModulesBundle: true,
     platform: 'node',
     dts: true,
     sourcemap: true,
     splitting: true,
     treeshake: true,
     keepNames: true,
-    outDir: 'dist/node',
+    outDir: 'dist',
     shims: true,
     format: ['cjs', 'esm'],
+    external: ['vite'],
   },
   {
     entry: {

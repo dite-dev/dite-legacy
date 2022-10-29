@@ -1,6 +1,6 @@
 import { DiteConfig, ServerMode } from '@dite/core/config';
 import { lodash, logger, Mustache, __require } from '@dite/utils';
-import swc from '@swc/wasm';
+import swc from '@swc/core';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import glob from 'fast-glob';
@@ -30,8 +30,8 @@ async function buildEverything(
     const browserBuildPromise = createBrowserBuild(config, options);
 
     return await Promise.all([serverBuildPromise, browserBuildPromise]);
-  } catch (error) {
-    logger.error(error);
+  } catch (error: any) {
+    logger.error(error.message);
     return [undefined, undefined];
   }
 }
@@ -177,7 +177,7 @@ export async function createServerBuild(
       return files.map(async (args) => {
         const { path, ...rest } = args;
         const filePath = join(serverRoot, path);
-        logger.debug('args', args);
+        logger.debug('args');
         const source = await fs.promises.readFile(filePath, 'utf-8');
         const isTs = /\.tsx?$/.test(path);
         const contents = await swc.transform(source, {

@@ -1,7 +1,7 @@
 {
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
   "compilerOptions": {
-    "module": "es2020",
+    "module": "CommonJS",
     "declaration": true,
     "strict": true,
     "removeComments": true,
@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "target": "es2017",
+    "target": "es2020",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": ".",
@@ -22,5 +22,5 @@
     "jsx": "preserve",
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["api", "app"]
+  "include": ["api", "server", "app"]
 }

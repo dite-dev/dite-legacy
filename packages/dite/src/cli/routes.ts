@@ -3,16 +3,22 @@ import minimatch from 'minimatch';
 import fs from 'node:fs';
 import path from 'node:path';
 
-export async function routes(diteRoot: string) {
-  const config = await resolveConfig({
-    root: diteRoot,
+export async function routes(root: string) {
+  // const config = resolveConfig({
+  //   root: diteRoot,
+  //   mode: ServerMode.Production,
+  // });
+  // console.log('config', config);
+
+  // const routesConfig = {};
+  // console.log(routesConfig);
+  // return routesConfig;
+  const config = resolveConfig({
+    root,
     mode: ServerMode.Production,
   });
-  console.log('config', config);
-
-  const routesConfig = {};
-  console.log(routesConfig);
-  return routesConfig;
+  const routes = defineConventionalRoutes(path.join(config.root, 'app'));
+  console.log(routes);
 }
 
 /**

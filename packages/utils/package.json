@@ -15,9 +15,8 @@
     "directory": "packages/utils"
   },
   "license": "MIT",
-  "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -31,7 +30,6 @@
     "@types/lodash": "^4.14.186",
     "@types/mustache": "^4.2.1",
     "chalk": "^5.1.2",
-    "consola": "^2.15.3",
     "debug": "^4.3.4",
     "exit-hook": "^3.1.2",
     "file-system-cache": "^2.0.1",

@@ -3,8 +3,8 @@
  */
 import { DiteConfig } from '@dite/core/config';
 import { logger } from '@dite/utils';
-import type { JscConfig } from '@swc/wasm';
-import swc from '@swc/wasm';
+import type { JscConfig } from '@swc/core';
+import swc from '@swc/core';
 import type { Plugin } from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,13 +14,13 @@ export const swcPlugin = (config: DiteConfig): Plugin => {
     name: 'dite-server-swc',
     async setup(build) {
       logger.debug('dite-server-swc setup');
-      // const swc: typeof import('@swc/wasm') = localRequire('@swc/wasm');
+      // const swc: typeof import('@swc/core') = localRequire('@swc/core');
       // logger.debug('dite-server-swc load swc done');
 
       if (!swc) {
         console.warn(
           build.initialOptions.format!,
-          'You have emitDecoratorMetadata enabled but @swc/wasm was not installed, skipping swc plugin',
+          'You have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin',
         );
         return;
       }

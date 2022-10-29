@@ -81,7 +81,6 @@ function dynamicRequire(filename: string) {
   const cacheKey = [basename(filename), statSync(filename).mtimeMs].join('-');
   const cacheFile = resolve(`./.cache/${cacheKey}.js`);
   mkdirSync(dirname(cacheFile), { recursive: true });
-  console.log(`cacheFile: ${cacheFile}`);
   if (existsSync(cacheFile)) {
     return __require(cacheFile);
   }
