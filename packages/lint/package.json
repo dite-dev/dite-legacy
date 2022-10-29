@@ -1,6 +1,6 @@
 {
   "name": "@dite/lint",
-  "version": "0.1.27",
+  "version": "0.1.28-alpha.0",
   "description": "lint",
   "keywords": [
     "dite"
