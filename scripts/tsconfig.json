@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "es2020",
     "esModuleInterop": true,
-    "target": "ESNext",
+    "target": "es2020",
     "sourceMap": true,
     "declaration": true,
     "skipLibCheck": true,

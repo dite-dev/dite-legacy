@@ -1,7 +1,8 @@
 node_modules
 dist
+.cache
+.dite
 *.d.ts
-*.js
 fixtures
 *.md
 *.yaml

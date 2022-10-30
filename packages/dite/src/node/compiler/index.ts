@@ -1,14 +1,13 @@
-import { DiteConfig, ServerMode } from '@dite/core';
-import { logger, __require } from '@dite/utils';
+import { DiteConfig, ServerMode } from '@dite/core/config';
+import { lodash, logger, Mustache, __require } from '@dite/utils';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs';
-import _ from 'lodash';
-import Mustache from 'mustache';
 import { dirname, join, sep } from 'node:path';
 
 import { templateDir } from '../constants';
-import { swcPlugin } from './swc';
+import { tscPlugin } from './tsc';
+// import { resolvePlugin } from './resolve';
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -29,8 +28,8 @@ async function buildEverything(
     const browserBuildPromise = createBrowserBuild(config, options);
 
     return await Promise.all([serverBuildPromise, browserBuildPromise]);
-  } catch (e) {
-    logger.error('e', e);
+  } catch (error: any) {
+    logger.error(error.message);
     return [undefined, undefined];
   }
 }
@@ -77,7 +76,9 @@ export async function watch(
     onBuildFailure,
     incremental: true,
   };
+  logger.debug('before buildEverything');
   let [serverBuild, browserBuild] = await buildEverything(config, options);
+  logger.debug('after buildEverything');
 
   const initialBuildComplete = !!browserBuild && !!serverBuild;
   if (initialBuildComplete && onInitialBuild) {
@@ -91,7 +92,7 @@ export async function watch(
     serverBuild = undefined;
   }
 
-  const rebuildEverything = _.debounce(async () => {
+  const rebuildEverything = lodash.debounce(async () => {
     if (onRebuildStart) onRebuildStart();
     if (!serverBuild?.rebuild) {
       disposeBuilders();
@@ -149,6 +150,7 @@ export async function createServerBuild(
   }: Required<BuildOptions> & { incremental?: boolean },
 ) {
   // auto externalize node_modules
+  logger.debug('start createServerBuild');
   const pkg = __require(join(config.root, 'package.json'));
   const localeTpl = fs.readFileSync(
     join(templateDir, 'server/main.ts.mustache'),
@@ -161,7 +163,9 @@ export async function createServerBuild(
     serverPath: join(config.root, 'server/index.ts'),
   });
   fs.writeFileSync(entryPath, entryContent);
-
+  logger.debug('write server entry file');
+  const serverRoot = join(config.root, 'server');
+  const outputDir = join(config.root, config.buildPath, 'dist/server');
   const build = await esbuild.build({
     entryPoints: [entryPath],
     outfile: config.serverBuildPath,
@@ -172,10 +176,11 @@ export async function createServerBuild(
     format,
     minify: mode === 'production',
     platform: 'node',
+    target: 'es2020',
     bundle: true,
-    mainFields: ['browser', 'module', 'main'],
+    mainFields: ['module', 'main'],
     splitting: false,
-    plugins: [swcPlugin()],
+    plugins: [tscPlugin(config)],
     keepNames: true,
     sourcemap: true,
     incremental,
@@ -185,7 +190,9 @@ export async function createServerBuild(
       ...Object.keys(pkg.devDependencies || {}),
     ].filter((dep) => !dep.startsWith('@dite/')),
   });
+  logger.debug('server build done');
   await writeServerBuildResult(config, { mode, format }, build.outputFiles);
+  logger.debug('server write output done');
   return build;
 }
 
@@ -200,6 +207,7 @@ export function createBrowserBuild(
     minifySyntax: true,
     jsx: 'automatic',
     format: 'esm',
+    target: 'es2020',
     minify: mode === 'production',
     platform: 'browser',
     bundle: true,

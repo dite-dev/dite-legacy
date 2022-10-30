@@ -2,10 +2,10 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "module": "esnext",
-    "target": "esnext",
+    "module": "es2020",
+    "target": "es2020",
     "outDir": "./dist",
-    "lib": ["esnext", "dom"],
+    "lib": ["dom"],
     "rootDir": "./src"
   },
   "include": ["src"]

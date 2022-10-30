@@ -3,13 +3,13 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
+    "module": "es2020",
     "skipLibCheck": true,
     "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "strict": true,
-    "target": "ESNext",
+    "target": "es2020",
     "jsx": "react"
   },
   "exclude": [

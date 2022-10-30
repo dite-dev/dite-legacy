@@ -1,8 +1,7 @@
-import { resolveConfig, ServerMode } from '@dite/core';
 import minimatch from 'minimatch';
 import fs from 'node:fs';
 import path from 'node:path';
-import { generateRoutes } from '../core/config/routes';
+import { resolveConfig, ServerMode } from '../config';
 
 export async function routes(diteRoot: string) {
   const config = await resolveConfig({
@@ -11,7 +10,7 @@ export async function routes(diteRoot: string) {
   });
   console.log('config', config);
 
-  const routesConfig = generateRoutes(diteRoot);
+  const routesConfig = {};
   console.log(routesConfig);
   return routesConfig;
 }

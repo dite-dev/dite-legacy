@@ -1,16 +1,19 @@
-import { DiteConfig, ServerMode } from '@dite/core';
+import { DiteConfig, ServerMode } from '@dite/core/config';
 import { logger } from '@dite/utils';
-import * as compiler from '../compiler';
-import { createServer } from '../server';
+import * as compiler from '../node/compiler';
+import { createServer } from '../node/server';
 
 export async function watch(config: DiteConfig) {
+  logger.debug('dite watch');
   const server = await createServer(config);
-  // const spinner = ora('dite');
+  logger.debug('dite watch server');
 
   const closeWatcher = await compiler.watch(config, {
     mode: ServerMode.Development,
     async onInitialBuild() {
-      await server.listen(config.port);
+      logger.debug('dite watch onInitialBuild');
+      // await server.listen(config.port);
+      logger.debug('dite watch onInitialBuild server.listen');
     },
     onRebuildStart: () => {
       logger.start('dite is rebuilding...');
@@ -19,7 +22,7 @@ export async function watch(config: DiteConfig) {
     async onRebuildFinish() {
       // spinner.stop();
       // spinner.succeed('Server rebuild success!');
-      await server.restart();
+      // await server.restart();
     },
   });
   return () => {

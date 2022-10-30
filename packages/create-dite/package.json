@@ -1,6 +1,6 @@
 {
   "name": "create-dite",
-  "version": "0.1.27",
+  "version": "0.1.28-alpha.0",
   "description": "create-dite",
   "keywords": [
     "dite"
@@ -15,7 +15,6 @@
     "directory": "packages/create-dite"
   },
   "license": "MIT",
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {

@@ -18,7 +18,9 @@ let revert: () => void = () => {};
 const cache = getCache('bundless-loader');
 
 const __require =
-  typeof require === 'function' ? require : createRequire(import.meta.url);
+  typeof require !== 'undefined' && typeof require.resolve !== 'undefined'
+    ? require
+    : createRequire(import.meta.url);
 
 function transform(opts: {
   code: string;

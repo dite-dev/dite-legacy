@@ -3,9 +3,9 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "outDir": "./dist",
-    "module": "esnext",
+    "module": "es2020",
     "rootDir": "./src",
-    "jsx": "react-jsx"
+    "jsx": "preserve"
   },
   "include": ["src"]
 }

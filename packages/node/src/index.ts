@@ -8,6 +8,7 @@ export interface NodeHookOptions {
   addMiddleware: (...input: (Interface | RequestHandler)[]) => void;
   addRequestHandler: any;
   config: any;
+  vite: any;
 }
 
 export type NodeAttacher = (options: NodeHookOptions) => Promise<void> | void;

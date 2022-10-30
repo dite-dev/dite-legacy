@@ -1,6 +1,6 @@
 {
   "name": "@dite/core",
-  "version": "0.1.27",
+  "version": "0.1.28-alpha.0",
   "description": "@dite/core",
   "keywords": [
     "dite"
@@ -15,9 +15,22 @@
     "directory": "packages/core"
   },
   "license": "MIT",
-  "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./config": {
+      "import": "./dist/config.mjs",
+      "require": "./dist/config.js"
+    },
+    "./route": {
+      "import": "./dist/route.mjs",
+      "require": "./dist/route.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -27,11 +40,18 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/utils": "0.1.27"
+    "@dite/utils": "0.1.28-alpha.0",
+    "esbuild": "^0.15.12",
+    "lodash.clonedeep": "^4.5.0",
+    "pirates": "^4.0.5",
+    "source-map-support": "^0.5.13"
   },
   "devDependencies": {
-    "esbuild": "^0.15.12",
-    "pirates": "^4.0.5"
+    "@types/lodash.clonedeep": "^4.5.6",
+    "@types/minimatch": "^5.1.2",
+    "@types/source-map-support": "^0.5.0",
+    "lodash.clonedeep": "^4.5.0",
+    "minimatch": "^5.1.0"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
