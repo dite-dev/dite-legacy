@@ -9,7 +9,6 @@ export default defineConfig([
     },
     minifyIdentifiers: false,
     bundle: true,
-    skipNodeModulesBundle: true,
     platform: 'node',
     dts: true,
     sourcemap: true,
