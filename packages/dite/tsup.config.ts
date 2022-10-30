@@ -18,7 +18,7 @@ export default defineConfig([
     outDir: 'dist',
     shims: true,
     format: ['cjs', 'esm'],
-    external: ['vite'],
+    noExternal: ['ora', 'chalk'],
   },
   {
     entry: {

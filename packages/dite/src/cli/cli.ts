@@ -8,7 +8,6 @@ import { routes } from './routes';
 import { start } from './start';
 
 process.env.DEBUG = 'dite:*';
-process.title = 'dite-app';
 
 const cli = cac('dite').version(version).help();
 

@@ -4,10 +4,8 @@ import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs';
 import { dirname, join, sep } from 'node:path';
-
 import { templateDir } from '../constants';
-import { tscPlugin } from './tsc';
-// import { resolvePlugin } from './resolve';
+import { swcPlugin } from './swc';
 
 function defaultWarningHandler(message: string, key: string) {
   console.log(message, key);
@@ -160,12 +158,11 @@ export async function createServerBuild(
   fs.mkdirSync(dirname(entryPath), { recursive: true });
   const entryContent = Mustache.render(localeTpl, {
     config: JSON.stringify(config),
-    serverPath: join(config.root, 'server/index.ts'),
+    serverPath: join(config.root, 'server/index'),
   });
+
   fs.writeFileSync(entryPath, entryContent);
   logger.debug('write server entry file');
-  const serverRoot = join(config.root, 'server');
-  const outputDir = join(config.root, config.buildPath, 'dist/server');
   const build = await esbuild.build({
     entryPoints: [entryPath],
     outfile: config.serverBuildPath,
@@ -179,8 +176,7 @@ export async function createServerBuild(
     target: 'es2020',
     bundle: true,
     mainFields: ['module', 'main'],
-    splitting: false,
-    plugins: [tscPlugin(config)],
+    plugins: [swcPlugin(config)],
     keepNames: true,
     sourcemap: true,
     incremental,
@@ -202,7 +198,7 @@ export function createBrowserBuild(
 ) {
   return esbuild.build({
     absWorkingDir: config.root,
-    entryPoints: { index: 'src/root.tsx' },
+    entryPoints: { index: 'app/root.tsx' },
     outdir: join(config.root, config.buildPath, 'browser'),
     minifySyntax: true,
     jsx: 'automatic',

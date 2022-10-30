@@ -10,8 +10,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  // @Get('/')
-  // async home(): Promise<string> {
-  //   return Promise.resolve('Hello DiteJs.');
-  // }
+  @Get('/')
+  async home(): Promise<string> {
+    return Promise.resolve('Hello DiteJs.');
+  }
 }

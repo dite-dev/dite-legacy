@@ -22,5 +22,5 @@
     "jsx": "preserve",
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["api", "server", "app"]
+  "include": ["api", "server", "app", "src"]
 }
