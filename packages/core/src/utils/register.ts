@@ -1,7 +1,6 @@
 import { getCache } from '@dite/utils';
 import type { Loader } from 'esbuild';
 import { statSync } from 'node:fs';
-import { createRequire } from 'node:module';
 import { extname } from 'node:path';
 import { addHook } from 'pirates';
 
@@ -16,11 +15,6 @@ let revert: () => void = () => {};
  * cache for transform
  */
 const cache = getCache('bundless-loader');
-
-const __require =
-  typeof require !== 'undefined' && typeof require.resolve !== 'undefined'
-    ? require
-    : createRequire(import.meta.url);
 
 function transform(opts: {
   code: string;
@@ -53,7 +47,7 @@ function transform(opts: {
 function register(opts: { exts?: string[] } = {}) {
   const { exts = HOOK_EXTS } = opts;
 
-  const esbuild = __require(__require.resolve('esbuild'));
+  const esbuild = require(require.resolve('esbuild'));
 
   files = [];
   if (!registered) {
@@ -74,12 +68,12 @@ function dynamicImport(filepath: string, opts: { clean?: boolean } = {}) {
   register();
   if (clean) {
     clearFiles();
-    content = __require(filepath);
+    content = require(filepath);
     for (const file of getFiles()) {
-      delete __require.cache[file];
+      delete require.cache[file];
     }
   } else {
-    content = __require(filepath);
+    content = require(filepath);
   }
   restore();
   return content;

@@ -1,9 +1,10 @@
 import { DiteConfig, ServerMode } from '@dite/core/config';
-import { lodash, logger, Mustache, __require } from '@dite/utils';
+import { lodash, logger, Mustache } from '@dite/utils';
+import swc from '@swc/core';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs';
-import { dirname, join, sep } from 'node:path';
+import path from 'path';
 import { templateDir } from '../constants';
 import { swcPlugin } from './swc';
 
@@ -55,7 +56,7 @@ interface WatchOptions extends BuildOptions {
 export async function watch(
   config: DiteConfig,
   {
-    mode = ServerMode.Development,
+    mode = 'development',
     onFileChanged,
     onFileCreated,
     onFileDeleted,
@@ -66,7 +67,7 @@ export async function watch(
     onBuildFailure = defaultBuildFailureHandler,
   }: WatchOptions = {},
 ) {
-  const toWatch = [join(config.root, 'server')];
+  const toWatch = [path.join(config.root, 'server')];
   const options = {
     mode,
     format: config.server.format,
@@ -149,16 +150,16 @@ export async function createServerBuild(
 ) {
   // auto externalize node_modules
   logger.debug('start createServerBuild');
-  const pkg = __require(join(config.root, 'package.json'));
+  const pkg = require(path.join(config.root, 'package.json'));
   const localeTpl = fs.readFileSync(
-    join(templateDir, 'server/main.ts.mustache'),
+    path.join(templateDir, 'server/main.ts.mustache'),
     'utf-8',
   );
-  const entryPath = join(config.root, config.buildPath, 'src/server.ts');
-  fs.mkdirSync(dirname(entryPath), { recursive: true });
+  const entryPath = path.join(config.root, config.buildPath, 'src/server.ts');
+  fs.mkdirSync(path.dirname(entryPath), { recursive: true });
   const entryContent = Mustache.render(localeTpl, {
     config: JSON.stringify(config),
-    serverPath: join(config.root, 'server/index'),
+    serverPath: path.join(config.root, 'server/index'),
   });
 
   fs.writeFileSync(entryPath, entryContent);
@@ -199,7 +200,7 @@ export function createBrowserBuild(
   return esbuild.build({
     absWorkingDir: config.root,
     entryPoints: { index: 'app/root.tsx' },
-    outdir: join(config.root, config.buildPath, 'browser'),
+    outdir: path.join(config.root, config.buildPath, 'browser'),
     minifySyntax: true,
     jsx: 'automatic',
     format: 'esm',
@@ -223,7 +224,7 @@ export function createBrowserBuild(
 export async function build(
   config: DiteConfig,
   {
-    mode = ServerMode.Production,
+    mode = 'production',
     onWarning = defaultWarningHandler,
     onBuildFailure = defaultBuildFailureHandler,
   }: BuildOptions = {},
@@ -245,13 +246,13 @@ export async function writeServerBuildResult(
   if (!outputFiles) return;
 
   for (const file of outputFiles) {
-    fs.mkdirSync(dirname(file.path), { recursive: true });
+    fs.mkdirSync(path.dirname(file.path), { recursive: true });
     if (file.path.endsWith('.js')) {
       if (mode === 'development') {
-        delete __require.cache[file.path];
+        delete require.cache[file.path];
       }
       // fix sourceMappingURL to be relative to current path instead of /build
-      const filename = file.path.substring(file.path.lastIndexOf(sep) + 1);
+      const filename = file.path.substring(file.path.lastIndexOf(path.sep) + 1);
       const escapedFilename = filename.replace(/\./g, '\\.');
       const pattern = `(//# sourceMappingURL=)(.*)${escapedFilename}`;
       let contents = Buffer.from(file.contents).toString('utf-8');
@@ -263,8 +264,24 @@ export async function writeServerBuildResult(
       contents = contents.replace(/"route:/gm, '"');
       fs.writeFileSync(file.path, contents, 'utf-8');
     } else {
-      fs.mkdirSync(dirname(file.path), { recursive: true });
+      fs.mkdirSync(path.dirname(file.path), { recursive: true });
       fs.writeFileSync(file.path, file.contents, 'utf-8');
     }
   }
+}
+
+export async function swcBuildServer(config: DiteConfig) {
+  const entryPath = path.join(config.root, config.buildPath, 'src/server.ts');
+
+  const build = await swc.bundle({
+    entry: entryPath,
+    target: 'node',
+    output: {
+      name: 'server',
+      path: config.serverBuildPath,
+    },
+    module: {
+      type: 'commonjs',
+    },
+  });
 }

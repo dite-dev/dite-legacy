@@ -3,7 +3,8 @@ process.title = 'dite-app-server';
 
 (async () => {
   const config = {
-    port: 3001,
+    ...{{{ config }}},
+    port: process.env.PORT || 3000,
   }
   const { bootstrap: createServer } = await import('{{{ serverPath }}}')
   await createServer({ config });

@@ -43,7 +43,7 @@ export function resolveUserConfig(opts: ResolveConfigOptions) {
 export function readConfig() {
   const config = resolveConfig({
     root: process.env.DITE_ROOT || (process.cwd() as string),
-    mode: ServerMode.Production,
+    mode: 'production',
   });
   return config;
 }
@@ -56,7 +56,7 @@ export function generateConfig(
     root: process.cwd!(),
     serverBuildPath: '',
     port: 3001,
-    mode: ServerMode.Production,
+    mode: 'production',
     buildPath: '.dite',
     server: {
       format: 'cjs',

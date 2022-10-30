@@ -8,7 +8,6 @@ import {
   resolveConfig,
   resolveUserConfig,
 } from '../src/config';
-import { ServerMode } from '../src/config/server-mode';
 import { TEST_FIXTURES_ROOT } from './utils/constants';
 
 import path from 'node:path';
@@ -46,7 +45,7 @@ describe('src/config', () => {
     it('resolveUserConfig should be success', async () => {
       const userConfig = await resolveUserConfig({
         root: configPath,
-        mode: ServerMode.Development,
+        mode: 'development',
       });
       expect(userConfig).toBeDefined();
       expect(userConfig?.config).toMatchObject(config);
@@ -57,7 +56,7 @@ describe('src/config', () => {
     it('should be success', async () => {
       const config = await resolveConfig({
         root: configPath,
-        mode: ServerMode.Development,
+        mode: 'development',
       });
       expect(config).toBeDefined();
       expect(config.port).toEqual(3001);
@@ -79,7 +78,7 @@ describe('src/config', () => {
       expect(
         generateConfig(
           { config: userConfig, path: root, dependencies: [] },
-          { root, mode: ServerMode.Production },
+          { root, mode: 'production' },
         ),
       ).toMatchObject({
         port: 3001,
@@ -93,7 +92,7 @@ describe('src/config', () => {
     it('should be success', () => {
       config = resolveConfig({
         root: configPath,
-        mode: ServerMode.Development,
+        mode: 'development',
       });
 
       expect(config).toMatchObject({

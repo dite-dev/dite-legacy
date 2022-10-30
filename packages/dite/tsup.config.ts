@@ -18,6 +18,7 @@ export default defineConfig([
     outDir: 'dist',
     shims: true,
     format: ['cjs', 'esm'],
+    external: ['esbuild', '@swc/core'],
     noExternal: ['ora', 'chalk'],
   },
   {

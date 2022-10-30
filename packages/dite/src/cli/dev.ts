@@ -1,4 +1,4 @@
-import { DiteConfig, resolveConfig, ServerMode } from '@dite/core/config';
+import { DiteConfig, resolveConfig } from '@dite/core/config';
 import { exitHook, logger } from '@dite/utils';
 import type { WatchOptions } from 'chokidar';
 import { watch } from './watch';
@@ -41,7 +41,7 @@ async function rebuildServer() {}
 export async function dev(root: string) {
   const config = resolveConfig({
     root,
-    mode: ServerMode.Development,
+    mode: 'development',
   });
   //   const serverRoot = path.join(config.root, 'server');
   //   const outputDir = path.join(config.root, config.buildPath, 'dist/server');

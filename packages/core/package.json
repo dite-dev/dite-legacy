@@ -44,12 +44,12 @@
     "esbuild": "^0.15.12",
     "lodash.clonedeep": "^4.5.0",
     "pirates": "^4.0.5",
-    "source-map-support": "^0.5.13"
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "@types/lodash.clonedeep": "^4.5.6",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@types/minimatch": "^5.1.2",
-    "@types/source-map-support": "^0.5.0",
+    "@types/source-map-support": "^0.5.6",
     "lodash.clonedeep": "^4.5.0",
     "minimatch": "^5.1.0"
   },

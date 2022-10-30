@@ -1,12 +1,12 @@
 import minimatch from 'minimatch';
 import fs from 'node:fs';
 import path from 'node:path';
-import { resolveConfig, ServerMode } from './config';
+import { resolveConfig } from './config';
 
 export async function routes(diteRoot: string) {
   const config = await resolveConfig({
     root: diteRoot,
-    mode: ServerMode.Production,
+    mode: 'production',
   });
   console.log('config', config);
 

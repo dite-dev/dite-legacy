@@ -1,4 +1,4 @@
-import { DiteConfig, ServerMode } from '@dite/core/config';
+import { DiteConfig } from '@dite/core/config';
 import { logger } from '@dite/utils';
 import ora from 'ora';
 import * as compiler from '../node/compiler';
@@ -11,7 +11,7 @@ export async function watch(config: DiteConfig) {
   const spinner = ora('dite');
 
   const closeWatcher = await compiler.watch(config, {
-    mode: ServerMode.Development,
+    mode: 'development',
     async onInitialBuild() {
       logger.debug('dite watch onInitialBuild');
       await server.listen(config.port);
