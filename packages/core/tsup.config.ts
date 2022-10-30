@@ -18,19 +18,4 @@ export default defineConfig([
     format: ['cjs', 'esm'],
     external: ['esbuild'],
   },
-  {
-    entry: {
-      'swc-register': 'src/register/swc.ts',
-    },
-    minifyIdentifiers: false,
-    bundle: true,
-    dts: true,
-    sourcemap: true,
-    splitting: false,
-    outDir: 'dist',
-    clean: true,
-    shims: true,
-    format: 'cjs',
-    external: ['esbuild', '@swc/core'],
-  },
 ]);

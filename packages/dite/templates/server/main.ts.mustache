@@ -1,14 +1,9 @@
-import { createServer } from '{{{ serverPath }}}';
-import { readConfig } from '@dite/core/config';
-
-global.__dite_server_start_time = performance.now();
-
-const config = readConfig('/Users/heixing/Git/dite/examples/boilerplate');
-
-global.__dite_config = config;
+import { bootstrap as createServer } from '/Users/loyep/Git/dite/examples/boilerplate/server/index';
 
 (async () => {
-  config.port = process.env.PORT || config.port;
+  const config = {
+    port: 3001,
+  }
   await createServer({ config });
   const payload = {
     type: 'dite:ready',

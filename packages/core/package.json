@@ -28,9 +28,6 @@
       "import": "./dist/route.mjs",
       "require": "./dist/route.js"
     },
-    "./swc-register": {
-      "require": "./dist/swc-register.js"
-    },
     "./package.json": "./package.json",
     "./dist/*": "./dist/*"
   },
@@ -44,7 +41,6 @@
   },
   "dependencies": {
     "@dite/utils": "0.1.28-alpha.0",
-    "@swc/core": "^1.3.11",
     "esbuild": "^0.15.12",
     "lodash.clonedeep": "^4.5.0",
     "pirates": "^4.0.5",

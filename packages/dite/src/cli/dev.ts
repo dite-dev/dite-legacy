@@ -1,15 +1,14 @@
 import { DiteConfig, resolveConfig, ServerMode } from '@dite/core/config';
 import { logger, Mustache } from '@dite/utils';
-import swc from '@swc/core';
 import type { FSWatcher, WatchOptions } from 'chokidar';
 import chokidar from 'chokidar';
-import spawn from 'cross-spawn';
 import esbuild from 'esbuild';
 import fs from 'fs';
 import path from 'path';
-import { templateDir } from '../node/constants';
+import { tscPlugin } from '../node/compiler/tsc';
 // import { exitHook, logger } from '@dite/utils';
 // import { watch } from './watch';
+import { templateDir } from '../node/constants';
 
 export async function createDevServer(config: DiteConfig) {
   // logger.debug('dite createDevServer', { config: JSON.stringify(config) });
@@ -54,82 +53,6 @@ export async function dev(root: string) {
   const serverRoot = path.join(config.root, 'server');
   const outputDir = path.join(config.root, config.buildPath, 'dist/server');
 
-  async function writeServerBuildResult(
-    outputFiles: esbuild.OutputFile[] = [],
-  ) {
-    if (!outputFiles) return;
-
-    for (const file of outputFiles) {
-      fs.mkdirSync(path.dirname(file.path), { recursive: true });
-      if (file.path.endsWith('.js')) {
-        // if (mode === 'development') {
-        //   delete __require.cache[file.path];
-        // }
-        // fix sourceMappingURL to be relative to current path instead of /build
-        const filename = file.path.substring(
-          file.path.lastIndexOf(path.sep) + 1,
-        );
-        const escapedFilename = filename.replace(/\./g, '\\.');
-        const pattern = `(//# sourceMappingURL=)(.*)${escapedFilename}`;
-        let contents = Buffer.from(file.contents).toString('utf-8');
-        contents = contents.replace(new RegExp(pattern), `$1${filename}`);
-        fs.writeFileSync(file.path, contents, 'utf-8');
-      } else if (file.path.endsWith('.map')) {
-        // remove route: prefix from source filenames so breakpoints work
-        let contents = Buffer.from(file.contents).toString('utf-8');
-        contents = contents.replace(/"route:/gm, '"');
-        fs.writeFileSync(file.path, contents, 'utf-8');
-      } else {
-        fs.mkdirSync(path.dirname(file.path), { recursive: true });
-        fs.writeFileSync(file.path, file.contents, 'utf-8');
-      }
-    }
-  }
-
-  async function swcTransformContent(
-    source: string,
-    { isTs }: { isTs?: boolean } = {},
-  ) {
-    return await swc.transform(source, {
-      jsc: {
-        parser: {
-          syntax: isTs ? 'typescript' : 'ecmascript',
-          decorators: true,
-        },
-        transform: {
-          legacyDecorator: true,
-          decoratorMetadata: true,
-        },
-        keepClassNames: true,
-        target: 'es2020',
-      },
-      sourceMaps: false,
-      // sourceMaps: config.mode === 'development',
-      configFile: false,
-      swcrc: false,
-      module: {
-        type: 'commonjs',
-        strict: true,
-      },
-    });
-  }
-
-  async function swcTransformFile(file: string) {
-    const filePath = path.join(serverRoot, file);
-    const source = await fs.promises.readFile(filePath, 'utf-8');
-    const isTs = /\.tsx?$/.test(file);
-    const { code } = await swcTransformContent(source, { isTs });
-    const output: esbuild.OutputFile = {
-      path: path.join(
-        outputDir,
-        `${path.dirname(file)}/${path.basename(file)}.js`,
-      ),
-      contents: Buffer.from(code, 'utf-8'),
-      text: '',
-    };
-    return output;
-  }
-
   async function generateServerEntry() {
     const localeTpl = await fs.promises.readFile(
       path.join(templateDir, 'server/main.ts.mustache'),
@@ -143,16 +66,38 @@ export async function dev(root: string) {
     await fs.promises.mkdir(path.dirname(entryPath), { recursive: true });
     const entryContent = Mustache.render(localeTpl, {
       config: JSON.stringify(config),
-      serverPath: path.join(config.root, 'server/index.ts'),
-    });
-    const { code } = await swcTransformContent(entryContent, {
-      isTs: true,
+      serverPath: path.join(config.root, 'server/index'),
     });
     await fs.promises.writeFile(
-      path.join(config.root, config.buildPath, 'server.cts'),
+      path.join(config.root, config.buildPath, 'server.ts'),
       entryContent,
     );
-    await fs.promises.writeFile(entryPath, code, 'utf-8');
+    const pkg = require(path.join(config.root, 'package.json'));
+
+    const build = await esbuild.build({
+      entryPoints: [path.join(config.root, config.buildPath, 'server.ts')],
+      outfile: config.serverBuildPath,
+      minifySyntax: true,
+      jsx: 'automatic',
+      sourceRoot: config.root,
+      write: true,
+      format: 'cjs',
+      minify: false,
+      platform: 'node',
+      target: 'es2020',
+      bundle: true,
+      mainFields: ['module', 'main'],
+      splitting: false,
+      plugins: [tscPlugin(config)],
+      keepNames: true,
+      sourcemap: true,
+      incremental: true,
+      treeShaking: true,
+      external: [
+        ...Object.keys(pkg.dependencies || {}),
+        ...Object.keys(pkg.devDependencies || {}),
+      ].filter((dep) => !dep.startsWith('@dite/')),
+    });
   }
 
   const now = Date.now();
@@ -168,12 +113,12 @@ export async function dev(root: string) {
     //   ),
     await generateServerEntry();
     // ]);
-    spawn('node', [' -r @dite/core/swc-register ./bootstrap.ts'], {
-      env: process.env,
-      stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
-      shell: true,
-      cwd: path.join(config.root, 'server'),
-    });
+    // spawn('node', [' -r @dite/core/swc-register ./bootstrap.ts'], {
+    //   env: process.env,
+    //   stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
+    //   shell: true,
+    //   cwd: path.join(config.root, 'server'),
+    // });
   }
 
   await initialServerBuild();

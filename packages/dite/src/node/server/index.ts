@@ -58,6 +58,7 @@ export async function createServer(
 
   const createChildProcess = ({ port }: { port?: number } = {}) => {
     const now = Math.ceil(performance.now());
+
     const ref = spawn('node', [config.serverBuildPath], {
       env: {
         ...process.env,
