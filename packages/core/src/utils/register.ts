@@ -1,14 +1,8 @@
-import { getCache, logger } from '@dite/utils';
+import { getCache } from '@dite/utils';
 import type { Loader } from 'esbuild';
-import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  statSync,
-  writeFileSync,
-} from 'node:fs';
+import { statSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { basename, dirname, extname, resolve } from 'node:path';
+import { extname } from 'node:path';
 import { addHook } from 'pirates';
 
 const COMPILE_EXTS = ['.ts', '.tsx', '.js', '.jsx'];
@@ -24,7 +18,7 @@ let revert: () => void = () => {};
 const cache = getCache('bundless-loader');
 
 const __require =
-  typeof require === 'function' && typeof require.resolve === 'function'
+  typeof require !== 'undefined' && typeof require.resolve !== 'undefined'
     ? require
     : createRequire(import.meta.url);
 
@@ -44,11 +38,11 @@ function transform(opts: {
     const { code } = implementor.transformSync(source, {
       sourcefile: filename,
       loader: ext.slice(1) as Loader,
-      target: 'es2020',
+      target: 'es2019',
       format: 'cjs',
       logLevel: 'error',
     });
-    cache.setSync(cacheKey, code);
+    cache.set(cacheKey, code);
     return code;
   } catch (e) {
     // @ts-expect-error
@@ -58,7 +52,7 @@ function transform(opts: {
 
 function register(opts: { exts?: string[] } = {}) {
   const { exts = HOOK_EXTS } = opts;
-  logger.debug('register loader');
+
   const esbuild = __require(__require.resolve('esbuild'));
 
   files = [];
@@ -72,49 +66,22 @@ function register(opts: { exts?: string[] } = {}) {
     );
     registered = true;
   }
-  logger.debug('register loader done');
-}
-
-function dynamicRequire(filename: string) {
-  files.push(filename);
-  const ext = extname(filename);
-  const cacheKey = [basename(filename), statSync(filename).mtimeMs].join('-');
-  const cacheFile = resolve(`./.cache/${cacheKey}.js`);
-  mkdirSync(dirname(cacheFile), { recursive: true });
-  if (existsSync(cacheFile)) {
-    return __require(cacheFile);
-  }
-  const esbuild = __require(__require.resolve('esbuild'));
-
-  const source = readFileSync(filename, 'utf-8');
-  const { code } = esbuild.transformSync(source, {
-    sourcefile: filename,
-    loader: ext.slice(1) as Loader,
-    target: 'es2020',
-    format: 'cjs',
-    logLevel: 'error',
-  });
-  console.log('code', code);
-
-  writeFileSync(cacheFile, code, 'utf-8');
-  __require(cacheFile);
-  return code;
 }
 
 function dynamicImport(filepath: string, opts: { clean?: boolean } = {}) {
   const { clean = false } = opts;
   let content;
-  // register();
+  register();
   if (clean) {
     clearFiles();
-    content = dynamicRequire(filepath);
+    content = __require(filepath);
     for (const file of getFiles()) {
       delete __require.cache[file];
     }
   } else {
-    content = dynamicRequire(filepath);
+    content = __require(filepath);
   }
-  // restore();
+  restore();
   return content;
 }
 
