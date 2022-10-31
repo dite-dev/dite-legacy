@@ -1,13 +1,16 @@
 {
-  "extends": "../tsconfig.base.json",
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
   "compilerOptions": {
-    "moduleResolution": "node",
+    "module": "CommonJS",
     "declaration": true,
+    "strict": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "target": "es2020",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": ".",
@@ -15,8 +18,9 @@
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "forceConsistentCasingInFileNames": true,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["api", "server", "app", "src"]
 }

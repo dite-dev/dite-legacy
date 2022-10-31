@@ -6,6 +6,11 @@
       "outputs": ["dist/**"],
       "inputs": ["tsup.config.ts", "src/**/*.ts", "src/**/*.tsx"]
     },
+    "build:dev": {
+      "dependsOn": ["^build:dev"],
+      "outputs": ["dist/**"],
+      "inputs": ["tsup.config.ts", "src/**/*.ts", "src/**/*.tsx"]
+    },
     "dev": {
       "cache": false
     }

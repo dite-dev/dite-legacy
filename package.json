@@ -45,8 +45,6 @@
     "@pnpm/lockfile-file": "^6.0.1",
     "@pnpm/logger": "^5.0.0",
     "@types/node": "^17.0.45",
-    "@types/react": "^18.0.24",
-    "@types/react-dom": "^18.0.8",
     "@types/resolve": "^1.20.2",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
