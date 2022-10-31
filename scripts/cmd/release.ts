@@ -109,12 +109,9 @@ const require = createRequire(import.meta.url);
       pkg,
       version,
       deps: [
-        '@dite/core',
         '@dite/nest',
         '@dite/node',
         '@dite/react',
-        '@dite/runtime',
-        '@dite/utils',
         '@dite/vue',
         'create-dite',
         'dite',

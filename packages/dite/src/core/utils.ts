@@ -19,8 +19,8 @@ export function normalizePath(id: string): string {
   return path.posix.normalize(isWindows ? slash(id) : id);
 }
 
-export function localRequire(id: string): any {
-  return __require(normalizePath(id));
+export function localRequire<T>(id: string): T {
+  return __require(normalizePath(id)) as T;
 }
 
 export function _rDefault<T>(r: any) {

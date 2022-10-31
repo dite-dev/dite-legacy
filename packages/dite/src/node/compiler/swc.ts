@@ -1,7 +1,7 @@
 /**
  * Use SWC to emit decorator metadata
  */
-import { JscConfig } from '@swc/core';
+import type { JscConfig } from '@swc/core';
 import { Plugin } from 'esbuild';
 import path from 'path';
 import { DiteConfig, localRequire, logger } from '../../core';
@@ -9,9 +9,8 @@ import { DiteConfig, localRequire, logger } from '../../core';
 export const swcPlugin = (config: DiteConfig): Plugin => {
   return {
     name: 'swc',
-
     setup(build) {
-      const swc: typeof import('@swc/core') = localRequire('@swc/core');
+      const swc = localRequire<typeof import('@swc/core')>('@swc/core');
 
       if (!swc) {
         logger.error(
@@ -36,7 +35,7 @@ export const swcPlugin = (config: DiteConfig): Plugin => {
             decoratorMetadata: true,
           },
           keepClassNames: true,
-          target: 'es2022',
+          target: 'es2020',
         };
 
         const result = await swc.transformFile(args.path, {

@@ -1,5 +1,4 @@
 import { hook, NodeHookOptions } from '@dite/node';
-import { logger } from '@dite/utils';
 import { NestFactory } from '@nestjs/core';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -13,10 +12,10 @@ const useVite = true;
 
 const adapter = hook(
   async ({ addMiddleware, addRequestHandler, config, vite }) => {
-    logger.debug('dite adapter start');
+    console.debug('dite adapter start');
     if (useVite) {
       addMiddleware(vite.middlewares);
-      logger.debug('dite adapter vite.middlewares');
+      console.debug('dite adapter vite.middlewares');
       const htmlTemplate = fs.readFileSync(
         path.resolve(config.root, 'app/index.html'),
         'utf-8',
@@ -47,7 +46,7 @@ export default adapter;
 
 export async function bootstrap(opts) {
   const { config } = opts;
-  logger.debug('createServer');
+  console.debug('createServer');
   const app = await NestFactory.create(AppModule);
   const vite: ViteDevServer = await createViteServer({
     appType: 'custom',
@@ -92,6 +91,6 @@ export async function bootstrap(opts) {
     app.use(path, requestHandler);
   }
   await app.listen(config.port);
-  logger.debug('finish listen');
+  console.debug('finish listen');
   return app;
 }
