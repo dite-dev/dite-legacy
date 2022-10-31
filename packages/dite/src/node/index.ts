@@ -1,5 +1,5 @@
-import type { DiteConfig } from '@dite/core/config';
-import { defineConfig } from '@dite/core/config';
+import type { DiteConfig } from '../core';
+import { defineConfig } from '../core';
 
 export type { DiteConfig };
 export { defineConfig };

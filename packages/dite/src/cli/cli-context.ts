@@ -1,4 +1,4 @@
-import { ServerMode } from '@dite/core/config';
+import { ServerMode } from '../core';
 
 export class Context {
   public readonly root: string;

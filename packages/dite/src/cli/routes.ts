@@ -1,12 +1,12 @@
-import { resolveConfig, ServerMode } from '@dite/core/config';
 import minimatch from 'minimatch';
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveConfig } from '../core';
 
 export async function routes(root: string) {
   // const config = resolveConfig({
   //   root: diteRoot,
-  //   mode: ServerMode.Production,
+  //   mode: 'production',
   // });
   // console.log('config', config);
 
@@ -15,7 +15,7 @@ export async function routes(root: string) {
   // return routesConfig;
   const config = resolveConfig({
     root,
-    mode: ServerMode.Production,
+    mode: 'production',
   });
   const routes = defineConventionalRoutes(path.join(config.root, 'app'));
   console.log(routes);

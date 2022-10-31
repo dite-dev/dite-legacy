@@ -1,8 +1,7 @@
-import { DiteConfig } from '@dite/core/config';
-import { lodash, logger } from '@dite/utils';
 import spawn from 'cross-spawn';
 import type { ChildProcess, Serializable } from 'node:child_process';
 import { performance } from 'node:perf_hooks';
+import { DiteConfig, lodash, logger } from '../../core';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
 
 export interface DiteServer {
@@ -65,17 +64,15 @@ export async function createServer(
         PORT: String(port ?? config.port),
       },
       cwd: process.cwd(),
+      shell: true,
       stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
     });
 
     function onReady(payload: Serializable) {
       if (isReadyPayload(payload)) {
         logger.debug('dite createServer fork onReady');
-        const { finishTime } = payload;
         const memoryUsage = getMemoryUsage();
-        logger.ready(
-          `Server is ready in ${finishTime - now}ms. \n${memoryUsage || ''}`,
-        );
+        logger.info(`Server is ready. \n${memoryUsage || ''}`);
         ref.removeListener('message', onReady);
       }
     }

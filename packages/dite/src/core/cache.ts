@@ -1,6 +1,6 @@
 import fsCache from 'file-system-cache';
 import path from 'path';
-import { _rDefault } from './utils/load-default';
+import { _rDefault } from './utils';
 
 const CACHE_PATH = 'node_modules/.cache/dite';
 

@@ -1,21 +1,15 @@
-import { performance } from 'node:perf_hooks';
-import { createServer } from '{{{ serverPath }}}';
-
-global.__dite_server_start_time = performance.now();
-
-function getMemoryUsage() {
-  const size = 1 << 20;
-  const used = process.memoryUsage().heapUsed / size;
-  const rss = process.memoryUsage().rss / size;
-  return `Memory Usage: ${Math.round(used * 100) / 100} MB (RSS: ${
-    Math.round(rss * 100) / 100
-  } MB)`;
-}
-
-const config = {{{ config }}};
+// require('source-map-support').install();
+process.title = 'dite-app-server';
 
 (async () => {
-  config.port = process.env.PORT || config.port;
+  const config = {
+    port: 3001,
+  }
+  const { bootstrap: createServer } = await import('{{{ serverPath }}}')
   await createServer({ config });
-  process.send({ type: 'dite:ready', duration: parseInt(performance.now() - global.__dite_server_start_time), memoryUsage: getMemoryUsage() });
+  const payload = {
+    type: 'dite:ready',
+    port: config.port,
+  };
+  process.send?.(payload);
 })();

@@ -13,7 +13,7 @@ export default defineConfig([
     clean: true,
     shims: true,
     platform: 'node',
-    skipNodeModulesBundle: false,
     format: ['cjs', 'esm'],
+    external: ['esbuild'],
   },
 ]);

@@ -7,7 +7,6 @@ export default defineConfig([
       cli: 'src/cli/cli.ts',
       dev: 'src/cli/dev.ts',
     },
-    minifyIdentifiers: false,
     bundle: true,
     platform: 'node',
     dts: true,
@@ -18,7 +17,7 @@ export default defineConfig([
     outDir: 'dist',
     shims: true,
     format: ['cjs', 'esm'],
-    external: ['vite'],
+    external: ['esbuild', '@swc/core'],
   },
   {
     entry: {

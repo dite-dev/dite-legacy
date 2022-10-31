@@ -1,14 +1,16 @@
-import { bootstrap as createServer } from '/Users/loyep/Git/dite/examples/boilerplate/server/index';
+// require('source-map-support').install();
+process.title = 'dite-app-server';
 
 (async () => {
   const config = {
-    port: 3001,
+    ...{{{ config }}},
+    port: process.env.PORT || 3000,
   }
+  const { bootstrap: createServer } = await import('{{{ serverPath }}}')
   await createServer({ config });
   const payload = {
     type: 'dite:ready',
     port: config.port,
-    finishTime: Math.ceil(performance.now()),
   };
   process.send?.(payload);
 })();

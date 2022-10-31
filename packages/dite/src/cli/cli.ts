@@ -1,5 +1,5 @@
-import { logger } from '@dite/utils';
 import { cac } from 'cac';
+import { logger } from '../core';
 // @ts-expect-error
 import { version } from '../../package.json';
 import { build } from './build';
@@ -8,7 +8,6 @@ import { routes } from './routes';
 import { start } from './start';
 
 process.env.DEBUG = 'dite:*';
-process.title = 'dite-app';
 
 const cli = cac('dite').version(version).help();
 

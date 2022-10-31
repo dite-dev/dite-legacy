@@ -1,14 +1,12 @@
-import { resolveConfig, ServerMode } from '@dite/core/config';
-import { logger } from '@dite/utils';
-// import * as compiler from '../node/compiler';
+import { logger, resolveConfig } from '../core';
 
 export async function build(diteRoot: string) {
   logger.debug('111');
   const config = resolveConfig({
     root: diteRoot,
-    mode: ServerMode.Production,
+    mode: 'production',
   });
   console.log(config);
   logger.debug('222');
-  // await compiler.build(config, { mode: ServerMode.Production });
+  // await compiler.build(config, { mode: 'production' });
 }
