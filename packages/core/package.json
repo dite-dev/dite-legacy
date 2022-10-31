@@ -20,14 +20,6 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./config": {
-      "import": "./dist/config.mjs",
-      "require": "./dist/config.js"
-    },
-    "./route": {
-      "import": "./dist/route.mjs",
-      "require": "./dist/route.js"
-    },
     "./package.json": "./package.json",
     "./dist/*": "./dist/*"
   },
@@ -40,18 +32,26 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/utils": "0.1.28-alpha.0",
     "esbuild": "^0.15.12",
-    "lodash.clonedeep": "^4.5.0",
-    "pirates": "^4.0.5",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/lodash": "^4.14.186",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/minimatch": "^5.1.2",
+    "@types/mustache": "^4.2.1",
     "@types/source-map-support": "^0.5.6",
+    "chalk": "^5.1.2",
+    "debug": "^4.3.4",
+    "exit-hook": "^3.1.2",
+    "file-system-cache": "^2.0.1",
+    "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
-    "minimatch": "^5.1.0"
+    "minimatch": "^5.1.0",
+    "mustache": "^4.2.0",
+    "pirates": "^4.0.5",
+    "resolve-from": "^5.0.0"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"

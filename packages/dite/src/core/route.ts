@@ -1,24 +1,18 @@
 import minimatch from 'minimatch';
 import fs from 'node:fs';
 import path from 'node:path';
-import { resolveConfig } from '../core';
+import { resolveConfig } from './config';
 
-export async function routes(root: string) {
-  // const config = resolveConfig({
-  //   root: diteRoot,
-  //   mode: 'production',
-  // });
-  // console.log('config', config);
-
-  // const routesConfig = {};
-  // console.log(routesConfig);
-  // return routesConfig;
-  const config = resolveConfig({
-    root,
+export async function routes(diteRoot: string) {
+  const config = await resolveConfig({
+    root: diteRoot,
     mode: 'production',
   });
-  const routes = defineConventionalRoutes(path.join(config.root, 'app'));
-  console.log(routes);
+  console.log('config', config);
+
+  const routesConfig = {};
+  console.log(routesConfig);
+  return routesConfig;
 }
 
 /**

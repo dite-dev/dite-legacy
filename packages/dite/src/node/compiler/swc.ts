@@ -1,11 +1,10 @@
 /**
  * Use SWC to emit decorator metadata
  */
-import { DiteConfig } from '@dite/core/config';
-import { localRequire, logger } from '@dite/utils';
 import { JscConfig } from '@swc/core';
 import { Plugin } from 'esbuild';
 import path from 'path';
+import { DiteConfig, localRequire, logger } from '../../core';
 
 export const swcPlugin = (config: DiteConfig): Plugin => {
   return {

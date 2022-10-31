@@ -1,6 +1,5 @@
-import { DiteConfig } from '@dite/core/config';
-import { logger } from '@dite/utils';
 import ora from 'ora';
+import { DiteConfig, logger } from '../core';
 import * as compiler from '../node/compiler';
 import { createServer } from '../node/server';
 

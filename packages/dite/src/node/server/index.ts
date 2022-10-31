@@ -1,8 +1,7 @@
-import { DiteConfig } from '@dite/core/config';
-import { lodash, logger } from '@dite/utils';
 import spawn from 'cross-spawn';
 import type { ChildProcess, Serializable } from 'node:child_process';
 import { performance } from 'node:perf_hooks';
+import { DiteConfig, lodash, logger } from '../../core';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
 
 export interface DiteServer {

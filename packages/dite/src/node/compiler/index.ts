@@ -1,10 +1,8 @@
-import { DiteConfig, ServerMode } from '@dite/core/config';
-import { lodash, logger, Mustache } from '@dite/utils';
-import swc from '@swc/core';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs';
 import path from 'path';
+import { DiteConfig, lodash, logger, Mustache, ServerMode } from '../../core';
 import { templateDir } from '../constants';
 import { swcPlugin } from './swc';
 
@@ -268,20 +266,4 @@ export async function writeServerBuildResult(
       fs.writeFileSync(file.path, file.contents, 'utf-8');
     }
   }
-}
-
-export async function swcBuildServer(config: DiteConfig) {
-  const entryPath = path.join(config.root, config.buildPath, 'src/server.ts');
-
-  const build = await swc.bundle({
-    entry: entryPath,
-    target: 'node',
-    output: {
-      name: 'server',
-      path: config.serverBuildPath,
-    },
-    module: {
-      type: 'commonjs',
-    },
-  });
 }

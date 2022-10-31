@@ -4,18 +4,17 @@ export default defineConfig([
   {
     entry: {
       index: 'src/index.ts',
-      route: 'src/route.ts',
-      config: 'src/config.ts',
     },
-    minifyIdentifiers: false,
+    minifyIdentifiers: true,
     bundle: true,
     dts: true,
     sourcemap: true,
     splitting: true,
     outDir: 'dist',
     clean: true,
+    treeshake: true,
     shims: true,
     format: ['cjs', 'esm'],
-    external: ['esbuild'],
+    external: ['esbuild', 'source-map-support'],
   },
 ]);

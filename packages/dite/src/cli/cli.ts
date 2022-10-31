@@ -1,5 +1,5 @@
-import { logger } from '@dite/utils';
 import { cac } from 'cac';
+import { logger } from '../core';
 // @ts-expect-error
 import { version } from '../../package.json';
 import { build } from './build';

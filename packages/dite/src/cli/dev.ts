@@ -1,6 +1,5 @@
-import { DiteConfig, resolveConfig } from '@dite/core/config';
-import { exitHook, logger } from '@dite/utils';
 import type { WatchOptions } from 'chokidar';
+import { DiteConfig, exitHook, logger, resolveConfig } from '../core';
 import { watch } from './watch';
 
 export async function createDevServer(config: DiteConfig) {

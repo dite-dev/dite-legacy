@@ -7,7 +7,6 @@ export default defineConfig([
       cli: 'src/cli/cli.ts',
       dev: 'src/cli/dev.ts',
     },
-    minifyIdentifiers: false,
     bundle: true,
     platform: 'node',
     dts: true,
@@ -19,7 +18,6 @@ export default defineConfig([
     shims: true,
     format: ['cjs', 'esm'],
     external: ['esbuild', '@swc/core'],
-    noExternal: ['ora', 'chalk'],
   },
   {
     entry: {

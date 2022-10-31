@@ -10,7 +10,6 @@ process.title = 'dite-app-server';
   const payload = {
     type: 'dite:ready',
     port: config.port,
-    finishTime: Math.ceil(performance.now()),
   };
   process.send?.(payload);
 })();
