@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import connect from 'connect';
 import fs from 'fs';
 import path from 'path';
 import type { ViteDevServer } from 'vite';
@@ -13,42 +14,28 @@ import { createServer as createViteServer } from 'vite';
 import { AppModule } from './app.module';
 
 const useVite = true;
+let vite: ViteDevServer;
+let template: string;
 
-const adapter = hook(
-  async ({ addMiddleware, addRequestHandler, config, vite }) => {
-    console.debug('dite adapter start');
-    if (useVite) {
-      addMiddleware((req, res, next) => {
-        console.debug('dite adapter addMiddleware');
-        vite.middlewares(req, res, next);
-      });
-      console.debug('dite adapter vite.middlewares');
-      const htmlTemplate = fs.readFileSync(
-        path.resolve(config.root, 'app/index.html'),
-        'utf-8',
-      );
-      addRequestHandler('*', async (req, res, next) => {
-        // console.log('111', req);
-        // const url = req.originalUrl ?? req.url;
-        // if (url.startsWith('/api')) {
-        //   next();
-        //   return;
-        // }
-        // try {
-        //   const template = await vite.transformIndexHtml(url, htmlTemplate);
-        //   const { render } = await vite.ssrLoadModule('/app/entry-server.ts');
-        //   const appHtml = await render(url);
-        //   const html = template.replace('<!--ssr-outlet-->', appHtml);
-        //   res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
-        // } catch (e) {
-        //   // vite.ssrFixStacktrace(e);
-        //   console.error(e);
-        //   next();
-        // }
-      });
-    }
-  },
-);
+export async function render(url: string) {
+  const renderHtml = await vite.transformIndexHtml(url, template);
+  const { render: viteRender } = await vite.ssrLoadModule(
+    '/app/entry-server.ts',
+  );
+  const appHtml = await viteRender(url);
+  const html = renderHtml.replace('<!--ssr-outlet-->', appHtml);
+  return html;
+}
+
+const adapter = hook(async ({ addMiddleware }) => {
+  console.debug('dite adapter start');
+  if (useVite) {
+    addMiddleware((req, res, next) => {
+      vite.middlewares(req, res, next);
+    });
+    console.debug('dite adapter vite.middlewares');
+  }
+});
 export default adapter;
 
 export async function bootstrap(opts) {
@@ -59,7 +46,7 @@ export async function bootstrap(opts) {
     AppModule,
     nestAdapter,
   );
-  const vite: ViteDevServer = await createViteServer({
+  vite = await createViteServer({
     appType: 'custom',
     publicDir: path.resolve(config.root, 'app', 'public'),
     plugins: [vue(), vueJsx()],
@@ -76,7 +63,6 @@ export async function bootstrap(opts) {
       external: ['reflect-metadata'],
     },
   });
-  console.log('vite', config.root);
   const storage: {
     middlewares: any[];
     requestHandlers: Map<string, any>;
@@ -94,22 +80,23 @@ export async function bootstrap(opts) {
     config,
     vite,
   };
+
+  template = fs.readFileSync(
+    path.resolve(config.root, 'app/index.html'),
+    'utf-8',
+  );
   await adapter(diteServer);
 
   storage.middlewares.forEach((middleware) => {
     app.use(middleware);
   });
-  for (const [path, requestHandler] of storage.requestHandlers.entries()) {
-    // app.use(path, (req, res, next) => {
-    //   requestHandler(req, res, next);
-    // });
-    // app.
-    // app.getHttpAdapter().use('/api', (req, res, next) => {
-    //   next();
-    // });
-  }
-  await app.listen(3000, '0.0.0.0');
-  // connect.listen(3000);
+  const connectApp = connect();
+  connectApp.use('/', async (req, res) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    res.end('not found');
+  });
+  connectApp.listen(3000, '0.0.0.0');
+  // await app.listen(3000, '0.0.0.0');
   console.debug('finish listen');
   return app;
 }

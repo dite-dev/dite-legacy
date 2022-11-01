@@ -8,7 +8,8 @@
     "start": "dite start"
   },
   "dependencies": {
-    "@dite/nest": "0.1.29",
+    "@dite/nest": "workspace:*",
+    "@dite/vue": "workspace:*",
     "@nestjs/common": "^9.1.6",
     "@nestjs/core": "^9.1.6",
     "@nestjs/platform-express": "^9.1.6",

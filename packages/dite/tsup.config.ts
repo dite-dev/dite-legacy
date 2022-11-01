@@ -1,4 +1,4 @@
-import { defineConfig } from '../../tsup-base.config';
+import { defineConfig } from '../../tsup.config.base';
 
 export default defineConfig([
   {

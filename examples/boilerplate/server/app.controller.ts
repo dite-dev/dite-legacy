@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { render } from '@dite/vue/render';
+import { Controller, Get, Header } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -11,7 +12,9 @@ export class AppController {
   }
 
   @Get('/')
+  @Header('Content-Type', 'text/html')
   async home(): Promise<string> {
-    return Promise.resolve('Hello DiteJs.');
+    const html = await render('/');
+    return html;
   }
 }
