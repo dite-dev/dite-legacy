@@ -2,7 +2,6 @@ import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
 export { default as exitHook } from 'exit-hook';
-export { default as lodash } from 'lodash';
 export { default as Mustache } from 'mustache';
 
 export const isWindows = os.platform() === 'win32';

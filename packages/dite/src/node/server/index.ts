@@ -1,7 +1,8 @@
 import spawn from 'cross-spawn';
+import { isObject } from 'lodash-es';
 import type { ChildProcess, Serializable } from 'node:child_process';
 import { performance } from 'node:perf_hooks';
-import { DiteConfig, lodash, logger } from '../../core';
+import { DiteConfig, logger } from '../../core';
 import { treeKillSync as killProcessSync } from '../../shared/lib/tree-kill';
 
 export interface DiteServer {
@@ -30,7 +31,7 @@ function isReadyPayload(
   payload: unknown,
 ): payload is { type: 'dite:ready'; finishTime: number; memoryUsage: string } {
   return (
-    lodash.isObject(payload) &&
+    isObject(payload) &&
     (payload as Record<string, unknown>).type === 'dite:ready'
   );
 }

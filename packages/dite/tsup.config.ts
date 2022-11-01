@@ -17,7 +17,15 @@ export default defineConfig([
     outDir: 'dist',
     shims: true,
     format: ['cjs', 'esm'],
-    external: ['esbuild', '@swc/core', 'typescript', 'vite', 'tsup'],
+    external: [
+      'esbuild',
+      '@swc/core',
+      'typescript',
+      'vite',
+      'tsup',
+      '@dite/core',
+      '@dite/node',
+    ],
   },
   {
     entry: {

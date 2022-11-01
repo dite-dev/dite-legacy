@@ -1,8 +1,9 @@
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import fs from 'fs';
+import { debounce } from 'lodash-es';
 import path from 'path';
-import { DiteConfig, lodash, logger, Mustache, ServerMode } from '../../core';
+import { DiteConfig, logger, Mustache, ServerMode } from '../../core';
 import { templateDir } from '../constants';
 import { swcPlugin } from './swc';
 
@@ -89,7 +90,7 @@ export async function watch(
     serverBuild = undefined;
   }
 
-  const rebuildEverything = lodash.debounce(async () => {
+  const rebuildEverything = debounce(async () => {
     if (onRebuildStart) onRebuildStart();
     if (!serverBuild?.rebuild) {
       disposeBuilders();
