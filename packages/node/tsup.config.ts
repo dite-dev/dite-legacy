@@ -1,4 +1,4 @@
-import { defineConfig } from '../../tsup-base.config';
+import { defineConfig } from '../../tsup.config.base';
 
 export default defineConfig({
   entry: {
@@ -10,7 +10,6 @@ export default defineConfig({
   sourcemap: true,
   splitting: true,
   skipNodeModulesBundle: true,
-  outDir: 'dist',
   clean: true,
   platform: 'node',
   shims: true,

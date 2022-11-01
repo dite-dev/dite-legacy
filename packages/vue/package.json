@@ -15,6 +15,18 @@
     "directory": "packages/vue"
   },
   "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./render": {
+      "import": "./dist/render.mjs",
+      "require": "./dist/render.js"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -25,7 +37,15 @@
     "build": "tsup",
     "dev": "pnpm build --watch"
   },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^3.0.0",
+    "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "@vue/babel-plugin-jsx": "^1.1.1",
+    "@vue/compiler-sfc": "^3.2.39"
+  },
   "devDependencies": {
+    "dite": "workspace:*",
+    "vite": "^3.0.0",
     "vue": "^3.2.41"
   },
   "peerDependencies": {

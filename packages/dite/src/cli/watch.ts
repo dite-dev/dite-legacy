@@ -1,3 +1,4 @@
+import { createServer as createMiddleware } from '@dite/node';
 import ora from 'ora';
 import { DiteConfig, logger } from '../core';
 import * as compiler from '../node/compiler';
@@ -6,6 +7,7 @@ import { createServer } from '../node/server';
 export async function watch(config: DiteConfig) {
   logger.debug('dite watch');
   const server = await createServer(config);
+  const middleware = await createMiddleware();
   logger.debug('dite watch server');
   const spinner = ora('dite');
 
@@ -14,6 +16,7 @@ export async function watch(config: DiteConfig) {
     async onInitialBuild() {
       logger.debug('dite watch onInitialBuild');
       await server.listen(config.port);
+      await middleware.listen(3000);
       logger.debug('dite watch onInitialBuild server.listen');
     },
     onRebuildStart: () => {

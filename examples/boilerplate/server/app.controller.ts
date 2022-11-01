@@ -12,6 +12,6 @@ export class AppController {
 
   @Get('/')
   async home(): Promise<string> {
-    return Promise.resolve('Hello DiteJs.');
+    return 'hello, this is home page';
   }
 }

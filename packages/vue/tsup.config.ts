@@ -1,9 +1,10 @@
-import { defineConfig } from '../../tsup-base.config';
+import { defineConfig } from '../../tsup.config.base';
 
 export default defineConfig([
   {
     entry: {
       index: 'src/node/index.ts',
+      render: 'src/render/index.ts',
     },
     minifyIdentifiers: false,
     bundle: true,
@@ -14,7 +15,7 @@ export default defineConfig([
     outDir: 'dist',
     clean: true,
     shims: true,
-    format: ['esm'],
+    format: ['esm', 'cjs'],
   },
   {
     entry: {
