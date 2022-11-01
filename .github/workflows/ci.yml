@@ -7,11 +7,11 @@ env:
   FORCE_COLOR: true
 
 on:
-  push:
-    paths-ignore:
-      - 'examples/**'
-      - 'docs/**'
-      - '**/*.md'
+  # push:
+  #   paths-ignore:
+  #     - 'examples/**'
+  #     - 'docs/**'
+  #     - '**/*.md'
   pull_request:
     types:
       - 'opened'
@@ -30,7 +30,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         # TODO: Enable node@18!
-        node-version: [14, 16]
+        # node-version: [14, 16]
+        node-version: [14]
         include:
           - os: macos-latest
             node-version: 14

@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    paths:
-      - 'examples/**'
-      - '.github/workflows/check.yml'
+  # pull_request:
+  #   paths:
+  #     - 'examples/**'
+  #     - '.github/workflows/check.yml'
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
