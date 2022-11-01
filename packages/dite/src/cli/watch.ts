@@ -1,13 +1,23 @@
 import { createServer as createMiddleware } from '@dite/node';
+import Router from 'find-my-way';
 import ora from 'ora';
-import { DiteConfig, logger } from '../core';
+import path from 'path';
+import { defineConventionalRoutes, DiteConfig, logger } from '../core';
 import * as compiler from '../node/compiler';
 import { createServer } from '../node/server';
 
 export async function watch(config: DiteConfig) {
   logger.debug('dite watch');
   const server = await createServer(config);
-  const middleware = await createMiddleware();
+  const routes = defineConventionalRoutes(path.join(config.root, 'app'));
+  const router = Router();
+  Object.entries(routes).forEach(([id, route]) => {
+    router.get(`/${route.path ?? ''}`, () => route);
+  });
+  const matchedRoutes = (url?: string) => {
+    return !!router.find('GET', url ?? '/');
+  };
+  const middleware = await createMiddleware({ matchedRoutes, router });
   logger.debug('dite watch server');
   const spinner = ora('dite');
 

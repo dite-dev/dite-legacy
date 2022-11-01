@@ -62,6 +62,7 @@
     "exit-hook": "^3.1.2",
     "fast-glob": "^3.2.12",
     "file-system-cache": "^2.0.1",
+    "find-my-way": "^7.3.1",
     "lodash-es": "^4.17.21",
     "minimatch": "^5.1.0",
     "mustache": "^4.2.0",
