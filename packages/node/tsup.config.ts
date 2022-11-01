@@ -9,7 +9,6 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   splitting: true,
-  skipNodeModulesBundle: true,
   clean: true,
   platform: 'node',
   shims: true,

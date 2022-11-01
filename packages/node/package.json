@@ -29,15 +29,14 @@
     "@vitejs/plugin-vue": "^3.0.0",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
     "@vue/babel-plugin-jsx": "^1.1.1",
-    "@vue/compiler-sfc": "^3.2.39",
-    "connect": "^3.7.0",
-    "http-proxy-middleware": "^2.0.6"
+    "@vue/compiler-sfc": "^3.2.39"
   },
   "devDependencies": {
     "@types/connect": "^3.0.0",
-    "@types/express": "^4.17.14"
+    "@types/express": "^4.17.14",
+    "connect": "^3.7.0",
+    "http-proxy-middleware": "^2.0.6"
   },
-  "peerDependencies": {},
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
