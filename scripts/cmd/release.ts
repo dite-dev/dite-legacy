@@ -39,7 +39,7 @@ const require = createRequire(import.meta.url);
 
   // check package changed
   logger.event('check package changed');
-  const changed = (await $`lerna changed --loglevel error`).stdout.trim();
+  const changed = (await $`pnpm exec changeset status`).stdout.trim();
   assert(changed, 'no package is changed');
 
   // check npm ownership

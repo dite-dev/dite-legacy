@@ -1,6 +1,5 @@
 {
   "name": "dite-scripts",
-  "version": "0.0.0",
   "private": true,
   "bin": {
     "dite-scripts": "bin/dite-scripts.js"
