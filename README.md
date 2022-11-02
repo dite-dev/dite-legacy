@@ -23,9 +23,6 @@
   <a href="https://gitter.im/ditejs/dite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
     <img src="https://badges.gitter.im/ditejs/dite.svg" alt="gitter">
   </a>
-  <a href="https://gitter.im/ditejs/dite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
-    <img src="https://badges.gitter.im/ditejs/dite.svg" alt="gitter">
-  </a>
 </p>
 
 ## 🚀 Features
