@@ -1,0 +1,50 @@
+{
+  "name": "@dite-run/vite",
+  "version": "0.0.1",
+  "description": "@dite-run/vite",
+  "keywords": [
+    "dite"
+  ],
+  "homepage": "https://dite.dev",
+  "bugs": {
+    "url": "https://github.com/ditejs/dite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ditejs/dite",
+    "directory": "packages/vite"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build --watch"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^3.2.0",
+    "@vitejs/plugin-vue-jsx": "^2.1.0",
+    "@vue/babel-plugin-jsx": "^1.1.1",
+    "@vue/compiler-sfc": "^3.2.41"
+  },
+  "devDependencies": {
+    "@types/connect": "^3.4.35",
+    "@types/express": "^4.17.14",
+    "connect": "^3.7.0",
+    "find-my-way": "^7.3.1",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "Zack <lorenx@163.com> (https://github.com/loyep)"
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "name": "@dite/codemod",
+  "name": "@dite-run/codemod",
   "version": "0.1.6-alpha.0",
-  "description": "@dite/codemod",
+  "description": "@dite-run/codemod",
   "keywords": [
     "dite"
   ],

@@ -1,5 +1,5 @@
 {
-  "name": "@dite/docs",
+  "name": "@dite-run/docs",
   "private": true,
   "description": "Docs for Dite",
   "main": "./dist/index.js",

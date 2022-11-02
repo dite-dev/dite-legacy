@@ -19,7 +19,7 @@ export async function watch(config: DiteConfig) {
   };
   const middleware = await createMiddleware({ matchedRoutes, router });
   logger.debug('dite watch server');
-  const spinner = ora('dite');
+  const spinner = ora('@dite-run/dite');
 
   const closeWatcher = await compiler.watch(config, {
     mode: 'development',

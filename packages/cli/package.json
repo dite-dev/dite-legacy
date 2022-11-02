@@ -1,0 +1,39 @@
+{
+  "name": "@dite-run/cli",
+  "version": "0.0.1",
+  "description": "@dite-run/cli",
+  "keywords": [
+    "dite"
+  ],
+  "homepage": "https://dite.dev",
+  "bugs": {
+    "url": "https://github.com/ditejs/dite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ditejs/dite",
+    "directory": "packages/cli"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "Zack <lorenx@163.com> (https://github.com/loyep)"
+  ]
+}

@@ -9,7 +9,7 @@ import { start } from './start';
 
 process.env.DEBUG = 'dite:*';
 
-const cli = cac('dite').version(version).help();
+const cli = cac('@dite-run/dite').version(version).help();
 
 export async function run() {
   logger.debug('dite Service');

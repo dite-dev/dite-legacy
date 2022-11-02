@@ -11,12 +11,12 @@
     "pnpm",
     "node",
     "dite",
-    "@dite/nest",
-    "@dite/node",
-    "@dite/core",
-    "@dite/utils",
-    "@dite/react",
-    "@dite/vue"
+    "@dite-run/nest",
+    "@dite-run/node",
+    "@dite-run/core",
+    "@dite-run/utils",
+    "@dite-run/react",
+    "@dite-run/vue"
   ],
   "ignorePaths": ["fixtures", "test/"],
   "postUpdateOptions": ["yarnDedupeHighest"],
