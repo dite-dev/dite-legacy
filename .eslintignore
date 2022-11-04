@@ -9,5 +9,5 @@ fixtures
 *.less
 .turbo
 examples/**/storage/logs
-*.test.ts
+*.spec.ts
 .dite

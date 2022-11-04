@@ -2,14 +2,19 @@
   "exclude": ["**/dist/**"],
   "include": ["."],
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2020",
     "module": "commonjs",
     "allowJs": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "baseUrl": ".",
     "jsx": "react",
-    "types": ["@types/jest", "jest-playwright-preset", "expect-playwright"],
+    "types": [
+      "@types/jest",
+      "jest-playwright-preset",
+      "expect-playwright",
+      "vitest/globals"
+    ],
     "paths": {}
   }
 }

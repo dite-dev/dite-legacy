@@ -1,0 +1,15 @@
+// require('source-map-support').install();
+process.title = 'dite-app-server';
+
+(async () => {
+  const config = {
+    port: 3001,
+  }
+  const { bootstrap: createServer } = await import('{{{ serverPath }}}')
+  await createServer({ config });
+  const payload = {
+    type: 'dite:ready',
+    port: config.port,
+  };
+  process.send?.(payload);
+})();

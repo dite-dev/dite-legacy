@@ -1,1 +1,1 @@
-# @dite/core
+# @dite/react

@@ -1,5 +1,5 @@
 {
-  "name": "@dite/playground",
+  "name": "@dite-run/playground",
   "private": true,
   "scripts": {
     "build": "dite build",
@@ -7,6 +7,6 @@
     "start": "dite start"
   },
   "devDependencies": {
-    "dite": "workspace:*"
+    "@dite-run/dite": "workspace:*"
   }
 }

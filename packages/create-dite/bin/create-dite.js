@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-const cli = require('../dist/cli');
-
-cli.run().catch(err => {
-  console.error(err);
-  process.exit(1);
-})
+(async () => {
+  const { run } = await import('../dist/cli.js');
+  await run(process.argv.slice(2));
+})();

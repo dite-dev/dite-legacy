@@ -2,14 +2,16 @@ import type { SpawnSyncOptions } from 'child_process';
 import spawn from 'cross-spawn';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
-import { dirname, join } from 'path';
+import { isArray } from 'lodash-es';
+import { dirname, join } from 'node:path';
 import { packagesDir } from '../internal/const';
 
 export function getPkgs(opts?: { base?: string }): string[] {
   const cwd = opts?.base || packagesDir;
+
   return glob
     .sync('**/package.json', {
-      ignore: ['**/{node_modules,src,dist,compiled,templates,.turbo}/**'],
+      ignore: ['**/{node_modules,src,dist,compiled,templates,.turbo,test}/**'],
       cwd,
     })
     .map(dirname);
@@ -50,7 +52,7 @@ export function spawnSync(cmd: string, opts: SpawnSyncOptions) {
 }
 
 export function toArray(v: unknown) {
-  if (Array.isArray(v)) {
+  if (isArray(v)) {
     return v;
   }
   return [v];

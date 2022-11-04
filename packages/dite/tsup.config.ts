@@ -1,24 +1,31 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from '../../tsup.config.base';
 
 export default defineConfig([
   {
     entry: {
-      cli: 'src/node/cli.ts',
-      dev: 'src/node/dev.ts',
       index: 'src/node/index.ts',
+      cli: 'src/cli.ts',
+      dev: 'src/cli/dev.ts',
     },
-    minifyIdentifiers: false,
     bundle: true,
+    platform: 'node',
     dts: true,
     sourcemap: true,
     splitting: true,
-    minify: process.env.NODE_ENV === 'production',
-    skipNodeModulesBundle: true,
-    outDir: 'dist/node',
-    clean: true,
+    treeshake: true,
+    keepNames: true,
+    outDir: 'dist',
     shims: true,
-    // noExternal: ['bundle-require'],
     format: ['cjs', 'esm'],
+    external: [
+      'esbuild',
+      '@swc/core',
+      'typescript',
+      'vite',
+      'tsup',
+      '@dite/core',
+      '@dite/node',
+    ],
   },
   {
     entry: {
@@ -29,11 +36,9 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     splitting: true,
-    minify: process.env.NODE_ENV === 'production',
-    skipNodeModulesBundle: true,
     outDir: 'dist/client',
-    clean: true,
-    shims: true,
     format: ['cjs', 'esm'],
+    shims: true,
+    external: ['esbuild', '@swc/core', 'typescript', 'vite', 'tsup'],
   },
 ]);
