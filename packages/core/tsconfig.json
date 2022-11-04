@@ -2,11 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "module": "esnext",
-    "target": "esnext",
     "outDir": "./dist",
-    "lib": ["esnext", "dom"],
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "jsx": "react-jsx"
   },
   "include": ["src"]
 }

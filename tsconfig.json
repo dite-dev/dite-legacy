@@ -4,9 +4,6 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "skipLibCheck": true,
-    "paths": {
-      "@/*": ["*"],
-      "@@/*": [".dite/*"]
-    }
+    "types": ["vitest/globals"]
   }
 }

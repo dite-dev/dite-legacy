@@ -1,0 +1,57 @@
+{
+  "name": "@dite-run/webpack",
+  "version": "0.0.1",
+  "description": "@dite-run/node",
+  "keywords": [
+    "dite"
+  ],
+  "homepage": "https://dite.dev",
+  "bugs": {
+    "url": "https://github.com/ditejs/dite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ditejs/dite",
+    "directory": "packages/webpack"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "dite-scripts build",
+    "dev": "pnpm build --watch"
+  },
+  "dependencies": {
+    "es-module-lexer": "^1.1.0",
+    "webpack": "^5.74.0",
+    "webpack-5-chain": "^8.0.1",
+    "webpack-virtual-modules": "^0.4.6"
+  },
+  "devDependencies": {
+    "@types/webpack-virtual-modules": "^0.1.1",
+    "esbuild": "workspace:*",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "Zack <lorenx@163.com> (https://github.com/loyep)"
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "name": "@dite/core",
-  "version": "0.1.6",
-  "description": "@dite/core",
+  "name": "@dite-run/core",
+  "version": "0.0.1",
+  "description": "@dite-run/core",
   "keywords": [
     "dite"
   ],
@@ -16,15 +16,6 @@
   },
   "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./dist/*": "./dist/*",
-    "./package.json": "./package.json"
-  },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,31 +23,24 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "pnpm build --watch",
-    "test": "pnpm test"
+    "build": "dite-scripts build",
+    "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "arg": "^5.0.2",
-    "cac": "^6.7.14",
-    "chalk": "^4.1.2",
-    "consola": "^2.15.3",
-    "debug": "^4.3.4",
-    "fs-extra": "^10.1.0",
-    "lodash": "^4.17.21",
-    "ora": "^6.1.2",
-    "picocolors": "^1.0.0",
-    "semver": "^7.3.8"
+    "@parcel/css": "1.14.0",
+    "compression": "^1.7.4"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.7",
-    "@types/fs-extra": "^9.0.13",
-    "@types/lodash": "^4.14.186",
-    "@types/semver": "^7.3.12",
-    "es-module-lexer": "^1.0.3"
+    "@types/compression": "^1.7.2"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^8.4.7 || ^9.0.0",
+    "@nestjs/core": "^8.4.7 || ^9.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.5.5"
   },
   "engines": {
-    "node": ">=14"
+    "node": "^14.18.0 || >=16.0.0"
   },
   "publishConfig": {
     "access": "public"

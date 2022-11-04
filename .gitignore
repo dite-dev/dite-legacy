@@ -19,14 +19,8 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+coverage/**
 *.lcov
-
-# nyc test coverage
-.nyc_output
-
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
 
 # Bower dependency directory (https://bower.io/)
 bower_components
@@ -39,10 +33,6 @@ build/Release
 
 # Dependency directories
 node_modules/
-jspm_packages/
-
-# Snowpack dependency directory (https://snowpack.dev/)
-web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -116,7 +106,5 @@ SPEED_MEASURE.json
 
 # Dite
 /examples/*/.dite
-!**/complied/*
-
 
 .DS_Store

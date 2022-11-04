@@ -1,9 +1,8 @@
-import { defineConfig } from 'tsup';
-
-const prod = process.env.NODE_ENV === 'production';
+import { defineConfig } from '../../tsup.config.base';
 
 export default defineConfig({
   entry: {
+    index: 'src/index.ts',
     cli: 'src/cli.ts',
   },
   minifyIdentifiers: false,
@@ -11,11 +10,9 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   splitting: true,
-  minify: prod,
   skipNodeModulesBundle: true,
-  silent: prod,
   outDir: 'dist',
   clean: true,
   shims: true,
-  format: 'cjs',
+  format: 'esm',
 });

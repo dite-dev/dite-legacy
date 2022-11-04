@@ -1,7 +1,7 @@
 {
-  "name": "@dite/codemod",
-  "version": "0.1.6-alpha.0",
-  "description": "@dite/codemod",
+  "name": "@dite-run/codemod",
+  "private": true,
+  "description": "@dite-run/codemod",
   "keywords": [
     "dite"
   ],
@@ -23,21 +23,20 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "dite-scripts build",
     "dev": "pnpm build --watch"
   },
   "dependencies": {
     "consola": "^2.15.3",
-    "esbuild": "^0.15.10",
+    "esbuild": "^0.15.12",
     "fast-glob": "^3.2.12",
-    "fs-extra": "^10.1.0",
-    "lodash": "^4.17.21"
+    "fs-extra": "^10.1.0"
   },
   "devDependencies": {
     "typescript": "^4.8.4"
   },
   "engines": {
-    "node": ">=14"
+    "node": "^14.18.0 || >=16.0.0"
   },
   "publishConfig": {
     "access": "public"

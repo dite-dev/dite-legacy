@@ -1,6 +1,7 @@
-import { join } from 'path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-export const examplesDir = join(__dirname, '../../examples');
+const __dirname = dirname(fileURLToPath(new URL(import.meta.url)));
 
 export const packagesDir = join(__dirname, '../../packages');
 
@@ -11,5 +12,4 @@ export const PATHS = {
   PACKAGES: join(ROOT, './packages'),
   EXAMPLES: join(ROOT, './examples'),
   LERNA_CONFIG: join(ROOT, './lerna.json'),
-  JEST_CONFIG: join(ROOT, './jest.config.ts'),
 };

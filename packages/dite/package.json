@@ -1,6 +1,6 @@
 {
-  "name": "dite",
-  "version": "0.1.6",
+  "name": "@dite-run/dite",
+  "version": "0.0.1",
   "description": "dite",
   "keywords": [
     "dite"
@@ -18,50 +18,65 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/node/index.d.ts",
-      "import": "./dist/node/index.js",
-      "require": "./dist/node/index.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
-  "main": "dist/node/index.cjs",
-  "module": "dist/node/index.js",
-  "types": "dist/node/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "bin": {
     "dite": "bin/dite.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "bin",
+    "templates",
+    "src"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "dite-scripts build",
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@dite/core": "0.1.6",
-    "arg": "^5.0.2",
-    "bundle-require": "^3.1.0",
-    "cac": "^6.7.14",
-    "chalk": "^4.1.2",
-    "consola": "^2.15.3",
-    "debug": "^4.3.4",
-    "fs-extra": "^10.1.0",
-    "lodash": "^4.17.21",
-    "ora": "^6.1.2",
-    "picocolors": "^1.0.0",
-    "semver": "^7.3.8",
-    "vite": "^3.0.0"
+    "esbuild": "^0.15.12",
+    "source-map-support": "^0.5.21",
+    "yargs-parser": "^21.1.1"
   },
   "devDependencies": {
+    "@dite-run/node": "workspace:*",
+    "@types/connect": "^3.4.35",
+    "@types/cross-spawn": "^6.0.2",
     "@types/debug": "^4.1.7",
-    "@types/fs-extra": "^9.0.13",
-    "@types/lodash": "^4.14.186",
-    "@types/semver": "^7.3.12",
-    "es-module-lexer": "^1.0.3"
+    "@types/lodash-es": "^4.17.6",
+    "@types/minimatch": "^5.1.2",
+    "@types/mustache": "^4.2.1",
+    "@types/source-map-support": "^0.5.6",
+    "cac": "^6.7.14",
+    "chokidar": "^3.5.3",
+    "connect": "^3.7.0",
+    "cross-spawn": "^7.0.3",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.3",
+    "exit-hook": "^3.1.2",
+    "fast-glob": "^3.2.12",
+    "file-system-cache": "^2.0.1",
+    "find-my-way": "^7.3.1",
+    "lodash-es": "^4.17.21",
+    "minimatch": "^5.1.0",
+    "mustache": "^4.2.0",
+    "ora": "^6.1.2",
+    "picocolors": "^1.0.0",
+    "pirates": "^4.0.5",
+    "resolve-from": "^5.0.0",
+    "vite": "^3.2.2"
+  },
+  "peerDependencies": {
+    "vite": "^3.0.0"
   },
   "engines": {
-    "node": ">=14"
+    "node": "^14.18.0 || >=16.0.0"
   },
   "publishConfig": {
     "access": "public"

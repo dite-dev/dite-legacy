@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "experimentalDecorators": true,
+      "outDir": "./dist",
+    },
+    "include": [
+      "index.d.ts", 
+"server.ts"
+    ]
+  }
+  

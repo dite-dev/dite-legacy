@@ -2,15 +2,16 @@ name: CI
 
 env:
   NODE_OPTIONS: --max-old-space-size=6144
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  FORCE_COLOR: true
 
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - 'examples/**'
-      - 'docs/**'
-      - '**/*.md'
+  # push:
+  #   paths-ignore:
+  #     - 'examples/**'
+  #     - 'docs/**'
+  #     - '**/*.md'
   pull_request:
     types:
       - 'opened'
@@ -23,61 +24,48 @@ concurrency:
 
 jobs:
   build:
+    name: 'Build: ${{ matrix.os }} (node@${{ matrix.node-version }})'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
         os: [ubuntu-latest, windows-latest]
+        # TODO: Enable node@18!
+        # node-version: [14, 16]
+        node-version: [14]
+        include:
+          - os: macos-latest
+            node-version: 14
       fail-fast: false
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.4
+
+      - name: Setup node@${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.3
+        uses: pnpm/action-setup@v2.2.4
         with:
           run_install: false
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-node${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-node${{ matrix.node-version }}-
-
-      # We use week in the turbo cache key to keep the cache from infinitely growing
-      - name: Get cache expires mark
-        id: get-week
-        run: echo ::set-output name=WEEK::$(date +%U)
-
-      - name: Turbo Cache
-        id: turbo-cache
-        uses: actions/cache@v3
-        with:
-          path: .turbo
-          key: turbo-${{ github.job }}-${{ runner.os }}-node${{ matrix.node-version }}-${{ github.ref_name }}-${{ steps.get-week.outputs.WEEK }}-${{ github.sha }}
-          restore-keys: |
-            turbo-${{ github.job }}-${{ runner.os }}-node${{ matrix.node-version }}-
-            turbo-${{ github.job }}-${{ runner.os }}-node${{ matrix.node-version }}-${{ github.ref_name }}-${{ steps.get-week.outputs.WEEK }}-
-
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm install
 
-      - run: pnpm build
-      - run: pnpm test
+      - name: Build Packages
+        run: pnpm run build
+
+      - name: Test
+        run: pnpm run test
         env:
           CI: true
           NODE_ENV: test

@@ -4,21 +4,16 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "inputs": ["src/**", "tsup.config.ts"]
+      "inputs": ["tsup.config.ts", "src/**/*.ts", "src/**/*.tsx"]
+    },
+    "build:dev": {
+      "dependsOn": ["^build:dev"],
+      "outputs": ["dist/**"],
+      "inputs": ["tsup.config.ts", "src/**/*.ts", "src/**/*.tsx"]
     },
     "dev": {
       "cache": false
-    },
-    "build:client": {
-      "cache": false
-    },
-    "test": {
-      "outputs": [".jest-cache/**"]
     }
   },
-  "globalDependencies": [
-    "tsconfig.base.json",
-    "tsconfig.json",
-    "jest.config.ts"
-  ]
+  "globalDependencies": ["tsconfig.base.json", "tsconfig.json"]
 }

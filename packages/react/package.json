@@ -1,7 +1,7 @@
 {
-  "name": "@dite/react",
-  "version": "0.1.6",
-  "description": "@dite/react",
+  "name": "@dite-run/react",
+  "version": "0.0.1",
+  "description": "@dite-run/run/run/react",
   "keywords": [
     "dite"
   ],
@@ -15,28 +15,19 @@
     "directory": "packages/react"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "dite-scripts build",
     "dev": "pnpm build --watch"
   },
-  "dependencies": {
-    "@nestjs/platform-express": "^9.1.4",
-    "@parcel/css": "1.14.0",
-    "compression": "^1.7.4"
-  },
-  "devDependencies": {
-    "@nestjs/common": "^9.1.4",
-    "@nestjs/core": "^9.1.4",
-    "@types/compression": "^1.7.2",
-    "@types/express": "^4.17.14",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.5.7"
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "peerDependencies": {
     "@nestjs/common": "^8.4.7 || ^9.0.0",
     "@nestjs/core": "^8.4.7 || ^9.0.0",
@@ -44,7 +35,7 @@
     "rxjs": "^7.5.5"
   },
   "engines": {
-    "node": ">=14"
+    "node": "^14.18.0 || >=16.0.0"
   },
   "publishConfig": {
     "access": "public"

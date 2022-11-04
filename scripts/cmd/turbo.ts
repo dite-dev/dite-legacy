@@ -12,16 +12,21 @@ import { spawnSync } from '../utils';
   // filter
   if (!args.includes('--filter')) {
     // Tips: should use double quotes, single quotes are not valid on windows.
-    args.push(`--filter="./packages/*"`);
+    args.push('--filter="./packages/*"');
   }
 
   // turbo cache
   if (!args.includes('--cache-dir')) {
-    args.push(`--cache-dir=".turbo"`);
+    args.push('--cache-dir=".turbo"');
+  }
+
+  //turbo env
+  if (args.includes('--prod')) {
+    process.env.NODE_ENV = 'production';
+    args.splice(args.indexOf('--prod'), 1);
+    args.push('--force');
   }
 
   const command = `turbo run ${args.join(' ')}`;
-  spawnSync(command, {
-    cwd: PATHS.ROOT,
-  });
+  spawnSync(command, { cwd: PATHS.ROOT, env: process.env });
 })();

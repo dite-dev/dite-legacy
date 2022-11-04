@@ -1,3 +1,5 @@
+import { describe, expect, vi, test } from 'vitest'
+
 
 test('class', () => {
   class A {
