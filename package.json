@@ -52,7 +52,7 @@
     "@types/resolve": "^1.20.2",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
-    "@vitest/coverage-c8": "^0.24.5",
+    "@vitest/coverage-c8": "^0.25.0",
     "dite-scripts": "workspace:*",
     "esbuild": "^0.15.12",
     "eslint": "^8.26.0",
@@ -74,7 +74,7 @@
     "turbo": "^1.6.3",
     "typescript": "^4.8.4",
     "vite": "^3.2.2",
-    "vitest": "^0.24.5",
+    "vitest": "^0.25.0",
     "zx": "4.3.0"
   },
   "packageManager": "pnpm@7.14.0",
