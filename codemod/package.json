@@ -30,7 +30,7 @@
     "consola": "^2.15.3",
     "esbuild": "^0.15.12",
     "fast-glob": "^3.2.12",
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^11.0.0"
   },
   "devDependencies": {
     "typescript": "^4.8.4"
