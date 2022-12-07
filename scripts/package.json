@@ -11,7 +11,7 @@
     "consola": "^2.15.3",
     "cpy": "^9.0.1",
     "cross-spawn": "^7.0.3",
-    "esbuild": "^0.15.12",
+    "esbuild": "^0.16.0",
     "fast-glob": "^3.2.12",
     "fs-extra": "^10.1.0",
     "git-repo-info": "^2.1.1",
